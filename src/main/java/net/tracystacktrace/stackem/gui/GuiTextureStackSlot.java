@@ -53,7 +53,7 @@ public class GuiTextureStackSlot extends GuiSlot {
         tessellator.draw();
         String showName = tag.name;
         if (tag.isInStack()) {
-            showName = "[" + (tag.order + 1) + "] " + showName;
+            showName = "[§e" + (tag.order + 1) + "§r] " + showName;
         }
 
         if (showName.length() > 32) {

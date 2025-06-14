@@ -1,11 +1,24 @@
-# Fox Loader Example Mod
+# StackEm (Stack 'Em)
 
-Example mod for [FoxLoader](https://github.com/Fox2Code/FoxLoader)
+Mod that adds multiple texturepack selection to ReIndev.
 
-Rat block texture by [@silveros](https://github.com/silverosre)
+Tired of glueing several small texturepacks in one .zip file? Got you, this mod allows you to use several texturepacks simultaneously.
 
-## Documentation
+I'm not sure of stability, but everything should work fine. If not, please ping me in discord server asap.
 
-For mixins usage check here: https://github.com/2xsaiko/mixin-cheatsheet
+![Showcase!](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_1.png)
 
-For spark usage check here: https://spark.lucko.me/docs/Command-Usage
+## Installation
+
+Simply grab a `.jar` file from releases and put into `mods` folder of your instance!
+
+Want to compile by yourself? Just download the sources and run the following command:
+```shell
+./gradlew build
+```
+
+The output file will be located in `build/libs` folder.
+
+## License
+
+This mod is licensed under [Apache License 2.0](https://github.com/tracystacktrace/ICY/blob/main/LICENSE)
