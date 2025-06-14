@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "minVersion": "0.8",
+  "package": "net.tracystacktrace.stackem.mixins",
+  "compatibilityLevel": "JAVA_8",
+  "mixins": [
+    "MixinGuiVideoSettings",
+    "MixinTexturePackList"
+  ]
+}

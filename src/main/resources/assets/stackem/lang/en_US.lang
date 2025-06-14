@@ -1,0 +1,7 @@
+stackem.gui.title=Select Texture Packs (Stack mode)
+stackem.gui.done=§c§lSAVE§r & Exit
+stackem.gui.folder=Open texture pack folder
+stackem.gui.folderhint=(Place texture pack files here)
+
+stackem.gui.hint1=Double-click a texture pack to include/remove
+stackem.gui.hint2=Only "§e.zip§r" texturepacks are §esupported§r!
