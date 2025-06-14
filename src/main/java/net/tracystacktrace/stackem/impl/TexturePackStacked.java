@@ -1,8 +1,10 @@
 package net.tracystacktrace.stackem.impl;
 
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.ITexturePack;
 import net.minecraft.client.renderer.block.TexturePackBase;
 import net.minecraft.client.renderer.world.RenderEngine;
+import net.tracystacktrace.stackem.processor.Metabolism;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -36,6 +38,10 @@ public class TexturePackStacked extends TexturePackBase {
     protected void loadDescription() {
         this.firstDescriptionLine = "StackEm Internal";
         this.secondDescriptionLine = "Do not use.";
+    }
+
+    public List<ZipFile> getZipFiles() {
+        return this.stackedTextures;
     }
 
     private void initialize() {

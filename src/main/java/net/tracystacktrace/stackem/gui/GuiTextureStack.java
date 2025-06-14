@@ -8,9 +8,10 @@ import net.minecraft.client.gui.GuiSmallButton;
 import net.minecraft.client.renderer.block.TexturePackBase;
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.hack.TexturePackListHack;
+import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.processor.Metabolism;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
@@ -212,16 +213,16 @@ public class GuiTextureStack extends GuiScreen {
             stackemList.add(this.sequoiaCache.get(i).name);
         }
 
-        final TexturePackStacked stacked = new TexturePackStacked("stackem", TexturePackListHack.getDefaultTexturePack(), files);
+        final TexturePackStacked stacked = new TexturePackStacked("stackem", SmartHacks.getDefaultTexturePack(), files);
 
         this.mc.texturePackList.setTexturePack(stacked);
+        this.mc.gameSettings.texturePack = StackEm.boxTexturePackList(stackemList.toArray(new String[0]));
+        this.mc.gameSettings.saveOptions();
         this.mc.renderEngine.refreshTextures();
         this.mc.renderGlobal.loadRenderers();
         this.mc.sndManager.refreshSounds(this.mc.texturePackList.getSelectedTexturePack());
         this.mc.fontRenderer = new FontRenderer((TexturePackBase) this.mc.texturePackList.getSelectedTexturePack(), this.mc.renderEngine);
 
-        this.mc.gameSettings.texturePack = StackEm.boxTexturePackList(stackemList.toArray(new String[0]));
-        this.mc.gameSettings.saveOptions();
         Display.update();
     }
 
