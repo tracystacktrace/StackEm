@@ -21,4 +21,4 @@ The output file will be located in `build/libs` folder.
 
 ## License
 
-This mod is licensed under [Apache License 2.0](https://github.com/tracystacktrace/ICY/blob/main/LICENSE)
+This mod is licensed under [Apache License 2.0](https://github.com/tracystacktrace/StackEm/blob/main/LICENSE)
