@@ -6,7 +6,8 @@ Tired of glueing several small texturepacks in one .zip file? Got you, this mod 
 
 I'm not sure of stability, but everything should work fine. If not, please ping me in discord server asap.
 
-![Showcase!](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase.png)
+![Showcase 1!](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_1.png)
+![Showcase 2!](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_2.png)
 
 ## Installation
 
