@@ -11,7 +11,6 @@ import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
-import net.tracystacktrace.stackem.processor.Metabolism;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
@@ -32,6 +31,7 @@ public class GuiTextureStack extends GuiScreen {
     private GuiTextureStackSlot slotManager;
     private GuiButton buttonMoveUp;
     private GuiButton buttonMoveDown;
+    private GuiButton buttonToggle;
 
     public GuiTextureStack(GuiScreen parentScreen) {
         this.parentScreen = parentScreen;
@@ -46,9 +46,10 @@ public class GuiTextureStack extends GuiScreen {
     @Override
     public void initGui() {
         this.controlList.clear();
-        this.fetchCacheFromOuterworld(StackEm.unboxTexturePackList(this.mc.gameSettings.texturePack));
+        this.fetchCacheFromOuterworld(StackEm.processIdentifier(this.mc.gameSettings.texturePack));
 
         final StringTranslate translate = StringTranslate.getInstance();
+
         this.controlList.add(new GuiSmallButton(-1, this.width / 2 - 154, this.height - 48, translate.translateKey("stackem.gui.folder")));
         this.controlList.add(new GuiSmallButton(-2, this.width / 2 + 4, this.height - 48, translate.translateKey("stackem.gui.done")));
 
@@ -56,9 +57,14 @@ public class GuiTextureStack extends GuiScreen {
         this.slotManager = new GuiTextureStackSlot(this, this.width, this.height);
         this.slotManager.registerScrollButtons(7, 8);
 
-        this.controlList.add(this.buttonMoveUp = new GuiButton(-3, this.width / 2 - 126, 0, 16, 16, "↑"));
-        this.controlList.add(this.buttonMoveDown = new GuiButton(-4, this.width / 2 - 126, 0, 16, 16, "↓"));
 
+        this.controlList.add(this.buttonToggle = new GuiButton(-5, 5, 40, 16, 16, "❌"));
+        this.controlList.add(this.buttonMoveUp = new GuiButton(-3, 5, 40 + 18, 16, 16, "↑"));
+        this.controlList.add(this.buttonMoveDown = new GuiButton(-4, 5, 40 + 36, 16, 16, "↓"));
+
+
+        this.buttonToggle.enabled = false;
+        this.buttonToggle.visible = false;
         this.buttonMoveUp.enabled = false;
         this.buttonMoveUp.visible = false;
         this.buttonMoveDown.enabled = false;
@@ -93,6 +99,11 @@ public class GuiTextureStack extends GuiScreen {
                 return;
             }
 
+            if (button.id == -5) {
+                this.slotManager.elementClicked(slotManager.selectedIndex, true);
+                return;
+            }
+
             this.slotManager.actionPerformed(button);
         }
     }
@@ -113,10 +124,14 @@ public class GuiTextureStack extends GuiScreen {
 
     public void updateMoveButtonsState(int index) {
         if (sequoiaCache.get(index).isInStack()) {
-            final int slotOffsetY = this.height / 2 - (this.sequoiaCache.size() * 18) - 9;
+            this.buttonToggle.enabled = true;
+            this.buttonToggle.visible = true;
+            this.buttonToggle.displayString = "❌";
 
-            this.buttonMoveUp.yPosition = slotOffsetY + (36 * index);
-            this.buttonMoveDown.yPosition = slotOffsetY + 18 + (36 * index);
+            //todo fix buttons location
+            //final int slotOffsetY = this.height / 2 - (this.sequoiaCache.size() * 18) - 9;
+            //this.buttonMoveUp.yPosition = slotOffsetY + (36 * index);
+            //this.buttonMoveDown.yPosition = slotOffsetY + 18 + (36 * index);
 
             this.buttonMoveUp.visible = true;
             this.buttonMoveDown.visible = true;
@@ -124,6 +139,10 @@ public class GuiTextureStack extends GuiScreen {
             this.buttonMoveUp.enabled = index > 0;
             this.buttonMoveDown.enabled = index + 1 < this.countInStackElements();
         } else {
+            this.buttonToggle.enabled = true;
+            this.buttonToggle.visible = true;
+            this.buttonToggle.displayString = "✔";
+
             this.buttonMoveUp.enabled = false;
             this.buttonMoveUp.visible = false;
             this.buttonMoveDown.enabled = false;
@@ -134,7 +153,7 @@ public class GuiTextureStack extends GuiScreen {
     /* code to obtain info from outside */
 
     private void fetchCacheFromOuterworld(String[] previousCached) {
-        List<TagTexturePack> candidates = StackEm.walkTexturePackFolders();
+        List<TagTexturePack> candidates = StackEm.buildTexturePackList();
         if (candidates == null) {
             this.sequoiaCache = new ArrayList<>();
             return;
@@ -216,7 +235,7 @@ public class GuiTextureStack extends GuiScreen {
         final TexturePackStacked stacked = new TexturePackStacked("stackem", SmartHacks.getDefaultTexturePack(), files);
 
         this.mc.texturePackList.setTexturePack(stacked);
-        this.mc.gameSettings.texturePack = StackEm.boxTexturePackList(stackemList.toArray(new String[0]));
+        this.mc.gameSettings.texturePack = StackEm.buildIdentifier(stackemList.toArray(new String[0]));
         this.mc.gameSettings.saveOptions();
         this.mc.renderEngine.refreshTextures();
         this.mc.renderGlobal.loadRenderers();

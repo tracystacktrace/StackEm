@@ -12,8 +12,10 @@ public class TagTexturePack {
     public final String firstLine;
     public final String secondLine;
 
-    public BufferedImage thumbnail;
     public int order = -1;
+
+    private BufferedImage thumbnail;
+    private int rendererThumbnailID = -1;
 
     public TagTexturePack(File file, String name, String firstLine, String secondLine) {
         this.file = file;
@@ -26,12 +28,18 @@ public class TagTexturePack {
         return this.order > -1;
     }
 
-    private int thumbImageString = -1;
+    public void setThumbnail(BufferedImage image) {
+        this.thumbnail = image;
+    }
+
+    public boolean hasThumbnail() {
+        return this.thumbnail != null;
+    }
 
     public void bindThumbnail(RenderEngine renderEngine) {
-        if (thumbImageString == -1) {
-            this.thumbImageString = renderEngine.allocateAndSetupTexture(this.thumbnail);
+        if (rendererThumbnailID == -1) {
+            this.rendererThumbnailID = renderEngine.allocateAndSetupTexture(this.thumbnail);
         }
-        RenderSystem.bindTexture2D(thumbImageString);
+        RenderSystem.bindTexture2D(rendererThumbnailID);
     }
 }

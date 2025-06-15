@@ -1,9 +1,10 @@
-package net.tracystacktrace.stackem.processor;
+package net.tracystacktrace.stackem.processor.image;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.TexturePackDefault;
 import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.processor.SegmentedTexture;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipFile;
 
-public class GlueingProcessor {
+public class GlueImages {
 
     public static class ImageHolder {
         public BufferedImage original;
@@ -40,7 +41,7 @@ public class GlueingProcessor {
 
         private boolean rescaleProperly(int width, int height) {
             //refer to scaling the result
-            if(original.getWidth() < width || original.getHeight() < height) {
+            if (original.getWidth() < width || original.getHeight() < height) {
                 this.original = ImageScaler.scaleImage(original, width, height);
                 this.modificational = ImageScaler.scaleImage(modificational, width, height);
                 return true;
@@ -49,8 +50,8 @@ public class GlueingProcessor {
         }
 
         public int overwriteChanges(BufferedImage attempt, SegmentedTexture holder) {
-            if(attempt.getWidth() != this.original.getWidth()) {
-                if(!rescaleProperly(attempt.getWidth(), attempt.getHeight())) {
+            if (attempt.getWidth() != this.original.getWidth()) {
+                if (!rescaleProperly(attempt.getWidth(), attempt.getHeight())) {
                     attempt = ImageScaler.scaleImage(attempt, original.getWidth(), original.getHeight());
                 }
             }
@@ -68,7 +69,7 @@ public class GlueingProcessor {
 
                     if (origPixel != modPixel) {
                         int test1 = holder.isInWhatSegment(x, y, scale);
-                        if(test1 > -1) {
+                        if (test1 > -1) {
                             modParts[test1] = true;
                         }
                     }
@@ -76,15 +77,15 @@ public class GlueingProcessor {
             }
 
             int amount = 0;
-            for(int i = 0; i < modParts.length; i++) {
-                if(modParts[i]) {
+            for (int i = 0; i < modParts.length; i++) {
+                if (modParts[i]) {
                     final int x = holder.segments[i][0] * scale;
                     final int y = holder.segments[i][1] * scale;
                     final int endX = (x + holder.segments[i][2]) * scale;
                     final int endY = (y + holder.segments[i][3]) * scale;
 
-                    for(int movY = y; movY < endY; movY++) {
-                        for(int movX = x; movX < endX; movX++) {
+                    for (int movY = y; movY < endY; movY++) {
+                        for (int movX = x; movX < endX; movX++) {
                             this.modificational.setRGB(movX, movY, attempt.getRGB(movX, movY));
                         }
                     }
@@ -120,10 +121,10 @@ public class GlueingProcessor {
         for (int i = zipFiles.size() - 1; i >= 0; i--) {
             ZipFile zipFile = zipFiles.get(i);
             final BufferedImage image = ImageReader.readImage(zipFile, name.texture);
-            if(ImageCheck.isValidTexture(image)) {
+            if (ImageCheck.isValidTexture(image)) {
                 images.add(image);
             } else {
-                if(image != null) {
+                if (image != null) {
                     image.flush();
                 }
             }

@@ -1,9 +1,8 @@
-package net.tracystacktrace.stackem.processor;
+package net.tracystacktrace.stackem.processor.image;
 
 import net.minecraft.client.renderer.block.ITexturePack;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;

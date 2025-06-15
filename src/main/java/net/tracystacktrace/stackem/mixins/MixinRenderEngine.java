@@ -1,7 +1,7 @@
 package net.tracystacktrace.stackem.mixins;
 
 import net.minecraft.client.renderer.world.RenderEngine;
-import net.tracystacktrace.stackem.processor.Metabolism;
+import net.tracystacktrace.stackem.processor.TextureMerger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -11,6 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinRenderEngine {
     @Inject(method = "refreshTextures", at = @At("TAIL"))
     private void stackem$injectRefreshTextures(CallbackInfo ci) {
-        Metabolism.replaceTextures();
+        TextureMerger.replaceTextures();
     }
 }

@@ -1,7 +1,6 @@
 package net.tracystacktrace.stackem.hack;
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.ITexturePack;
 import net.minecraft.client.renderer.block.TexturePackList;
 import net.minecraft.client.renderer.world.RenderEngine;
@@ -20,7 +19,6 @@ public class SmartHacks {
             throw new RuntimeException(e);
         }
     }
-
 
     public static Object2IntOpenHashMap<String> getTextureMap(RenderEngine renderEngine) {
         try {

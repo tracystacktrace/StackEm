@@ -13,8 +13,7 @@ import java.util.zip.ZipFile;
 
 public class StackEm extends Mod {
 
-
-    public static String[] unboxTexturePackList(String input) {
+    public static String[] processIdentifier(String input) {
         int start = input.indexOf('[');
         int end = input.indexOf(']');
 
@@ -25,14 +24,14 @@ public class StackEm extends Mod {
         return input.substring(start + 1, end).split(";");
     }
 
-    public static String boxTexturePackList(String[] input) {
+    public static String buildIdentifier(String[] input) {
         if (input == null || input.length < 1) {
             return "stackem[]";
         }
         return "stackem[" + String.join(";", input) + "]";
     }
 
-    public static List<TagTexturePack> walkTexturePackFolders() {
+    public static List<TagTexturePack> buildTexturePackList() {
         final File texturepacksDir = new File(Minecraft.getInstance().getMinecraftDir(), "texturepacks");
 
         if (!texturepacksDir.exists() || !texturepacksDir.isDirectory()) {
@@ -51,7 +50,7 @@ public class StackEm extends Mod {
             TagTexturePack tagTexturePack = new TagTexturePack(file, file.getName(), (String) collect$1[0], (String) collect$1[1]);
 
             if (collect$1[2] != null) {
-                tagTexturePack.thumbnail = (java.awt.image.BufferedImage) collect$1[2];
+                tagTexturePack.setThumbnail((java.awt.image.BufferedImage) collect$1[2]);
             }
 
             collector.add(tagTexturePack);
@@ -103,4 +102,5 @@ public class StackEm extends Mod {
 
         return line.length() > maxLength ? line.substring(0, maxLength) : line;
     }
+
 }

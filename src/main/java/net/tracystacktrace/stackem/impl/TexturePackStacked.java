@@ -1,10 +1,8 @@
 package net.tracystacktrace.stackem.impl;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.ITexturePack;
 import net.minecraft.client.renderer.block.TexturePackBase;
 import net.minecraft.client.renderer.world.RenderEngine;
-import net.tracystacktrace.stackem.processor.Metabolism;
 
 import java.io.File;
 import java.io.FileNotFoundException;

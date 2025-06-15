@@ -3,21 +3,22 @@ package net.tracystacktrace.stackem.processor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.hack.SmartHacks;
+import net.tracystacktrace.stackem.processor.image.GlueImages;
 
 import java.awt.image.BufferedImage;
 
-public class Metabolism {
+public class TextureMerger {
 
     public static void replaceTextures(RenderEngine renderEngine) {
-        if(renderEngine == null) {
+        if (renderEngine == null) {
             return;
         }
 
-        for (SegmentedTexture value : SegmentManager.TEXTURES) {
+        for (SegmentedTexture value : SegmentsProvider.TEXTURES) {
             //process texture layering, get a layered texture
-            BufferedImage image = GlueingProcessor.processLayering(value);
+            BufferedImage image = GlueImages.processLayering(value);
 
-            if(SmartHacks.getTextureMap(renderEngine).containsKey(value.texture)) {
+            if (SmartHacks.getTextureMap(renderEngine).containsKey(value.texture)) {
                 //hack solution - simply overwrite the texture with the in-built code
                 int id = SmartHacks.getTextureMap(renderEngine).getInt(value.texture);
                 renderEngine.setupTexture(image, id);
@@ -30,7 +31,7 @@ public class Metabolism {
     }
 
     public static void replaceTextures() {
-        Metabolism.replaceTextures(
+        TextureMerger.replaceTextures(
                 Minecraft.getInstance().renderEngine
 //                new String[]{
 //                        "/textures/gui/effects.png",

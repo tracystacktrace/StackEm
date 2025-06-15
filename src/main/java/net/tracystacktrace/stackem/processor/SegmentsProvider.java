@@ -1,6 +1,6 @@
 package net.tracystacktrace.stackem.processor;
 
-public class SegmentManager {
+public class SegmentsProvider {
 
     public static final SegmentedTexture[] TEXTURES = new SegmentedTexture[]{
             new SegmentedTexture(

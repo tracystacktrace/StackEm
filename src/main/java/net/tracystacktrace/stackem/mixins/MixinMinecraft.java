@@ -1,7 +1,7 @@
 package net.tracystacktrace.stackem.mixins;
 
 import net.minecraft.client.Minecraft;
-import net.tracystacktrace.stackem.processor.Metabolism;
+import net.tracystacktrace.stackem.processor.TextureMerger;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,6 +13,6 @@ public class MixinMinecraft {
             value = "INVOKE",
             target = "Lnet/minecraft/client/gui/FontRenderer;setBidiFlag(Z)V"))
     private void stackem$injectPreloadTextures(CallbackInfo ci) {
-        Metabolism.replaceTextures();
+        TextureMerger.replaceTextures();
     }
 }
