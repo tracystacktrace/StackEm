@@ -2,7 +2,7 @@
 ## [0.2] - 2025-06-15
 - Some small optimization inserted
 - Fixed a bug when a texturepack list can freak out
-- Temporarily fixed action buttons' positions, will eventually be fixed in consequent versions
+- Temporarily hardcoded position of action buttons, will eventually be fixed in consequent versions
 - Experimental: the mod now can manually join several same file textures by comparing pixels from vanilla. Right now, it is supported for following textures:
   - /textures/gui/effects.png
   - /textures/gui/gui.png

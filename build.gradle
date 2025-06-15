@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'foxloader.dev'
 
 group = 'net.tracystacktrace'
-version = '0.1'
+version = '0.2'
 
 dependencies {
     api 'org.semver4j:semver4j:5.3.0'
@@ -36,7 +36,6 @@ foxloader {
     modMain = "net.tracystacktrace.stackem.StackEm"
     modWebsite = "https://github.com/tracystacktrace/StackEm"
     modDesc("§eStacked (multiple) texturepacks support!")
-    modDesc()
     modDesc()
     modDesc("\u00A76License: \u00A7aApache License 2.0")
     modDesc("\u00A76Sources: \u00A79https://github.com/tracystacktrace/StackEm")

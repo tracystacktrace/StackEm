@@ -17,20 +17,16 @@ import java.util.zip.ZipFile;
 
 public class GlueImages {
 
-    public static class ImageHolder {
+    public static class EditContainer {
         public BufferedImage original;
         public BufferedImage modificational;
 
         private final int origWidth;
 
-        public ImageHolder(BufferedImage image) {
+        public EditContainer(BufferedImage image) {
             this.original = image;
+            this.modificational = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-            this.modificational = new BufferedImage(
-                    image.getWidth(),
-                    image.getHeight(),
-                    BufferedImage.TYPE_INT_ARGB
-            );
             Graphics2D g2d = this.modificational.createGraphics();
             g2d.setComposite(AlphaComposite.Src);
             g2d.drawImage(image, 0, 0, null);
@@ -42,8 +38,8 @@ public class GlueImages {
         private boolean rescaleProperly(int width, int height) {
             //refer to scaling the result
             if (original.getWidth() < width || original.getHeight() < height) {
-                this.original = ImageScaler.scaleImage(original, width, height);
-                this.modificational = ImageScaler.scaleImage(modificational, width, height);
+                this.original = ImageHelper.scaleImage(original, width, height);
+                this.modificational = ImageHelper.scaleImage(modificational, width, height);
                 return true;
             }
             return false; //signal to scale not the original, but modified version
@@ -52,7 +48,7 @@ public class GlueImages {
         public int overwriteChanges(BufferedImage attempt, SegmentedTexture holder) {
             if (attempt.getWidth() != this.original.getWidth()) {
                 if (!rescaleProperly(attempt.getWidth(), attempt.getHeight())) {
-                    attempt = ImageScaler.scaleImage(attempt, original.getWidth(), original.getHeight());
+                    attempt = ImageHelper.scaleImage(attempt, original.getWidth(), original.getHeight());
                 }
             }
 
@@ -100,9 +96,9 @@ public class GlueImages {
             this.original.flush();
         }
 
-        public void saveToLocal() {
+        public void saveToLocal(String name) {
             try {
-                ImageIO.write(modificational, "png", new File(Minecraft.getInstance().getMinecraftDir(), "lol.png"));
+                ImageIO.write(modificational, "png", new File(Minecraft.getInstance().getMinecraftDir(), name + ".png"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -114,14 +110,15 @@ public class GlueImages {
         final TexturePackDefault defaultPack = (TexturePackDefault) SmartHacks.getDefaultTexturePack();
         final TexturePackStacked stacked = (TexturePackStacked) Minecraft.getInstance().texturePackList.getSelectedTexturePack();
 
-        final ImageHolder original = new ImageHolder(ImageReader.readImage(defaultPack, name.texture));
+        final EditContainer original = new EditContainer(ImageHelper.readImage(defaultPack, name.texture));
         final List<BufferedImage> images = new ArrayList<>();
 
+        //fetching texturepacks that can into gluing
         List<ZipFile> zipFiles = stacked.getZipFiles();
         for (int i = zipFiles.size() - 1; i >= 0; i--) {
             ZipFile zipFile = zipFiles.get(i);
-            final BufferedImage image = ImageReader.readImage(zipFile, name.texture);
-            if (ImageCheck.isValidTexture(image)) {
+            final BufferedImage image = ImageHelper.readImage(zipFile, name.texture);
+            if (ImageHelper.isValidTexture(image)) {
                 images.add(image);
             } else {
                 if (image != null) {
@@ -130,6 +127,7 @@ public class GlueImages {
             }
         }
 
+        //actual gluing process
         int changesNum = 0;
 
         for (final BufferedImage attack : images) {
@@ -138,13 +136,13 @@ public class GlueImages {
 
         System.out.println("Overwrote " + changesNum + " image segments for: " + name.texture.substring(1));
 
+        //clean-up process
         for (BufferedImage image : images) {
             image.flush();
         }
         images.clear();
 
         original.nicelyFlush();
-        original.saveToLocal();
         return original.modificational;
     }
 }

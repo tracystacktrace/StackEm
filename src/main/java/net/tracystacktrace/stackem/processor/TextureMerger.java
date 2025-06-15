@@ -9,6 +9,13 @@ import java.awt.image.BufferedImage;
 
 public class TextureMerger {
 
+    /**
+     * This is the actual code you should call upon refreshing textures
+     */
+    public static void replaceTextures() {
+        TextureMerger.replaceTextures(Minecraft.getInstance().renderEngine);
+    }
+
     public static void replaceTextures(RenderEngine renderEngine) {
         if (renderEngine == null) {
             return;
@@ -28,19 +35,6 @@ public class TextureMerger {
                 SmartHacks.getTextureMap(renderEngine).put(value.texture, i);
             }
         }
-    }
-
-    public static void replaceTextures() {
-        TextureMerger.replaceTextures(
-                Minecraft.getInstance().renderEngine
-//                new String[]{
-//                        "/textures/gui/effects.png",
-//                        "/textures/gui/gui.png",
-//                        "/textures/gui/icons.png",
-//                        "/textures/gui/web_buttons.png",
-//                        "/textures/gui/stats/slot.png",
-//                }
-        );
     }
 
 }

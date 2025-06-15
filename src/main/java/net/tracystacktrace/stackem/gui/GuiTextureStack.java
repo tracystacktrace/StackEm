@@ -58,9 +58,9 @@ public class GuiTextureStack extends GuiScreen {
         this.slotManager.registerScrollButtons(7, 8);
 
 
-        this.controlList.add(this.buttonToggle = new GuiButton(-5, 5, 40, 16, 16, "❌"));
-        this.controlList.add(this.buttonMoveUp = new GuiButton(-3, 5, 40 + 18, 16, 16, "↑"));
-        this.controlList.add(this.buttonMoveDown = new GuiButton(-4, 5, 40 + 36, 16, 16, "↓"));
+        this.controlList.add(this.buttonToggle = new GuiButton(-5, 5, 40, 16, 16, "§4❌"));
+        this.controlList.add(this.buttonMoveUp = new GuiButton(-3, 5, 40 + 18, 16, 16, "§9↑"));
+        this.controlList.add(this.buttonMoveDown = new GuiButton(-4, 5, 40 + 36, 16, 16, "§9↓"));
 
 
         this.buttonToggle.enabled = false;
@@ -126,7 +126,7 @@ public class GuiTextureStack extends GuiScreen {
         if (sequoiaCache.get(index).isInStack()) {
             this.buttonToggle.enabled = true;
             this.buttonToggle.visible = true;
-            this.buttonToggle.displayString = "❌";
+            this.buttonToggle.displayString = "§4❌";
 
             //todo fix buttons location
             //final int slotOffsetY = this.height / 2 - (this.sequoiaCache.size() * 18) - 9;
@@ -141,7 +141,7 @@ public class GuiTextureStack extends GuiScreen {
         } else {
             this.buttonToggle.enabled = true;
             this.buttonToggle.visible = true;
-            this.buttonToggle.displayString = "✔";
+            this.buttonToggle.displayString = "§a✔";
 
             this.buttonMoveUp.enabled = false;
             this.buttonMoveUp.visible = false;

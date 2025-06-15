@@ -31,12 +31,12 @@ public class GuiTextureStackSlot extends GuiSlot {
 
     @Override
     protected void drawSlot(Minecraft minecraft, int index, float x, float y, int iconHeight, Tessellator tessellator) {
-        TagTexturePack tag = parentScreen.getSequoiaCacheElement(index);
+        final TagTexturePack tag = parentScreen.getSequoiaCacheElement(index);
 
         if (tag.hasThumbnail()) {
-            minecraft.renderEngine.bindTexture(minecraft.renderEngine.getTexture("/textures/gui/unknown_pack.png"));
-        } else {
             tag.bindThumbnail(minecraft.renderEngine);
+        } else {
+            minecraft.renderEngine.bindTexture(minecraft.renderEngine.getTexture("/textures/gui/unknown_pack.png"));
         }
 
         if (tag.isInStack()) {
