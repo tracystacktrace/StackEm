@@ -9,8 +9,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +59,7 @@ public class TexturePackStacked extends TexturePackBase {
 
     @Override
     public void deleteTexturePack(RenderEngine renderEngine) {
-        super.deleteTexturePack(renderEngine);
+        //super.deleteTexturePack(renderEngine);
         for (int i = 0; i < this.stackedTextures.size(); i++) {
             ZipFile zipFile = this.stackedTextures.get(i);
             try {
@@ -108,8 +106,11 @@ public class TexturePackStacked extends TexturePackBase {
             final ZipEntry entry = zipFile.getEntry(resourcePath.substring(1));
             if (entry != null) {
                 try {
-                    return new URI("jar:file:" + this.archives[i].getAbsolutePath() + "!/" + entry.getName()).toURL();
-                } catch (URISyntaxException | MalformedURLException ignored) {}
+                    final URL url = new URL("jar:file:" + this.archives[i].getAbsolutePath() + "!/" + entry.getName());
+                    System.out.println("Loading audio: (" + url + ")");
+                    return url;
+                } catch (MalformedURLException ignored) {
+                }
             }
         }
 

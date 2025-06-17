@@ -49,7 +49,8 @@ public abstract class MixinTexturePackList {
                 }
             }
         }
-        this.selectedTexturePack = new TexturePackStacked("stackem", defaultTexturePack, collector);
+
+        this.selectedTexturePack = new TexturePackStacked(StackEm.getRandomStackEmIdentifier(), defaultTexturePack, collector);
 
         String[] finished = new String[collector.size()];
         for (int i = 0; i < collector.size(); i++) {

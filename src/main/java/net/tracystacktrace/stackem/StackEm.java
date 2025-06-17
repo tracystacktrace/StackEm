@@ -13,6 +13,16 @@ import java.util.zip.ZipFile;
 
 public class StackEm extends Mod {
 
+    public static int generateRandomNDigitNumber(int digits) {
+        final int min = (int) Math.pow(10, digits - 1);
+        final int max = (int) (Math.pow(10, digits) - 1);
+        return (int) (min + (Math.random() * ((max - min) + 1)));
+    }
+
+    public static String getRandomStackEmIdentifier() {
+        return "stackem" + generateRandomNDigitNumber(5);
+    }
+
     public static String[] processIdentifier(String input) {
         int start = input.indexOf('[');
         int end = input.indexOf(']');
