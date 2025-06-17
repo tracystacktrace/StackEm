@@ -1,4 +1,10 @@
 
+## [0.3] - 2025-06-17
+- Fixed a bug where the code doesn't use stack's File instance (causes crash while getting audio files)
+- Added `/textures/environment/particles.png` to auto-gluing code
+
+Thanks `rerere284` for making segments list for "_particles.png_"!
+
 ## [0.2] - 2025-06-15
 - Some small optimization inserted
 - Fixed a bug when a texturepack list can freak out
