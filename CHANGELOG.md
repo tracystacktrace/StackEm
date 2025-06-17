@@ -1,4 +1,8 @@
 
+## [0.3.1] - 2025-06-17
+- Fixed a problem related to loading/unloading audio files in stacked texturepacks
+- Implemented force audio cleanup
+
 ## [0.3] - 2025-06-17
 - Fixed a bug where the code doesn't use stack's File instance (causes crash while getting audio files)
 - Added `/textures/environment/particles.png` to auto-gluing code

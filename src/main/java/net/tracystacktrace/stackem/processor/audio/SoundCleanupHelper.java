@@ -6,7 +6,7 @@ import net.tracystacktrace.stackem.mixins.AccessorSoundManager;
 import net.tracystacktrace.stackem.mixins.AccessorSoundPool;
 import paulscode.sound.SoundSystem;
 
-public class SoundRemover {
+public class SoundCleanupHelper {
 
     public static void cleanupSoundSources(SoundManager manager) {
         final SoundSystem soundSystem = ((AccessorSoundManager) manager).stackem$getSoundSystem();

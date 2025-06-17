@@ -11,7 +11,7 @@ import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
-import net.tracystacktrace.stackem.processor.audio.SoundRemover;
+import net.tracystacktrace.stackem.processor.audio.SoundCleanupHelper;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
@@ -245,9 +245,10 @@ public class GuiTextureStack extends GuiScreen {
         this.mc.renderGlobal.loadRenderers();
         this.mc.fontRenderer = new FontRenderer((TexturePackBase) this.mc.texturePackList.getSelectedTexturePack(), this.mc.renderEngine);
 
-        SoundRemover.cleanupSoundSources(this.mc.sndManager);
+        SoundCleanupHelper.cleanupSoundSources(this.mc.sndManager);
         this.mc.sndManager.refreshSounds(stacked);
         this.mc.sndManager.onSoundOptionsChanged();
+
         Display.update();
     }
 
