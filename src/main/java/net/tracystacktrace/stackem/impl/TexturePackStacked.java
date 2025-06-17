@@ -9,6 +9,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,9 +108,8 @@ public class TexturePackStacked extends TexturePackBase {
             final ZipEntry entry = zipFile.getEntry(resourcePath.substring(1));
             if (entry != null) {
                 try {
-                    return new URL("jar:file:" + this.texturePackFile.getAbsolutePath() + "!/" + entry.getName());
-                } catch (MalformedURLException malformedURLException) {
-                }
+                    return new URI("jar:file:" + this.archives[i].getAbsolutePath() + "!/" + entry.getName()).toURL();
+                } catch (URISyntaxException | MalformedURLException ignored) {}
             }
         }
 
