@@ -112,7 +112,7 @@ public class SegmentsProvider {
             ),
 
             new SegmentedTexture(
-                    "textures/environment/particles.png",
+                    "/textures/environment/particles.png",
                     new int[][]{
                             {16, 40, 8, 8}, {0, 104, 8, 8}, {24, 80, 8, 8}, {32, 80, 8, 8},
                             {40, 80, 8, 8}, {48, 80, 8, 8}, {56, 80, 8, 8}, {64, 80, 8, 8},
