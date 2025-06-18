@@ -3,6 +3,7 @@ package net.tracystacktrace.stackem.impl;
 import net.minecraft.client.renderer.block.ITexturePack;
 import net.minecraft.client.renderer.block.TexturePackBase;
 import net.minecraft.client.renderer.world.RenderEngine;
+import net.tracystacktrace.stackem.StackEm;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -22,7 +23,7 @@ public class TexturePackStacked extends TexturePackBase {
     private boolean initialized = false;
 
     public TexturePackStacked(String id, ITexturePack defaultTexturePack, List<File> texturepackArchives) {
-        super(id, null, "stackem.instance$1", defaultTexturePack);
+        super(id, null, "stackem.tpstacked", defaultTexturePack);
 
         final File[] files = new File[texturepackArchives.size()];
         for (int i = 0; i < files.length; i++) {
@@ -34,7 +35,7 @@ public class TexturePackStacked extends TexturePackBase {
 
     @Override
     protected void loadDescription() {
-        this.firstDescriptionLine = "StackEm Internal";
+        this.firstDescriptionLine = "Stack 'Em Internal";
         this.secondDescriptionLine = "Do not use.";
     }
 
@@ -50,7 +51,7 @@ public class TexturePackStacked extends TexturePackBase {
                     stackedTextures.add(new ZipFile(file));
                 } catch (IOException e) {
                     e.printStackTrace();
-                    System.out.println("Failed to load... " + file.getAbsolutePath());
+                    StackEm.LOGGER.severe("Failed to load texturepack (" + file.getAbsolutePath() + "), reason: " + e.getMessage());
                 }
             }
             this.initialized = true;
@@ -68,7 +69,7 @@ public class TexturePackStacked extends TexturePackBase {
                 }
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("Failed to close... " + zipFile.getName());
+                StackEm.LOGGER.severe("Failed to close texturepack (" + zipFile.getName() + "), reason: " + e.getMessage());
             }
         }
         this.stackedTextures.clear();
@@ -106,8 +107,9 @@ public class TexturePackStacked extends TexturePackBase {
             final ZipEntry entry = zipFile.getEntry(resourcePath.substring(1));
             if (entry != null) {
                 try {
+                    //noinspection deprecation
                     final URL url = new URL("jar:file:" + this.archives[i].getAbsolutePath() + "!/" + entry.getName());
-                    System.out.println("Loading audio: (" + url + ")");
+                    StackEm.LOGGER.info("Loading audio: (" + url.toString().replace("jar:file:", "") + ")");
                     return url;
                 } catch (MalformedURLException ignored) {
                 }

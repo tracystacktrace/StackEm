@@ -42,4 +42,11 @@ public class TagTexturePack {
         }
         RenderSystem.bindTexture2D(rendererThumbnailID);
     }
+
+    public void removeThumbnail(RenderEngine renderEngine) {
+        if (rendererThumbnailID != -1) {
+            renderEngine.deleteTexture(this.rendererThumbnailID);
+            this.thumbnail = null;
+        }
+    }
 }

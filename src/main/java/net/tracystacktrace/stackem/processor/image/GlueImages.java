@@ -2,9 +2,10 @@ package net.tracystacktrace.stackem.processor.image;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.TexturePackDefault;
+import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
-import net.tracystacktrace.stackem.processor.SegmentedTexture;
+import net.tracystacktrace.stackem.processor.image.segment.SegmentedTexture;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -134,7 +135,7 @@ public class GlueImages {
             changesNum += original.overwriteChanges(attack, name);
         }
 
-        System.out.println("Overwrote " + changesNum + " image segments for: " + name.texture.substring(1));
+        StackEm.LOGGER.info("Overwrote " + changesNum + " image segments for: " + name.texture.substring(1));
 
         //clean-up process
         for (BufferedImage image : images) {

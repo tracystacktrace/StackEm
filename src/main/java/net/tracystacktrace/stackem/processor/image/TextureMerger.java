@@ -1,9 +1,10 @@
-package net.tracystacktrace.stackem.processor;
+package net.tracystacktrace.stackem.processor.image;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.hack.SmartHacks;
-import net.tracystacktrace.stackem.processor.image.GlueImages;
+import net.tracystacktrace.stackem.processor.image.segment.SegmentedTexture;
+import net.tracystacktrace.stackem.processor.image.segment.SegmentsProvider;
 
 import java.awt.image.BufferedImage;
 

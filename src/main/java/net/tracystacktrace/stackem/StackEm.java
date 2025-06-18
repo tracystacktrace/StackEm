@@ -8,10 +8,13 @@ import javax.imageio.ImageIO;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Logger;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class StackEm extends Mod {
+
+    public static final Logger LOGGER = Logger.getLogger("STACKEM");
 
     public static int generateRandomNDigitNumber(int digits) {
         final int min = (int) Math.pow(10, digits - 1);

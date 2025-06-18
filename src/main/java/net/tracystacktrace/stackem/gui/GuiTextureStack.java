@@ -123,6 +123,12 @@ public class GuiTextureStack extends GuiScreen {
         super.drawScreen(mouseX, mouseY, deltaTicks);
     }
 
+    @Override
+    public void onGuiClosed() {
+        super.onGuiClosed();
+        this.sequoiaCache.forEach(p -> p.removeThumbnail(mc.renderEngine));
+    }
+
     public void updateMoveButtonsState(int index) {
         if (sequoiaCache.get(index).isInStack()) {
             this.buttonToggle.enabled = true;
