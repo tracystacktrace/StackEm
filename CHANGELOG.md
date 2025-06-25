@@ -1,5 +1,8 @@
 
 ## [0.3.2] - 2025-06-18
+
+**[View changes between 0.3.1 with 0.3.2](https://github.com/tracystacktrace/StackEm/compare/0.3.1...0.3.2)**
+
 - Fixed a possible memory leak related to binding thumbnail images
 - Added Russian language support
 - Fancy logger, no System.out.println over the code

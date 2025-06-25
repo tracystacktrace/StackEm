@@ -1,17 +1,19 @@
 # StackEm (Stack 'Em)
 
-Mod that adds multiple texturepack selection to ReIndev.
+A FoxLoader (ReIndev mod loader) modification that adds an ability to use several texturepacks at once!
 
-Tired of glueing several small texturepacks in one .zip file? Got you, this mod allows you to use several texturepacks simultaneously.
+No need to extract and combine several texturepacks into one big `.zip` file, just install the mod and select any of texturepacks you want to use within menu.
 
-I'm not sure of stability, but everything should work fine. If not, please ping me in discord server asap.
+This is achieved by replacing a standard `ITexturePack` instance with custom one that handles multiple zip files `I/O` operations. All injections & source code manipulations are done within Mixins.
 
-![Showcase 1!](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_1.png)
-![Showcase 2!](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_2.png)
+![Texturepacks menu GUI](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_1.png)
+![Showcase of gluing system](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_2.png)
 
 ## Installation
 
-Simply grab a `.jar` file from releases and put into `mods` folder of your instance!
+Ensure you have [FoxLoader](https://github.com/Fox2Code/FoxLoader) installed. Click at the link and follow instructions (`Installation` section). Or in a nutshell, grab `*-mmc.zip` file and export it to MultiMC/PrismLauncher.
+
+Simply download a `.jar` file and put it inside `mods` folder. That's all.
 
 Want to compile by yourself? Just download the sources and run the following command:
 ```shell
