@@ -1,4 +1,8 @@
 
+## [0.3.3] - 2025-06-29
+
+- Added ability to toggle stacked textures by pressing **F10**. This is useful when you need to quickly toggle textures to see changes
+
 ## [0.3.2] - 2025-06-18
 
 **[View changes between 0.3.1 with 0.3.2](https://github.com/tracystacktrace/StackEm/compare/0.3.1...0.3.2)**

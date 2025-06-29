@@ -5,3 +5,6 @@ stackem.gui.folderhint=(Place texture pack files here)
 
 stackem.gui.hint1=Double-click a texture pack to include/remove
 stackem.gui.hint2=Only "§e.zip§r" texturepacks are §esupported§r!
+
+stackem.debug.on=[§eStackEm§r] Proceeding to force default textures...
+stackem.debug.off=[§eStackEm§r] Restoring stacked textures...

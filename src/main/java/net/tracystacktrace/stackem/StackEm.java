@@ -2,6 +2,7 @@ package net.tracystacktrace.stackem;
 
 import com.fox2code.foxloader.loader.Mod;
 import net.minecraft.client.Minecraft;
+import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 
 import javax.imageio.ImageIO;
@@ -14,6 +15,7 @@ import java.util.zip.ZipFile;
 
 public class StackEm extends Mod {
 
+    public static boolean DEBUG_DISABLE = false;
     public static final Logger LOGGER = Logger.getLogger("STACKEM");
 
     public static int generateRandomNDigitNumber(int digits) {
@@ -42,6 +44,19 @@ public class StackEm extends Mod {
             return "stackem[]";
         }
         return "stackem[" + String.join(";", input) + "]";
+    }
+
+    public static void toggleDebug() {
+        final Minecraft mc = Minecraft.getInstance();
+
+        // handle safely
+        if(mc.thePlayer == null) {
+            return;
+        }
+
+        DEBUG_DISABLE = !DEBUG_DISABLE;
+        mc.renderEngine.refreshTextures();
+        mc.thePlayer.addChatMessage(StringTranslate.getInstance().translateKey(DEBUG_DISABLE ? "stackem.debug.on" : "stackem.debug.off"));
     }
 
     public static List<TagTexturePack> buildTexturePackList() {

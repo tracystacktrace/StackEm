@@ -18,6 +18,7 @@ import java.util.zip.ZipFile;
 
 @SuppressWarnings("ForLoopReplaceableByForEach")
 public class TexturePackStacked extends TexturePackBase {
+    private final ITexturePack defaultTexturePack;
     private final File[] archives;
     private final List<ZipFile> stackedTextures;
     private boolean initialized = false;
@@ -31,6 +32,7 @@ public class TexturePackStacked extends TexturePackBase {
         }
         this.stackedTextures = new ArrayList<>();
         this.archives = files;
+        this.defaultTexturePack = defaultTexturePack;
     }
 
     @Override
@@ -83,6 +85,10 @@ public class TexturePackStacked extends TexturePackBase {
 
         this.initialize();
 
+        if(StackEm.DEBUG_DISABLE) {
+            return this.defaultTexturePack.findResource(resourcePath, false);
+        }
+
         for (int i = 0; i < this.stackedTextures.size(); i++) {
             ZipFile zipFile = this.stackedTextures.get(i);
             ZipEntry entry = zipFile.getEntry(resourcePath.substring(1));
@@ -100,6 +106,10 @@ public class TexturePackStacked extends TexturePackBase {
             this.initialize();
         } catch (Exception e) {
             return null;
+        }
+
+        if(StackEm.DEBUG_DISABLE) {
+            return this.defaultTexturePack.findResourceURL(resourcePath, false);
         }
 
         for (int i = 0; i < this.stackedTextures.size(); i++) {
@@ -123,6 +133,11 @@ public class TexturePackStacked extends TexturePackBase {
     public boolean checkIfFileExists(String resourcePath) {
         try {
             this.initialize();
+
+            if(StackEm.DEBUG_DISABLE) {
+                return this.defaultTexturePack.checkIfFileExists(resourcePath, false);
+            }
+
             for (int i = 0; i < this.stackedTextures.size(); i++) {
                 ZipFile zipFile = this.stackedTextures.get(i);
                 if (zipFile.getEntry(resourcePath.substring(1)) != null)
@@ -138,6 +153,11 @@ public class TexturePackStacked extends TexturePackBase {
     public boolean checkIfDirectoryExists(String path) {
         try {
             this.initialize();
+
+            if(StackEm.DEBUG_DISABLE) {
+                return this.defaultTexturePack.checkIfDirectoryExists(path, false);
+            }
+
             for (int i = 0; i < this.stackedTextures.size(); i++) {
                 ZipFile zipFile = this.stackedTextures.get(i);
                 ZipEntry entry = zipFile.getEntry(path.substring(1));
