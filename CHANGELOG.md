@@ -2,6 +2,8 @@
 ## [0.3.3] - 2025-06-29
 
 - Added ability to toggle stacked textures by pressing **F10**. This is useful when you need to quickly toggle textures to see changes
+- The texturepack selection GUI has been slightly redesigned, now it looks better and bigger
+- Removed unnecessary stabs and code for "possible features" (they did not become possible)
 
 ## [0.3.2] - 2025-06-18
 

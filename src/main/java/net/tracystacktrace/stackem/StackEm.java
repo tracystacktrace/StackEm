@@ -61,6 +61,10 @@ public class StackEm extends Mod {
         mc.thePlayer.addChatMessage(StringTranslate.getInstance().translateKey(DEBUG_DISABLE ? "stackem.debug.on" : "stackem.debug.off"));
     }
 
+    public static boolean isValidWebsite(String website) {
+        return website != null && (website.startsWith("https://") || website.startsWith("http://"));
+    }
+
     public static List<TagTexturePack> buildTexturePackList() {
         final File texturepacksDir = new File(Minecraft.getInstance().getMinecraftDir(), "texturepacks");
 
@@ -156,11 +160,11 @@ public class StackEm extends Mod {
     }
 
     private static String formatDescriptionLine(String line) {
-        if (line == null || line.length() < 34) {
+        if (line == null || line.length() < 56) {
             return line;
         }
 
-        int maxLength = 34;
+        int maxLength = 56;
         int colorCodeCount = (int) line.chars().limit(maxLength - 1).filter(c -> c == '§').count();
 
         maxLength += colorCodeCount * 2;

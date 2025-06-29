@@ -12,7 +12,7 @@ public class GuiTextureStackSlot extends GuiSlot {
     public int selectedIndex = -1;
 
     public GuiTextureStackSlot(GuiTextureStack parentScreen, int width, int height) {
-        super(width, height, 0, height - 30, 36);
+        super(width, height, 0, height - 30, 48, 320);
         this.parentScreen = parentScreen;
     }
 
@@ -40,15 +40,15 @@ public class GuiTextureStackSlot extends GuiSlot {
         }
 
         if (tag.isInStack()) {
-            this.drawGradientRect(x, y, x + 216, y + 32, 0xC0903AA2, 0xC0903AA2);
+            this.drawGradientRect(x, y, x + 316, y + 44, 0xC0903AA2, 0xC0903AA2);
         }
 
         RenderSystem.color(1.0F, 1.0F, 1.0F, 1.0F);
         tessellator.startDrawingQuads();
         tessellator.setColorOpaque_I(16777215);
         tessellator.addVertexWithUV(x, (y + iconHeight), 0.0D, 0.0D, 1.0D);
-        tessellator.addVertexWithUV((x + 32.0F), (y + iconHeight), 0.0D, 1.0D, 1.0D);
-        tessellator.addVertexWithUV((x + 32.0F), y, 0.0D, 1.0D, 0.0D);
+        tessellator.addVertexWithUV((x + iconHeight), (y + iconHeight), 0.0D, 1.0D, 1.0D);
+        tessellator.addVertexWithUV((x + iconHeight), y, 0.0D, 1.0D, 0.0D);
         tessellator.addVertexWithUV(x, y, 0.0D, 0.0D, 0.0D);
         tessellator.draw();
         String showName = tag.name;
@@ -56,13 +56,17 @@ public class GuiTextureStackSlot extends GuiSlot {
             showName = "[§e" + (tag.order + 1) + "§r] " + showName;
         }
 
-        if (showName.length() > 32) {
-            showName = showName.substring(0, 32).trim() + "...";
+        if (showName.length() > 56) {
+            showName = showName.substring(0, 56).trim() + "...";
         }
 
-        parentScreen.drawString(minecraft.fontRenderer, showName, x + 32.0F + 2.0F, y + 1.0F, 16777215);
-        parentScreen.drawString(minecraft.fontRenderer, tag.firstLine, x + 32.0F + 2.0F, y + 12.0F, 8421504);
-        parentScreen.drawString(minecraft.fontRenderer, tag.secondLine, x + 32.0F + 2.0F, y + 12.0F + 10.0F, 8421504);
+        parentScreen.drawString(minecraft.fontRenderer, showName, x + iconHeight + 2.0F, y + 1.0F, 16777215);
+        parentScreen.drawString(minecraft.fontRenderer, tag.firstLine, x + iconHeight + 2.0F, y + 12.0F, 8421504);
+        parentScreen.drawString(minecraft.fontRenderer, tag.secondLine, x + iconHeight + 2.0F, y + 12.0F + 11.0F, 8421504);
+
+        if(tag.hasCategories()) {
+            parentScreen.drawString(minecraft.fontRenderer, tag.getBakedCategoryString(), x + iconHeight + 2.0F, y + 34.0F, 0xFFFFFFFF);
+        }
     }
 
     @Override

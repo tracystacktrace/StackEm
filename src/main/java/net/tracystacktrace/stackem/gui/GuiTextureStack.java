@@ -12,11 +12,14 @@ import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.audio.SoundCleanupHelper;
+import net.tracystacktrace.stackem.processor.category.EnumCategory;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,11 +29,13 @@ public class GuiTextureStack extends GuiScreen {
 
     private final String hint1;
     private final String hint2;
+    private final String actions;
 
     private GuiTextureStackSlot slotManager;
     private GuiButton buttonMoveUp;
     private GuiButton buttonMoveDown;
     private GuiButton buttonToggle;
+    private GuiButton buttonWebsite;
 
     public GuiTextureStack(GuiScreen parentScreen) {
         this.parentScreen = parentScreen;
@@ -38,6 +43,7 @@ public class GuiTextureStack extends GuiScreen {
         final StringTranslate translate = StringTranslate.getInstance();
         this.hint1 = translate.translateKey("stackem.gui.hint1");
         this.hint2 = translate.translateKey("stackem.gui.hint2");
+        this.actions = translate.translateKey("stackem.gui.actions");
     }
 
     @Override
@@ -48,7 +54,7 @@ public class GuiTextureStack extends GuiScreen {
         final StringTranslate translate = StringTranslate.getInstance();
 
         // texture pack folder
-        final GuiButton openFolder = new GuiButton(-1, this.width - 120, this.height - 25, 20, 20, "§9ℹ", translate.translateKey("stackem.gui.folder"));
+        final GuiButton openFolder = new GuiButton(-1, this.width - 120, this.height - 25, 20, 20, "§9☄", translate.translateKey("stackem.gui.folder"));
         openFolder.canDisplayInfo = true;
         this.controlList.add(openFolder);
 
@@ -61,8 +67,9 @@ public class GuiTextureStack extends GuiScreen {
 
         // action buttons
         this.controlList.add(this.buttonToggle = new GuiButton(-5, 5, 20, 16, 16, "§4❌", translate.translateKey("stackem.button.remove")));
-        this.controlList.add(this.buttonMoveUp = new GuiButton(-3, 5, 20 + 18, 16, 16, "§9↑", translate.translateKey("stackem.button.moveup")));
-        this.controlList.add(this.buttonMoveDown = new GuiButton(-4, 5, 20 + 36, 16, 16, "§9↓", translate.translateKey("stackem.button.movedown")));
+        this.controlList.add(this.buttonWebsite = new GuiButton(-6, 5, 20 + 18, 16, 16, "§bℹ", translate.translateKey("stackem.button.website")));
+        this.controlList.add(this.buttonMoveDown = new GuiButton(-4, 5 + 18, 20 + 18, 16, 16, "§9↓", translate.translateKey("stackem.button.movedown")));
+        this.controlList.add(this.buttonMoveUp = new GuiButton(-3, 5 + 18, 20, 16, 16, "§9↑", translate.translateKey("stackem.button.moveup")));
 
 
         this.buttonToggle.enabled = false;
@@ -74,6 +81,9 @@ public class GuiTextureStack extends GuiScreen {
         this.buttonMoveDown.enabled = false;
         this.buttonMoveDown.visible = false;
         this.buttonMoveDown.canDisplayInfo = true;
+        this.buttonWebsite.enabled = false;
+        this.buttonWebsite.visible = false;
+        this.buttonWebsite.canDisplayInfo = true;
     }
 
     @Override
@@ -109,6 +119,16 @@ public class GuiTextureStack extends GuiScreen {
                 return;
             }
 
+            if(button.id == -6) {
+                final String website = sequoiaCache.get(this.slotManager.selectedIndex).getWebsite();
+                if(StackEm.isValidWebsite(website)) {
+                    try {
+                        Desktop.getDesktop().browse(new URI(website));
+                    }catch (IOException | URISyntaxException ignored) {}
+                }
+                return;
+            }
+
             this.slotManager.actionPerformed(button);
         }
     }
@@ -117,6 +137,8 @@ public class GuiTextureStack extends GuiScreen {
     public void drawScreen(float mouseX, float mouseY, float deltaTicks) {
         this.drawDefaultBackground();
         this.slotManager.drawElement(this.mc, mouseX, mouseY, deltaTicks);
+
+        drawString(fontRenderer, actions, 5, 5, 0xFFFFFFFF);
 
         drawString(fontRenderer, hint1, 3, this.height - 14, 0xFFFFFFFF);
         drawString(fontRenderer, hint2, 3, this.height - 26, 0xFFFFFFFF);
@@ -144,9 +166,22 @@ public class GuiTextureStack extends GuiScreen {
 
             this.buttonMoveUp.visible = true;
             this.buttonMoveDown.visible = true;
+            this.buttonWebsite.visible = true;
 
             this.buttonMoveUp.enabled = index > 0;
             this.buttonMoveDown.enabled = index + 1 < this.countInStackElements();
+
+            TagTexturePack pack = sequoiaCache.get(index);
+            this.buttonWebsite.enabled = StackEm.isValidWebsite(pack.getWebsite());
+
+            if(pack.hasAuthor() && pack.hasWebsite()) {
+                this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.2", pack.getAuthor());
+            } else if(pack.hasAuthor()) {
+                this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.1", pack.getAuthor());
+            } else {
+                this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKey("stackem.button.website.0");
+            }
+
         } else {
             this.buttonToggle.enabled = true;
             this.buttonToggle.visible = true;
@@ -157,6 +192,10 @@ public class GuiTextureStack extends GuiScreen {
             this.buttonMoveUp.visible = false;
             this.buttonMoveDown.enabled = false;
             this.buttonMoveDown.visible = false;
+            this.buttonWebsite.enabled = false;
+            this.buttonWebsite.visible = false;
+
+            this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKey("stackem.button.website.0");
         }
     }
 
@@ -179,6 +218,7 @@ public class GuiTextureStack extends GuiScreen {
         }
 
         this.sequoiaCache = candidates;
+        this.sequoiaCache.forEach(TagTexturePack::buildCategory);
         this.pushSequoiaCacheSort();
     }
 

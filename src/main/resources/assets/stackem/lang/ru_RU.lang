@@ -1,10 +1,10 @@
 # general/gui
-stackem.gui.title=Выбрать наборы текстур (накладной режим)
 stackem.gui.done=§c§lСОХРАНИТЬ§r и выйти
 stackem.gui.folder=Открыть папку текстур паков
 
 stackem.gui.hint1=Нажмите два раза на элемент, чтобы включить/исключить
 stackem.gui.hint2=§eПоддерживаются§r только текстурпаки формата "§e.zip§r"!
+stackem.gui.actions=Действия:
 
 stackem.debug.on=[§eStackEm§r] Принудительно используем стандартные текстуры...
 stackem.debug.off=[§eStackEm§r] Восстанавливаем стэк текстур...
@@ -14,3 +14,4 @@ stackem.button.add=Добавить в стэк
 stackem.button.remove=Убрать из стэка
 stackem.button.moveup=Переместить вверх
 stackem.button.movedown=Переместить вниз
+stackem.button.website=Открыть сайт текстурпака

@@ -1,10 +1,10 @@
 # general/gui
-stackem.gui.title=Select Texture Packs (Stack mode)
 stackem.gui.done=§c§lSAVE§r & Exit
 stackem.gui.folder=Open texture packs folder
 
 stackem.gui.hint1=Double-click a texture pack to include/remove
 stackem.gui.hint2=Only "§e.zip§r" texturepacks are §esupported§r!
+stackem.gui.actions=Actions:
 
 stackem.debug.on=[§eStackEm§r] Proceeding to force default textures...
 stackem.debug.off=[§eStackEm§r] Restoring stacked textures...
@@ -14,15 +14,19 @@ stackem.button.add=Add to stack
 stackem.button.remove=Remove from stack
 stackem.button.moveup=Move up
 stackem.button.movedown=Move down
+stackem.button.website.0=Open texturepack website
+stackem.button.website.1=Author: %s
+stackem.button.website.2=Author: %s (click to open website)
 
 # categories
-stackem.category.blocks=Blocks
-stackem.category.entities=Entities
-stackem.category.fonts=Fonts
-stackem.category.gui=GUI
-stackem.category.items=Items
-stackem.category.paintings=Paintings
-stackem.category.animation=Animation
-stackem.category.queer=Queer!
-stackem.category.hud=HUD
-stackem.category.qol=QoL Changes
+stackem.category.audio=§e♫ Audio
+stackem.category.blocks=§1⛏ Blocks
+stackem.category.entities=§3⛨ Entities
+stackem.category.fonts=§5Ⓐ Fonts
+stackem.category.gui=§a☈ GUI
+stackem.category.items=§b⚔ Items
+stackem.category.paintings=§e░ Paintings
+stackem.category.animation=§d☄ Animations
+stackem.category.queer=§c❤ Queer!
+stackem.category.hud=§b☈ HUD
+stackem.category.qol=§e☺ QoL Changes
