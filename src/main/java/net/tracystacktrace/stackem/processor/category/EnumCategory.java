@@ -1,6 +1,7 @@
 package net.tracystacktrace.stackem.processor.category;
 
 import net.minecraft.common.util.i18n.StringTranslate;
+import net.tracystacktrace.stackem.processor.StringManipulation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,21 +51,25 @@ public enum EnumCategory {
     }
 
     @SuppressWarnings({"ForLoopReplaceableByForEach", "ManualArrayToCollectionCopy", "UseBulkOperation"})
-    public static String collect(EnumCategory[] categories, String[] custom) {
+    public static String[] collect(EnumCategory[] categories, String[] custom) {
         final List<String> names = new ArrayList<>();
 
-        if(categories != null) {
-            for(int i = 0; i < categories.length; i++) {
+        if (categories != null && categories.length > 0) {
+            for (int i = 0; i < categories.length; i++) {
                 names.add(StringTranslate.getInstance().translateKey(categories[i].cookI18NString()));
             }
         }
 
-        if(custom != null) {
-            for(int i = 0; i < custom.length; i++) {
+        if (custom != null && custom.length > 0) {
+            for (int i = 0; i < custom.length; i++) {
                 names.add(custom[i]);
             }
         }
 
-        return String.join(" §r§7|§r ", names);
+        if (names.isEmpty()) {
+            return null;
+        }
+
+        return StringManipulation.combinations(names, 56).toArray(new String[0]);
     }
 }

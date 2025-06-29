@@ -28,7 +28,7 @@ public class TagTexturePack {
     protected String[] customCategories;
 
     //category inner data
-    private String bakedCategoryString;
+    private String[] bakedCSS;
 
     public TagTexturePack(File file, String name, String firstLine, String secondLine) {
         this.file = file;
@@ -96,17 +96,16 @@ public class TagTexturePack {
     }
 
     public boolean hasCategories() {
-        return this.bakedCategoryString != null;
+        return this.bakedCSS != null;
     }
 
-    public String getBakedCategoryString() {
-        return this.bakedCategoryString;
+    public String[] getBakedCSS() {
+        return this.bakedCSS;
     }
 
     public void buildCategory() {
-        if(this.categories != null || this.customCategories != null) {
-            this.bakedCategoryString = EnumCategory.collect(this.categories, this.customCategories);
+        if (this.categories != null || this.customCategories != null) {
+            this.bakedCSS = EnumCategory.collect(this.categories, this.customCategories);
         }
     }
-
 }

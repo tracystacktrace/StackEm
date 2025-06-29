@@ -125,8 +125,8 @@ public class StackEm extends Mod {
             ZipEntry packTxt = zipFile.getEntry("pack.txt");
             if (packTxt != null) {
                 try (InputStream inputStream = zipFile.getInputStream(packTxt); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-                    objects[0] = formatDescriptionLine(reader.readLine());
-                    objects[1] = formatDescriptionLine(reader.readLine());
+                    objects[0] = reader.readLine();
+                    objects[1] = reader.readLine();
                     canBeAdded = true;
                 } catch (IOException ignored) {
                 }
@@ -157,19 +157,6 @@ public class StackEm extends Mod {
         } catch (IOException e) {
             return null;
         }
-    }
-
-    private static String formatDescriptionLine(String line) {
-        if (line == null || line.length() < 56) {
-            return line;
-        }
-
-        int maxLength = 56;
-        int colorCodeCount = (int) line.chars().limit(maxLength - 1).filter(c -> c == '§').count();
-
-        maxLength += colorCodeCount * 2;
-
-        return line.length() > maxLength ? line.substring(0, maxLength) : line;
     }
 
 }

@@ -4,7 +4,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiSmallButton;
 import net.minecraft.client.renderer.block.TexturePackBase;
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.StackEm;
@@ -12,7 +11,6 @@ import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.audio.SoundCleanupHelper;
-import net.tracystacktrace.stackem.processor.category.EnumCategory;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
@@ -37,6 +35,8 @@ public class GuiTextureStack extends GuiScreen {
     private GuiButton buttonToggle;
     private GuiButton buttonWebsite;
 
+    private boolean clickedAtLeastOnce;
+
     public GuiTextureStack(GuiScreen parentScreen) {
         this.parentScreen = parentScreen;
 
@@ -48,6 +48,7 @@ public class GuiTextureStack extends GuiScreen {
 
     @Override
     public void initGui() {
+        this.clickedAtLeastOnce = false;
         this.controlList.clear();
         this.fetchCacheFromOuterworld(StackEm.processIdentifier(this.mc.gameSettings.texturePack));
 
@@ -119,12 +120,13 @@ public class GuiTextureStack extends GuiScreen {
                 return;
             }
 
-            if(button.id == -6) {
+            if (button.id == -6) {
                 final String website = sequoiaCache.get(this.slotManager.selectedIndex).getWebsite();
-                if(StackEm.isValidWebsite(website)) {
+                if (StackEm.isValidWebsite(website)) {
                     try {
                         Desktop.getDesktop().browse(new URI(website));
-                    }catch (IOException | URISyntaxException ignored) {}
+                    } catch (IOException | URISyntaxException ignored) {
+                    }
                 }
                 return;
             }
@@ -138,7 +140,9 @@ public class GuiTextureStack extends GuiScreen {
         this.drawDefaultBackground();
         this.slotManager.drawElement(this.mc, mouseX, mouseY, deltaTicks);
 
-        drawString(fontRenderer, actions, 5, 5, 0xFFFFFFFF);
+        if (this.clickedAtLeastOnce) {
+            drawString(fontRenderer, actions, 5, 7, 0xFFFFFFFF);
+        }
 
         drawString(fontRenderer, hint1, 3, this.height - 14, 0xFFFFFFFF);
         drawString(fontRenderer, hint2, 3, this.height - 26, 0xFFFFFFFF);
@@ -152,7 +156,14 @@ public class GuiTextureStack extends GuiScreen {
         this.sequoiaCache.forEach(p -> p.removeThumbnail(mc.renderEngine));
     }
 
+    @Override
+    public void updateScreen() {
+        super.updateScreen();
+        this.slotManager.tickAnimation();
+    }
+
     public void updateMoveButtonsState(int index) {
+        this.clickedAtLeastOnce = true;
         if (sequoiaCache.get(index).isInStack()) {
             this.buttonToggle.enabled = true;
             this.buttonToggle.visible = true;
@@ -171,17 +182,6 @@ public class GuiTextureStack extends GuiScreen {
             this.buttonMoveUp.enabled = index > 0;
             this.buttonMoveDown.enabled = index + 1 < this.countInStackElements();
 
-            TagTexturePack pack = sequoiaCache.get(index);
-            this.buttonWebsite.enabled = StackEm.isValidWebsite(pack.getWebsite());
-
-            if(pack.hasAuthor() && pack.hasWebsite()) {
-                this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.2", pack.getAuthor());
-            } else if(pack.hasAuthor()) {
-                this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.1", pack.getAuthor());
-            } else {
-                this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKey("stackem.button.website.0");
-            }
-
         } else {
             this.buttonToggle.enabled = true;
             this.buttonToggle.visible = true;
@@ -192,9 +192,20 @@ public class GuiTextureStack extends GuiScreen {
             this.buttonMoveUp.visible = false;
             this.buttonMoveDown.enabled = false;
             this.buttonMoveDown.visible = false;
-            this.buttonWebsite.enabled = false;
-            this.buttonWebsite.visible = false;
+            this.buttonWebsite.visible = true;
 
+            this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKey("stackem.button.website.0");
+        }
+
+        //info button process
+        final TagTexturePack pack = sequoiaCache.get(index);
+        this.buttonWebsite.enabled = StackEm.isValidWebsite(pack.getWebsite());
+
+        if (pack.hasAuthor() && pack.hasWebsite()) {
+            this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.2", pack.getAuthor());
+        } else if (pack.hasAuthor()) {
+            this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.1", pack.getAuthor());
+        } else {
             this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKey("stackem.button.website.0");
         }
     }
@@ -282,6 +293,7 @@ public class GuiTextureStack extends GuiScreen {
             stackemList.add(this.sequoiaCache.get(i).name);
         }
 
+        StackEm.DEBUG_DISABLE = false;
         this.mc.texturePackList.getSelectedTexturePack().deleteTexturePack(mc.renderEngine);
 
         final TexturePackStacked stacked = new TexturePackStacked(StackEm.getRandomStackEmIdentifier(), SmartHacks.getDefaultTexturePack(), files);
