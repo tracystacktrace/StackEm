@@ -56,14 +56,27 @@ There are two ways to include category, you can use either or them, both or even
 
 For this, you need to provide `"id"` parameter with a list of in-built category id(s).
 
-In this example, we include `qol` (QoL features included) and `sound` (changes/adds sound):
+In this example, we include `qol` (QoL features included) and `audio` (changes/adds sound):
 ```json
 {
   "category": {
-    "id": ["qol", "sound"]
+    "id": ["qol", "audio"]
   }
 }
 ```
+
+A list of in-built categories:
+- `audio`: Texturepacks add/changes audio
+- `animation`: Adds/changes animation to blocks/items
+- `blocks`: Changes block(s) textures
+- `entities`: Changes entity(ies) textures
+- `fonts`: Changes font(s) textures
+- `gui`: Changes GUI (interface) textures
+- `hud`: Changes HUD (in-game) textures
+- `items`: Changes item(s) textures
+- `paintings`: Adds/changes painting(s) textures
+- `qol`: Provides with some QoL (Quality of Life) features
+- `queer`: Provides with some queer things! :3
 
 #### [2] Writing custom (own) categories:
 
