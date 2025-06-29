@@ -2,20 +2,30 @@ package net.tracystacktrace.stackem.impl;
 
 import com.indigo3d.util.RenderSystem;
 import net.minecraft.client.renderer.world.RenderEngine;
+import net.tracystacktrace.stackem.processor.category.EnumCategory;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
 
 public class TagTexturePack {
+    //pack.txt/pack.png public attributes
     public final File file;
     public final String name;
     public final String firstLine;
     public final String secondLine;
 
+    //current order
     public int order = -1;
 
+    //thumbnail inner data
     private BufferedImage thumbnail;
     private int rendererThumbnailID = -1;
+
+    //stackem.json attributes
+    protected String author;
+    protected String website;
+    protected EnumCategory[] categories;
+    protected String[] customCategories;
 
     public TagTexturePack(File file, String name, String firstLine, String secondLine) {
         this.file = file;
@@ -48,5 +58,21 @@ public class TagTexturePack {
             renderEngine.deleteTexture(this.rendererThumbnailID);
             this.thumbnail = null;
         }
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
+    public void setCategories(EnumCategory[] categories) {
+        this.categories = categories;
+    }
+
+    public void setCustomCategories(String[] categories) {
+        this.customCategories = categories;
     }
 }

@@ -4,12 +4,15 @@ import com.fox2code.foxloader.loader.Mod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
+import net.tracystacktrace.stackem.processor.category.DescriptionFileCooker;
 
 import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -71,14 +74,26 @@ public class StackEm extends Mod {
         for (File file : texturepacksDir.listFiles()) {
             Object[] collect$1 = fetchDefaultObjects(file);
 
-            if (collect$1 == null || collect$1[0] == null) {
+            if (collect$1 == null) {
                 continue;
+            }
+
+            //safely handle data
+            if(collect$1[0] == null || ((String)collect$1[0]).isEmpty()) {
+                collect$1[0] = "";
+            }
+            if(collect$1[1] == null || ((String)collect$1[1]).isEmpty()) {
+                collect$1[1] = "";
             }
 
             TagTexturePack tagTexturePack = new TagTexturePack(file, file.getName(), (String) collect$1[0], (String) collect$1[1]);
 
             if (collect$1[2] != null) {
                 tagTexturePack.setThumbnail((java.awt.image.BufferedImage) collect$1[2]);
+            }
+
+            if(collect$1[3] != null) {
+                DescriptionFileCooker.read(tagTexturePack, (String) collect$1[3]);
             }
 
             collector.add(tagTexturePack);
@@ -89,30 +104,45 @@ public class StackEm extends Mod {
 
     private static Object[] fetchDefaultObjects(File file) {
         //first line, second line, thumbnail image
-        Object[] objects = new Object[3];
+        final Object[] objects = new Object[4];
+        boolean canBeAdded = false;
 
         try {
             ZipFile zipFile = new ZipFile(file);
 
+            //0 and 1 - pack.txt two strings
             ZipEntry packTxt = zipFile.getEntry("pack.txt");
             if (packTxt != null) {
                 try (InputStream inputStream = zipFile.getInputStream(packTxt); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                     objects[0] = formatDescriptionLine(reader.readLine());
                     objects[1] = formatDescriptionLine(reader.readLine());
+                    canBeAdded = true;
                 } catch (IOException ignored) {
                 }
             }
 
+            //2 - pack.png image (BufferedImage)
             ZipEntry packPng = zipFile.getEntry("pack.png");
             if (packPng != null) {
                 try (InputStream inputStream = zipFile.getInputStream(packPng)) {
                     objects[2] = ImageIO.read(inputStream);
+                    canBeAdded = true;
                 } catch (IOException ignored) {
                 }
             }
 
+            //3 - stackem.json
+            ZipEntry stackemJson = zipFile.getEntry("stackem.json");
+            if(stackemJson != null) {
+                try (InputStream inputStream = zipFile.getInputStream(stackemJson); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+                    objects[3] = reader.lines().collect(Collectors.joining());
+                    canBeAdded = true;
+                }catch (IOException ignored) {
+                }
+            }
+
             zipFile.close();
-            return objects;
+            return canBeAdded ? objects : null;
         } catch (IOException e) {
             return null;
         }
