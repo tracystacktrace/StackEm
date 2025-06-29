@@ -85,7 +85,7 @@ public class TexturePackStacked extends TexturePackBase {
 
         this.initialize();
 
-        if(StackEm.DEBUG_DISABLE) {
+        if (StackEm.DEBUG_DISABLE) {
             return this.defaultTexturePack.findResource(resourcePath, false);
         }
 
@@ -108,7 +108,7 @@ public class TexturePackStacked extends TexturePackBase {
             return null;
         }
 
-        if(StackEm.DEBUG_DISABLE) {
+        if (StackEm.DEBUG_DISABLE) {
             return this.defaultTexturePack.findResourceURL(resourcePath, false);
         }
 
@@ -134,7 +134,7 @@ public class TexturePackStacked extends TexturePackBase {
         try {
             this.initialize();
 
-            if(StackEm.DEBUG_DISABLE) {
+            if (StackEm.DEBUG_DISABLE) {
                 return this.defaultTexturePack.checkIfFileExists(resourcePath, false);
             }
 
@@ -154,7 +154,7 @@ public class TexturePackStacked extends TexturePackBase {
         try {
             this.initialize();
 
-            if(StackEm.DEBUG_DISABLE) {
+            if (StackEm.DEBUG_DISABLE) {
                 return this.defaultTexturePack.checkIfDirectoryExists(path, false);
             }
 

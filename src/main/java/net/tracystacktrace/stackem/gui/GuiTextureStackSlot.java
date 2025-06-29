@@ -12,7 +12,7 @@ public class GuiTextureStackSlot extends GuiSlot {
     public int selectedIndex = -1;
 
     public GuiTextureStackSlot(GuiTextureStack parentScreen, int width, int height) {
-        super(width, height, 32, height - 55 + 4, 36);
+        super(width, height, 0, height - 30, 36);
         this.parentScreen = parentScreen;
     }
 

@@ -7,7 +7,6 @@ import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.processor.category.DescriptionFileCooker;
 
 import javax.imageio.ImageIO;
-import java.awt.image.BufferedImage;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,7 +52,7 @@ public class StackEm extends Mod {
         final Minecraft mc = Minecraft.getInstance();
 
         // handle safely
-        if(mc.thePlayer == null) {
+        if (mc.thePlayer == null) {
             return;
         }
 
@@ -72,34 +71,42 @@ public class StackEm extends Mod {
         final List<TagTexturePack> collector = new ArrayList<>();
 
         for (File file : texturepacksDir.listFiles()) {
-            Object[] collect$1 = fetchDefaultObjects(file);
-
-            if (collect$1 == null) {
-                continue;
+            final TagTexturePack tagTexturePack = processFile(file);
+            if (tagTexturePack != null) {
+                collector.add(tagTexturePack);
             }
-
-            //safely handle data
-            if(collect$1[0] == null || ((String)collect$1[0]).isEmpty()) {
-                collect$1[0] = "";
-            }
-            if(collect$1[1] == null || ((String)collect$1[1]).isEmpty()) {
-                collect$1[1] = "";
-            }
-
-            TagTexturePack tagTexturePack = new TagTexturePack(file, file.getName(), (String) collect$1[0], (String) collect$1[1]);
-
-            if (collect$1[2] != null) {
-                tagTexturePack.setThumbnail((java.awt.image.BufferedImage) collect$1[2]);
-            }
-
-            if(collect$1[3] != null) {
-                DescriptionFileCooker.read(tagTexturePack, (String) collect$1[3]);
-            }
-
-            collector.add(tagTexturePack);
         }
 
         return collector;
+    }
+
+    public static TagTexturePack processFile(File file) {
+        final Object[] collect$1 = fetchDefaultObjects(file);
+
+        if (collect$1 == null) {
+            return null;
+        }
+
+        //safely handle data
+        if (collect$1[0] == null || ((String) collect$1[0]).isEmpty()) {
+            collect$1[0] = "";
+        }
+
+        if (collect$1[1] == null || ((String) collect$1[1]).isEmpty()) {
+            collect$1[1] = "";
+        }
+
+        final TagTexturePack tagTexturePack = new TagTexturePack(file, file.getName(), (String) collect$1[0], (String) collect$1[1]);
+
+        if (collect$1[2] != null) {
+            tagTexturePack.setThumbnail((java.awt.image.BufferedImage) collect$1[2]);
+        }
+
+        if (collect$1[3] != null) {
+            DescriptionFileCooker.read(tagTexturePack, (String) collect$1[3]);
+        }
+
+        return tagTexturePack;
     }
 
     private static Object[] fetchDefaultObjects(File file) {
@@ -133,11 +140,11 @@ public class StackEm extends Mod {
 
             //3 - stackem.json
             ZipEntry stackemJson = zipFile.getEntry("stackem.json");
-            if(stackemJson != null) {
+            if (stackemJson != null) {
                 try (InputStream inputStream = zipFile.getInputStream(stackemJson); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                     objects[3] = reader.lines().collect(Collectors.joining());
                     canBeAdded = true;
-                }catch (IOException ignored) {
+                } catch (IOException ignored) {
                 }
             }
 

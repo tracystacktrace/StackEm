@@ -24,8 +24,6 @@ public class GuiTextureStack extends GuiScreen {
 
     public List<TagTexturePack> sequoiaCache;
 
-    private final String title1;
-    private final String title2;
     private final String hint1;
     private final String hint2;
 
@@ -38,8 +36,6 @@ public class GuiTextureStack extends GuiScreen {
         this.parentScreen = parentScreen;
 
         final StringTranslate translate = StringTranslate.getInstance();
-        this.title1 = translate.translateKey("stackem.gui.title");
-        this.title2 = translate.translateKey("stackem.gui.folderhint");
         this.hint1 = translate.translateKey("stackem.gui.hint1");
         this.hint2 = translate.translateKey("stackem.gui.hint2");
     }
@@ -51,25 +47,33 @@ public class GuiTextureStack extends GuiScreen {
 
         final StringTranslate translate = StringTranslate.getInstance();
 
-        this.controlList.add(new GuiSmallButton(-1, this.width / 2 - 154, this.height - 48, translate.translateKey("stackem.gui.folder")));
-        this.controlList.add(new GuiSmallButton(-2, this.width / 2 + 4, this.height - 48, translate.translateKey("stackem.gui.done")));
+        // texture pack folder
+        final GuiButton openFolder = new GuiButton(-1, this.width - 120, this.height - 25, 20, 20, "§9ℹ", translate.translateKey("stackem.gui.folder"));
+        openFolder.canDisplayInfo = true;
+        this.controlList.add(openFolder);
 
+        // save & close
+        this.controlList.add(new GuiButton(-2, this.width - 95, this.height - 25, 90, 20, translate.translateKey("stackem.gui.done")));
 
+        // slot manager
         this.slotManager = new GuiTextureStackSlot(this, this.width, this.height);
         this.slotManager.registerScrollButtons(7, 8);
 
-
-        this.controlList.add(this.buttonToggle = new GuiButton(-5, 5, 40, 16, 16, "§4❌"));
-        this.controlList.add(this.buttonMoveUp = new GuiButton(-3, 5, 40 + 18, 16, 16, "§9↑"));
-        this.controlList.add(this.buttonMoveDown = new GuiButton(-4, 5, 40 + 36, 16, 16, "§9↓"));
+        // action buttons
+        this.controlList.add(this.buttonToggle = new GuiButton(-5, 5, 20, 16, 16, "§4❌", translate.translateKey("stackem.button.remove")));
+        this.controlList.add(this.buttonMoveUp = new GuiButton(-3, 5, 20 + 18, 16, 16, "§9↑", translate.translateKey("stackem.button.moveup")));
+        this.controlList.add(this.buttonMoveDown = new GuiButton(-4, 5, 20 + 36, 16, 16, "§9↓", translate.translateKey("stackem.button.movedown")));
 
 
         this.buttonToggle.enabled = false;
         this.buttonToggle.visible = false;
+        this.buttonToggle.canDisplayInfo = true;
         this.buttonMoveUp.enabled = false;
         this.buttonMoveUp.visible = false;
+        this.buttonMoveUp.canDisplayInfo = true;
         this.buttonMoveDown.enabled = false;
         this.buttonMoveDown.visible = false;
+        this.buttonMoveDown.canDisplayInfo = true;
     }
 
     @Override
@@ -114,11 +118,8 @@ public class GuiTextureStack extends GuiScreen {
         this.drawDefaultBackground();
         this.slotManager.drawElement(this.mc, mouseX, mouseY, deltaTicks);
 
-        //drawCenteredString(this.fontRenderer, title1, this.width / 2, 16.0F, 16777215);
-        drawCenteredString(this.fontRenderer, title2, this.width / 2 - 77, this.height - 26, 8421504);
-
-        drawString(fontRenderer, hint1, 2, 2, 0xFFFFFFFF);
-        drawString(fontRenderer, hint2, 2, 14, 0xFFFFFFFF);
+        drawString(fontRenderer, hint1, 3, this.height - 14, 0xFFFFFFFF);
+        drawString(fontRenderer, hint2, 3, this.height - 26, 0xFFFFFFFF);
 
         super.drawScreen(mouseX, mouseY, deltaTicks);
     }
@@ -134,6 +135,7 @@ public class GuiTextureStack extends GuiScreen {
             this.buttonToggle.enabled = true;
             this.buttonToggle.visible = true;
             this.buttonToggle.displayString = "§4❌";
+            this.buttonToggle.displayInfo = StringTranslate.getInstance().translateKey("stackem.button.remove");
 
             //todo fix buttons location
             //final int slotOffsetY = this.height / 2 - (this.sequoiaCache.size() * 18) - 9;
@@ -149,6 +151,7 @@ public class GuiTextureStack extends GuiScreen {
             this.buttonToggle.enabled = true;
             this.buttonToggle.visible = true;
             this.buttonToggle.displayString = "§a✔";
+            this.buttonToggle.displayInfo = StringTranslate.getInstance().translateKey("stackem.button.add");
 
             this.buttonMoveUp.enabled = false;
             this.buttonMoveUp.visible = false;

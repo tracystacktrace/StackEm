@@ -23,7 +23,7 @@ public enum EnumCategory {
     }
 
     public static EnumCategory define(String id) {
-        if(id == null || id.isEmpty()) {
+        if (id == null || id.isEmpty()) {
             return null;
         }
 

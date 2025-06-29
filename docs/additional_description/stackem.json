@@ -1,9 +1,9 @@
 {
+  "author": "Author name or username",
+  "website": "https://example.com",
+
   "category": {
     "id": ["qol", "queer"],
     "custom": ["Trans Rights!", "My favourite!"]
-  },
-
-  "author": "Author name or username",
-  "website": "https://example.com"
+  }
 }

@@ -1,10 +1,28 @@
+# general/gui
 stackem.gui.title=Select Texture Packs (Stack mode)
 stackem.gui.done=§c§lSAVE§r & Exit
-stackem.gui.folder=Open texture pack folder
-stackem.gui.folderhint=(Place texture pack files here)
+stackem.gui.folder=Open texture packs folder
 
 stackem.gui.hint1=Double-click a texture pack to include/remove
 stackem.gui.hint2=Only "§e.zip§r" texturepacks are §esupported§r!
 
 stackem.debug.on=[§eStackEm§r] Proceeding to force default textures...
 stackem.debug.off=[§eStackEm§r] Restoring stacked textures...
+
+# buttons hint
+stackem.button.add=Add to stack
+stackem.button.remove=Remove from stack
+stackem.button.moveup=Move up
+stackem.button.movedown=Move down
+
+# categories
+stackem.category.blocks=Blocks
+stackem.category.entities=Entities
+stackem.category.fonts=Fonts
+stackem.category.gui=GUI
+stackem.category.items=Items
+stackem.category.paintings=Paintings
+stackem.category.animation=Animation
+stackem.category.queer=Queer!
+stackem.category.hud=HUD
+stackem.category.qol=QoL Changes
