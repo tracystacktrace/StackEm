@@ -22,6 +22,7 @@ public class TexturePackStacked extends TexturePackBase {
     private final File[] archives;
     private final List<ZipFile> stackedTextures;
     private boolean initialized = false;
+    private final DeepMeta deepMeta = new DeepMeta();
 
     public TexturePackStacked(String id, ITexturePack defaultTexturePack, List<File> texturepackArchives) {
         super(id, null, "stackem.tpstacked", defaultTexturePack);
@@ -75,6 +76,7 @@ public class TexturePackStacked extends TexturePackBase {
             }
         }
         this.stackedTextures.clear();
+        this.deepMeta.flush();
     }
 
     @Override
@@ -177,5 +179,9 @@ public class TexturePackStacked extends TexturePackBase {
 
     public boolean isEmpty() {
         return this.archives == null || this.archives.length == 0;
+    }
+
+    public DeepMeta getDeepMeta() {
+        return this.deepMeta;
     }
 }

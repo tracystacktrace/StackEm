@@ -1,10 +1,10 @@
-package net.tracystacktrace.stackem.processor;
+package net.tracystacktrace.stackem.hack;
 
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public final class StringManipulation {
+public final class StringFeatures {
 
     public static String limitString(String line, final int length, final boolean endDots) {
         if (line == null || line.length() < length) {
@@ -24,7 +24,7 @@ public final class StringManipulation {
         return result;
     }
 
-    public static List<String> combinations(List<String> input, int maxLength) {
+    public static List<String> provideCategoryCombinations(List<String> input, int maxLength) {
         final List<String> strings = new ArrayList<>(input);
         strings.sort(Comparator.comparingInt(String::length));
 

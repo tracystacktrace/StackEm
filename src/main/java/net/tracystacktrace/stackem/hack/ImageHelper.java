@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.image;
+package net.tracystacktrace.stackem.hack;
 
 import net.minecraft.client.renderer.block.ITexturePack;
 

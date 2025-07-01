@@ -1,7 +1,7 @@
 package net.tracystacktrace.stackem.processor.category;
 
 import net.minecraft.common.util.i18n.StringTranslate;
-import net.tracystacktrace.stackem.processor.StringManipulation;
+import net.tracystacktrace.stackem.hack.StringFeatures;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -70,6 +70,6 @@ public enum EnumCategory {
             return null;
         }
 
-        return StringManipulation.combinations(names, 56).toArray(new String[0]);
+        return StringFeatures.provideCategoryCombinations(names, 56).toArray(new String[0]);
     }
 }

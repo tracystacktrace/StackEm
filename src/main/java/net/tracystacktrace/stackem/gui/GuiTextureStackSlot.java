@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.world.Tessellator;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
-import net.tracystacktrace.stackem.processor.StringManipulation;
+import net.tracystacktrace.stackem.hack.StringFeatures;
 
 public class GuiTextureStackSlot extends GuiSlot {
 
@@ -100,7 +100,7 @@ public class GuiTextureStackSlot extends GuiSlot {
         }
 
         if (!isSelectedOne) {
-            showName = StringManipulation.limitString(showName, 44, true);
+            showName = StringFeatures.limitString(showName, 44, true);
         }
 
         parentScreen.drawString(minecraft.fontRenderer, showName, x + iconHeight + 2.0F, y + 1.0F, 16777215);

@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.image.segment;
+package net.tracystacktrace.stackem.processor.imageglue.segment;
 
 @SuppressWarnings("ClassCanBeRecord")
 public class SegmentedTexture {
