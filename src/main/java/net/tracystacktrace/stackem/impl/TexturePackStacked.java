@@ -174,4 +174,8 @@ public class TexturePackStacked extends TexturePackBase {
     public boolean isCompatible() {
         return true;
     }
+
+    public boolean isEmpty() {
+        return this.archives == null || this.archives.length == 0;
+    }
 }

@@ -1,27 +1,46 @@
-package net.tracystacktrace.stackem.processor.image;
+package net.tracystacktrace.stackem.processor;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.world.RenderEngine;
+import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hack.SmartHacks;
+import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.processor.image.GlueImages;
 import net.tracystacktrace.stackem.processor.image.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.image.segment.SegmentsProvider;
 
 import java.awt.image.BufferedImage;
 
-public class TextureMerger {
+/**
+ * A main entrypoint for most texture/sound modifications handled by this mod
+ */
+public class StackEmModifications {
+
+    /**
+     * This is the actual code you should call upon refreshing textures
+     * <br>
+     * This one takes {@link RenderEngine} instance from {@link Minecraft#renderEngine} field
+     */
+    public static void fetchTextureModifications() {
+        StackEmModifications.fetchTextureModifications(Minecraft.getInstance().renderEngine);
+    }
 
     /**
      * This is the actual code you should call upon refreshing textures
      */
-    public static void replaceTextures() {
-        TextureMerger.replaceTextures(Minecraft.getInstance().renderEngine);
-    }
-
-    public static void replaceTextures(RenderEngine renderEngine) {
+    public static void fetchTextureModifications(RenderEngine renderEngine) {
         if (renderEngine == null) {
             return;
         }
 
+        final TexturePackStacked stacked = StackEm.getContainerInstance();
+
+        //no textures - no changes
+        if(stacked.isEmpty()) {
+            return;
+        }
+
+        //first step - segmented textures
         for (SegmentedTexture value : SegmentsProvider.TEXTURES) {
             //process texture layering, get a layered texture
             BufferedImage image = GlueImages.processLayering(value);

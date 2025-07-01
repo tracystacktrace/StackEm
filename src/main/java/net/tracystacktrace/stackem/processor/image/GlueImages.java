@@ -109,7 +109,7 @@ public class GlueImages {
 
     public static BufferedImage processLayering(SegmentedTexture name) {
         final TexturePackDefault defaultPack = (TexturePackDefault) SmartHacks.getDefaultTexturePack();
-        final TexturePackStacked stacked = (TexturePackStacked) Minecraft.getInstance().texturePackList.getSelectedTexturePack();
+        final TexturePackStacked stacked = StackEm.getContainerInstance();
 
         final EditContainer original = new EditContainer(ImageHelper.readImage(defaultPack, name.texture));
         final List<BufferedImage> images = new ArrayList<>();

@@ -2,7 +2,7 @@ package net.tracystacktrace.stackem.mixins;
 
 import net.minecraft.client.Minecraft;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.processor.image.TextureMerger;
+import net.tracystacktrace.stackem.processor.StackEmModifications;
 import org.lwjgl.input.Keyboard;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -15,7 +15,7 @@ public class MixinMinecraft {
             value = "INVOKE",
             target = "Lnet/minecraft/client/gui/FontRenderer;setBidiFlag(Z)V"))
     private void stackem$injectPreloadTextures(CallbackInfo ci) {
-        TextureMerger.replaceTextures();
+        StackEmModifications.fetchTextureModifications();
     }
 
     @Inject(method = "run", at = @At(

@@ -4,6 +4,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.ITexturePack;
 import net.minecraft.client.renderer.block.TexturePackList;
 import net.tracystacktrace.stackem.StackEm;
+import net.tracystacktrace.stackem.hack.QuickRNG;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,7 +41,7 @@ public abstract class MixinTexturePackList {
         final List<File> collector = new ArrayList<>();
 
         if (this.mc.gameSettings.texturePack.startsWith("stackem")) {
-            final List<String> candidates = new ArrayList<>(Arrays.asList(StackEm.processIdentifier(this.mc.gameSettings.texturePack)));
+            final List<String> candidates = new ArrayList<>(Arrays.asList(StackEm.unpackSaveString(this.mc.gameSettings.texturePack)));
             for (File var3 : getTexturePackDirContents()) {
                 if (!var3.isDirectory() && var3.getName().toLowerCase().endsWith(".zip")) {
                     if (candidates.contains(var3.getName())) {
@@ -50,14 +51,14 @@ public abstract class MixinTexturePackList {
             }
         }
 
-        this.selectedTexturePack = new TexturePackStacked(StackEm.getRandomStackEmIdentifier(), defaultTexturePack, collector);
+        this.selectedTexturePack = new TexturePackStacked(QuickRNG.getRandomIdentifier(), defaultTexturePack, collector);
 
         String[] finished = new String[collector.size()];
         for (int i = 0; i < collector.size(); i++) {
             finished[i] = collector.get(i).getName();
         }
 
-        this.mc.gameSettings.texturePack = StackEm.buildIdentifier(finished);
+        this.mc.gameSettings.texturePack = StackEm.packSaveString(finished);
         this.mc.gameSettings.saveOptions();
 
         ci.cancel();

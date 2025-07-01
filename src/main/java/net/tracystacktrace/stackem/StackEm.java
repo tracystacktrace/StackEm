@@ -4,6 +4,7 @@ import com.fox2code.foxloader.loader.Mod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
+import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.category.DescriptionFileCooker;
 
 import javax.imageio.ImageIO;
@@ -20,32 +21,8 @@ public class StackEm extends Mod {
     public static boolean DEBUG_DISABLE = false;
     public static final Logger LOGGER = Logger.getLogger("STACKEM");
 
-    public static int generateRandomNDigitNumber(int digits) {
-        final int min = (int) Math.pow(10, digits - 1);
-        final int max = (int) (Math.pow(10, digits) - 1);
-        return (int) (min + (Math.random() * ((max - min) + 1)));
-    }
-
-    public static String getRandomStackEmIdentifier() {
-        return "stackem" + generateRandomNDigitNumber(5);
-    }
-
-    public static String[] processIdentifier(String input) {
-        int start = input.indexOf('[');
-        int end = input.indexOf(']');
-
-        if (start == -1 || end == -1 || !input.contains("stackem")) {
-            return new String[0];
-        }
-
-        return input.substring(start + 1, end).split(";");
-    }
-
-    public static String buildIdentifier(String[] input) {
-        if (input == null || input.length < 1) {
-            return "stackem[]";
-        }
-        return "stackem[" + String.join(";", input) + "]";
+    public static TexturePackStacked getContainerInstance() {
+        return (TexturePackStacked) Minecraft.getInstance().texturePackList.getSelectedTexturePack();
     }
 
     public static void toggleDebug() {
@@ -59,6 +36,24 @@ public class StackEm extends Mod {
         DEBUG_DISABLE = !DEBUG_DISABLE;
         mc.renderEngine.refreshTextures();
         mc.thePlayer.addChatMessage(StringTranslate.getInstance().translateKey(DEBUG_DISABLE ? "stackem.debug.on" : "stackem.debug.off"));
+    }
+
+    public static String[] unpackSaveString(String input) {
+        int start = input.indexOf('[');
+        int end = input.indexOf(']');
+
+        if (start == -1 || end == -1 || !input.contains("stackem")) {
+            return new String[0];
+        }
+
+        return input.substring(start + 1, end).split(";");
+    }
+
+    public static String packSaveString(String[] input) {
+        if (input == null || input.length < 1) {
+            return "stackem[]";
+        }
+        return "stackem[" + String.join(";", input) + "]";
     }
 
     public static boolean isValidWebsite(String website) {

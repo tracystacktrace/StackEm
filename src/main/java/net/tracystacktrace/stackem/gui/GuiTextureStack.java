@@ -4,9 +4,9 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.renderer.block.TexturePackBase;
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.StackEm;
+import net.tracystacktrace.stackem.hack.QuickRNG;
 import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
@@ -50,7 +50,7 @@ public class GuiTextureStack extends GuiScreen {
     public void initGui() {
         this.clickedAtLeastOnce = false;
         this.controlList.clear();
-        this.fetchCacheFromOuterworld(StackEm.processIdentifier(this.mc.gameSettings.texturePack));
+        this.fetchCacheFromOuterworld(StackEm.unpackSaveString(this.mc.gameSettings.texturePack));
 
         final StringTranslate translate = StringTranslate.getInstance();
 
@@ -294,17 +294,17 @@ public class GuiTextureStack extends GuiScreen {
         }
 
         StackEm.DEBUG_DISABLE = false;
-        this.mc.texturePackList.getSelectedTexturePack().deleteTexturePack(mc.renderEngine);
+        StackEm.getContainerInstance().deleteTexturePack(mc.renderEngine);
 
-        final TexturePackStacked stacked = new TexturePackStacked(StackEm.getRandomStackEmIdentifier(), SmartHacks.getDefaultTexturePack(), files);
+        final TexturePackStacked stacked = new TexturePackStacked(QuickRNG.getRandomIdentifier(), SmartHacks.getDefaultTexturePack(), files);
 
         this.mc.texturePackList.setTexturePack(stacked);
-        this.mc.gameSettings.texturePack = StackEm.buildIdentifier(stackemList.toArray(new String[0]));
+        this.mc.gameSettings.texturePack = StackEm.packSaveString(stackemList.toArray(new String[0]));
         this.mc.gameSettings.saveOptions();
 
         this.mc.renderEngine.refreshTextures();
         this.mc.renderGlobal.loadRenderers();
-        this.mc.fontRenderer = new FontRenderer((TexturePackBase) this.mc.texturePackList.getSelectedTexturePack(), this.mc.renderEngine);
+        this.mc.fontRenderer = new FontRenderer(StackEm.getContainerInstance(), this.mc.renderEngine);
 
         SoundCleanupHelper.cleanupSoundSources(this.mc.sndManager);
         this.mc.sndManager.refreshSounds(stacked);
