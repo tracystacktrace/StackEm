@@ -4,6 +4,20 @@ Since version `0.3.4` the mod allows you to configure the moon textures in a suc
 
 This is created as an experiment of Stack 'Em capabilities and allows me to think of possible ways to expand this mod
 
+All configuration is located within `stackem.moon.json` file, which is located in the root directory of a texturepack (next to `pack.txt`)
+
+This is the example content of `stackem.moon.json`:
+```json
+{
+	"path": "textures/environment/moon_phases.png",
+	"cycle": "default",
+	"scale": 1.0,
+	
+	"number_x": 4,
+	"number_y": 2
+}
+```
+
 ## Attributes
 
 ### `path`

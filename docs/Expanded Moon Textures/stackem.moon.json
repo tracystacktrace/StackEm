@@ -1,7 +1,7 @@
 {
 	"path": "textures/environment/moon_phases.png",
 	"cycle": "default",
-	"scale": 3.0,
+	"scale": 1.0,
 	
 	"number_x": 4,
 	"number_y": 2
