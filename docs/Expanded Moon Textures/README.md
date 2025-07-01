@@ -1,12 +1,12 @@
 ## `stackem.moon.json`
 
-Since version `0.3.4` the mod allows you to configure the moon textures in a such way it can even support cycles!
+Since version `0.3.4`, the mod allows you to configure the moon texture to support cycles!
 
-This is created as an experiment of Stack 'Em capabilities and allows me to think of possible ways to expand this mod
+This is created as an experiment of `Stack 'Em` capabilities and allows me to think of possible ways to expand this mod
 
 All configuration is located within `stackem.moon.json` file, which is located in the root directory of a texturepack (next to `pack.txt`)
 
-This is the example content of `stackem.moon.json`:
+This is a complete example content of `stackem.moon.json`:
 ```json
 {
 	"path": "textures/environment/moon_phases.png",
@@ -18,12 +18,12 @@ This is the example content of `stackem.moon.json`:
 }
 ```
 
-## Attributes
+## Attributes (5)
 
 ### `path`
 - Explanation: A path to the moon cycles `.png` file
 - Type: `string`
-- Default value: `/textures/environment/moon_phases.png`
+- Default value: `"/textures/environment/moon_phases.png"`
 
 Custom value example:
 ```json
@@ -35,8 +35,8 @@ Custom value example:
 ### `cycle`
 - Explanation: the type of moon cycle it must follow
 - Type: `string`
-- Default value: `default`
-- Allowed values: `default`, `reverse`, `random`
+- Default value: `"default"`
+- Allowed values: `"default"`, `"reverse"`, `"random"`
 
 Custom value example:
 ```json

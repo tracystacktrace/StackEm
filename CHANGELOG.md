@@ -1,4 +1,10 @@
 
+## [0.3.4] - TBA
+
+- Refurbished audio debug output, now it looks fancier
+- Experimental `stackem.moon.json` with the support of moon cycles!
+- Added a button in GUI to import `.zip` files from local storage
+
 ## [0.3.3] - 2025-06-29
 
 - Added ability to toggle stacked textures by pressing **F10**. This is useful when you need to quickly toggle textures to see changes
