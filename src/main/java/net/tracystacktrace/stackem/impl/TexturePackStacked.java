@@ -124,7 +124,7 @@ public class TexturePackStacked extends TexturePackBase {
 
                     //friendly debug output
                     final String friendlyOutput = url.toString();
-                    StackEm.LOGGER.info("Loading audio from \"" + friendlyOutput.substring(friendlyOutput.lastIndexOf(File.separatorChar, friendlyOutput.indexOf("!/")) + 1).replace("!", "\": "));
+                    StackEm.LOGGER.info("Loading resource from \"" + friendlyOutput.substring(friendlyOutput.lastIndexOf(File.separatorChar, friendlyOutput.indexOf("!/")) + 1).replace("!", "\": "));
 
                     return url;
                 } catch (MalformedURLException ignored) {
