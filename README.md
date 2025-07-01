@@ -23,7 +23,7 @@ This is achieved by replacing a standard `ITexturePack` instance with custom one
     - `/textures/gui/hud/hud.png`
     - `/textures/gui/stats/slot.png`
     - `/textures/environment/particles.png`
-- Additional description file: you can [create an additional description file](https://github.com/tracystacktrace/StackEm/tree/main/docs/additional_description) in your texturepack to include authorship, website and categories!
+- Additional description file: you can [create an additional description file](https://github.com/tracystacktrace/StackEm/tree/main/docs/Additional%20Description) in your texturepack to include authorship, website and categories!
 
 ## Installation
 
