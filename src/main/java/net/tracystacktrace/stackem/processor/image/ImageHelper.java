@@ -10,7 +10,7 @@ import java.io.InputStream;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class ImageHelper {
+public final class ImageHelper {
 
     public static boolean isValidTexture(BufferedImage check) {
         return check != null && check.getWidth() == check.getHeight();

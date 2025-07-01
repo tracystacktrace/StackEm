@@ -14,7 +14,7 @@ import java.awt.image.BufferedImage;
 /**
  * A main entrypoint for most texture/sound modifications handled by this mod
  */
-public class StackEmModifications {
+public final class StackEmModifications {
 
     /**
      * This is the actual code you should call upon refreshing textures
@@ -36,7 +36,7 @@ public class StackEmModifications {
         final TexturePackStacked stacked = StackEm.getContainerInstance();
 
         //no textures - no changes
-        if(stacked.isEmpty()) {
+        if (stacked.isEmpty()) {
             return;
         }
 

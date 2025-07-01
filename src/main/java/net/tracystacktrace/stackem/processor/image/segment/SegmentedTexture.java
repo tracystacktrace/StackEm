@@ -10,10 +10,21 @@ public class SegmentedTexture {
         this.segments = segments;
     }
 
+    /**
+     * Provides an empty array with the length equivalent to number of segments
+     */
     public boolean[] generateOverwrite() {
         return new boolean[this.segments.length];
     }
 
+    /**
+     * Returns the id of the segment where the point (X/Y coords) is located
+     *
+     * @param pixelX X location of the pixel
+     * @param pixelY Y location of the pixel
+     * @param scale  scale of the reference image, usually (1) for x1 scale
+     * @return id of the segment, otherwise (-1) if not found
+     */
     public int isInWhatSegment(int pixelX, int pixelY, int scale) {
         for (int i = 0; i < this.segments.length; i++) {
             int[] segment = this.segments[i];

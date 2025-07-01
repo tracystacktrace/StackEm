@@ -11,13 +11,14 @@ public final class QuickRNG {
      * A very simple, deterministic, yet effective RNG based on input value.
      * <br>
      * Basically hashes the value integer and outputs an answer based on it.
+     *
      * @param value A value to base on random
-     * @param min Minimum range value (inclusive)
-     * @param max Maximum range value (exclusive)
+     * @param min   Minimum range value (inclusive)
+     * @param max   Maximum range value (exclusive)
      * @return A random number between corresponding to [min;max) range
      */
     public static int getBetween(int value, int min, int max) {
-        if(max <= min) {
+        if (max <= min) {
             throw new IllegalArgumentException("The value (max) must be bigger than (min)!");
         }
         int hash = value;

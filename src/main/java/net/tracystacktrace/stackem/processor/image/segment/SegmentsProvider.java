@@ -1,6 +1,11 @@
 package net.tracystacktrace.stackem.processor.image.segment;
 
-public class SegmentsProvider {
+/**
+ * A class which contains in-built list of vanilla (reindev) segmented textures
+ * <br>
+ * That's all... isn't it?
+ */
+public final class SegmentsProvider {
 
     public static final SegmentedTexture[] TEXTURES = new SegmentedTexture[]{
             new SegmentedTexture(
@@ -142,4 +147,5 @@ public class SegmentsProvider {
                     }
             ),
     };
+
 }

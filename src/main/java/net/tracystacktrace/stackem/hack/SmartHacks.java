@@ -7,7 +7,7 @@ import net.minecraft.client.renderer.world.RenderEngine;
 
 import java.lang.reflect.Field;
 
-public class SmartHacks {
+public final class SmartHacks {
 
     public static ITexturePack getDefaultTexturePack() {
         try {

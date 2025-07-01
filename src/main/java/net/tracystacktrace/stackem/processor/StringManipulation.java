@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
-public class StringManipulation {
+public final class StringManipulation {
 
     public static String limitString(String line, final int length, final boolean endDots) {
         if (line == null || line.length() < length) {

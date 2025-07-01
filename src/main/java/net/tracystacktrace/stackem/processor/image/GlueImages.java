@@ -18,44 +18,45 @@ import java.util.zip.ZipFile;
 
 public class GlueImages {
 
-    public static class EditContainer {
+    public static class ImageGlueContainer {
         public BufferedImage original;
-        public BufferedImage modificational;
+        public BufferedImage canvas;
 
-        private final int origWidth;
+        private final int original_width;
 
-        public EditContainer(BufferedImage image) {
+        public ImageGlueContainer(BufferedImage image) {
             this.original = image;
-            this.modificational = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
 
-            Graphics2D g2d = this.modificational.createGraphics();
+            //basically copy the image into an independent object
+            this.canvas = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
+            Graphics2D g2d = this.canvas.createGraphics();
             g2d.setComposite(AlphaComposite.Src);
             g2d.drawImage(image, 0, 0, null);
             g2d.dispose();
 
-            this.origWidth = original.getWidth();
+            this.original_width = original.getWidth();
         }
 
-        private boolean rescaleProperly(int width, int height) {
+        private boolean rescaleContainer(int width, int height) {
             //refer to scaling the result
             if (original.getWidth() < width || original.getHeight() < height) {
                 this.original = ImageHelper.scaleImage(original, width, height);
-                this.modificational = ImageHelper.scaleImage(modificational, width, height);
+                this.canvas = ImageHelper.scaleImage(canvas, width, height);
                 return true;
             }
             return false; //signal to scale not the original, but modified version
         }
 
-        public int overwriteChanges(BufferedImage attempt, SegmentedTexture holder) {
+        public int makeChanges(BufferedImage attempt, SegmentedTexture holder) {
             if (attempt.getWidth() != this.original.getWidth()) {
-                if (!rescaleProperly(attempt.getWidth(), attempt.getHeight())) {
+                if (!rescaleContainer(attempt.getWidth(), attempt.getHeight())) {
                     attempt = ImageHelper.scaleImage(attempt, original.getWidth(), original.getHeight());
                 }
             }
 
             final int width = this.original.getWidth();
             final int height = this.original.getHeight();
-            final int scale = width / origWidth;
+            final int scale = width / original_width;
 
             final boolean[] modParts = holder.generateOverwrite();
 
@@ -83,7 +84,7 @@ public class GlueImages {
 
                     for (int movY = y; movY < endY; movY++) {
                         for (int movX = x; movX < endX; movX++) {
-                            this.modificational.setRGB(movX, movY, attempt.getRGB(movX, movY));
+                            this.canvas.setRGB(movX, movY, attempt.getRGB(movX, movY));
                         }
                     }
                     amount++;
@@ -93,13 +94,13 @@ public class GlueImages {
             return amount;
         }
 
-        public void nicelyFlush() {
+        public void flush() {
             this.original.flush();
         }
 
-        public void saveToLocal(String name) {
+        public void debugSave(String name) {
             try {
-                ImageIO.write(modificational, "png", new File(Minecraft.getInstance().getMinecraftDir(), name + ".png"));
+                ImageIO.write(canvas, "png", new File(Minecraft.getInstance().getMinecraftDir(), name + ".png"));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -111,7 +112,7 @@ public class GlueImages {
         final TexturePackDefault defaultPack = (TexturePackDefault) SmartHacks.getDefaultTexturePack();
         final TexturePackStacked stacked = StackEm.getContainerInstance();
 
-        final EditContainer original = new EditContainer(ImageHelper.readImage(defaultPack, name.texture));
+        final ImageGlueContainer original = new ImageGlueContainer(ImageHelper.readImage(defaultPack, name.texture));
         final List<BufferedImage> images = new ArrayList<>();
 
         //fetching texturepacks that can into gluing
@@ -132,7 +133,7 @@ public class GlueImages {
         int changesNum = 0;
 
         for (final BufferedImage attack : images) {
-            changesNum += original.overwriteChanges(attack, name);
+            changesNum += original.makeChanges(attack, name);
         }
 
         StackEm.LOGGER.info("Overwrote " + changesNum + " image segments for: " + name.texture.substring(1));
@@ -143,7 +144,7 @@ public class GlueImages {
         }
         images.clear();
 
-        original.nicelyFlush();
-        return original.modificational;
+        original.flush();
+        return original.canvas;
     }
 }
