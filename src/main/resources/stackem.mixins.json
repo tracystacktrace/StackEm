@@ -9,6 +9,7 @@
     "MixinGuiVideoSettings",
     "MixinMinecraft",
     "MixinRenderEngine",
+    "MixinRenderGlobal",
     "MixinTexturePackList"
   ]
 }

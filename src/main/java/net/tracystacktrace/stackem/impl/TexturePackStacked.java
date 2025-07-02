@@ -188,4 +188,8 @@ public class TexturePackStacked extends TexturePackBase {
     public DeepMeta getDeepMeta() {
         return this.deepMeta;
     }
+
+    public boolean isCustomMoon() {
+        return this.deepMeta.isCustomMoon();
+    }
 }

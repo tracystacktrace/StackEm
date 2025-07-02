@@ -4,10 +4,10 @@ import net.tracystacktrace.stackem.hack.QuickRNG;
 import org.jetbrains.annotations.Nullable;
 
 public enum EnumMoonCycle {
+    STATIC("static"),
     DEFAULT("default"),
     REVERSE("reverse"),
-    RANDOM("random"),
-    ;
+    RANDOM("random");
 
     public final String id;
 
@@ -18,6 +18,9 @@ public enum EnumMoonCycle {
     //total - total amount of moon cycles available
     public static int getMoon(EnumMoonCycle cycle, long timeTicks, int total) {
         switch (cycle) {
+            case STATIC -> {
+                return 0;
+            }
             case DEFAULT -> {
                 return ((int)(timeTicks / 24000L)) % total;
             }

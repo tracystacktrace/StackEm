@@ -9,6 +9,7 @@ import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
 import net.tracystacktrace.stackem.processor.moon.MoonCycleCooker;
+import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -74,9 +75,10 @@ public final class StackEmModifications {
             }
 
             if(collectedJsonString != null && !collectedJsonString.isEmpty()) {
-                MoonCycleCooker.MoonMetadata metadata = MoonCycleCooker.read(collectedJsonString);
+                CelestialMeta metadata = MoonCycleCooker.read(collectedJsonString);
                 if(metadata != null) {
                     stacked.getDeepMeta().setMoonData(metadata);
+                    StackEm.LOGGER.info("Loaded custom moon: " + metadata.path);
                 }
             }
         }
