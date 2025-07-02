@@ -1,13 +1,20 @@
 
 ## [0.3.4] - TBA
 
+**[View changes between 0.3.3 with 0.3.4](https://github.com/tracystacktrace/StackEm/compare/0.3.3...0.3.4)**
+
 - Experimental `stackem.moon.json` with the support of moon cycles!
+- Also, there is an equivalent of `stackem.sun.json`, but it changes the Sun!
+- Added CharMap interface that is... basically a list of possible standard font characters
 - Added a button in GUI to import `.zip` files from local storage
+
 
 - Refurbished resource debug output, now it looks fancier
 - Fixed a typo: it's generic resources, not only audio stuff (in debug)
 
 ## [0.3.3] - 2025-06-29
+
+**[View changes between 0.3.2 with 0.3.3](https://github.com/tracystacktrace/StackEm/compare/0.3.2...0.3.3)**
 
 - Added ability to toggle stacked textures by pressing **F10**. This is useful when you need to quickly toggle textures to see changes
 - The texturepack selection GUI has been slightly redesigned, now it looks better and bigger

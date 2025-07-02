@@ -1,6 +1,7 @@
 # general/gui
 stackem.gui.done=§c§lСОХРАНИТЬ§r и выйти
 stackem.gui.folder=Открыть папку текстур паков
+stackem.gui.charmap=Открыть CharMap
 
 stackem.gui.hint1=Нажмите два раза на элемент, чтобы включить/исключить
 stackem.gui.hint2=§eПоддерживаются§r только текстурпаки формата "§e.zip§r"!
@@ -17,6 +18,10 @@ stackem.button.movedown=Переместить вниз
 stackem.button.website.0=Открыть сайт текстурпака
 stackem.button.website.1=Автор: %s
 stackem.button.website.2=Автор: %s (нажмите, чтобы открыть ссылку)
+
+# charmap
+stackem.charmap.page=[страница %s/%s]
+stackem.charmap.close=Вернутся назад
 
 # categories
 stackem.category.audio=§e♫ Audio

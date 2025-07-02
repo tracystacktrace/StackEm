@@ -62,15 +62,20 @@ public class GuiTextureStack extends GuiScreen {
         // save & close
         this.controlList.add(new GuiButton(-2, this.width - 95, this.height - 25, 90, 20, translate.translateKey("stackem.gui.done")));
 
+        // charMap
+        final GuiButton charMap = new GuiButton(-3, this.width - 145, this.height - 25, 20, 20, "§3♤", translate.translateKey("stackem.gui.charmap"));
+        charMap.canDisplayInfo = true;
+        this.controlList.add(charMap);
+
         // slot manager
         this.slotManager = new GuiTextureStackSlot(this, this.width, this.height);
         this.slotManager.registerScrollButtons(7, 8);
 
         // action buttons
-        this.controlList.add(this.buttonToggle = new GuiButton(-5, 5, 20, 16, 16, "§4❌", translate.translateKey("stackem.button.remove")));
-        this.controlList.add(this.buttonWebsite = new GuiButton(-6, 5, 20 + 18, 16, 16, "§bℹ", translate.translateKey("stackem.button.website")));
-        this.controlList.add(this.buttonMoveDown = new GuiButton(-4, 5 + 18, 20 + 18, 16, 16, "§9↓", translate.translateKey("stackem.button.movedown")));
-        this.controlList.add(this.buttonMoveUp = new GuiButton(-3, 5 + 18, 20, 16, 16, "§9↑", translate.translateKey("stackem.button.moveup")));
+        this.controlList.add(this.buttonToggle = new GuiButton(-105, 5, 20, 16, 16, "§4❌", translate.translateKey("stackem.button.remove")));
+        this.controlList.add(this.buttonWebsite = new GuiButton(-106, 5, 20 + 18, 16, 16, "§bℹ", translate.translateKey("stackem.button.website")));
+        this.controlList.add(this.buttonMoveDown = new GuiButton(-104, 5 + 18, 20 + 18, 16, 16, "§9↓", translate.translateKey("stackem.button.movedown")));
+        this.controlList.add(this.buttonMoveUp = new GuiButton(-103, 5 + 18, 20, 16, 16, "§9↑", translate.translateKey("stackem.button.moveup")));
 
 
         this.buttonToggle.enabled = false;
@@ -105,22 +110,27 @@ public class GuiTextureStack extends GuiScreen {
                 return;
             }
 
-            if (button.id == -3) {
+            if(button.id == -3) {
+                this.mc.displayGuiScreen(new GuiCharMap(this));
+                return;
+            }
+
+            if (button.id == -103) {
                 this.moveUpElement(slotManager.selectedIndex);
                 return;
             }
 
-            if (button.id == -4) {
+            if (button.id == -104) {
                 this.moveDownElement(slotManager.selectedIndex);
                 return;
             }
 
-            if (button.id == -5) {
+            if (button.id == -105) {
                 this.slotManager.elementClicked(slotManager.selectedIndex, true);
                 return;
             }
 
-            if (button.id == -6) {
+            if (button.id == -106) {
                 final String website = sequoiaCache.get(this.slotManager.selectedIndex).getWebsite();
                 if (StackEm.isValidWebsite(website)) {
                     try {

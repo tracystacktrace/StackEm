@@ -1,6 +1,7 @@
 # general/gui
 stackem.gui.done=§c§lSAVE§r & Exit
 stackem.gui.folder=Open texture packs folder
+stackem.gui.charmap=Open CharMap
 
 stackem.gui.hint1=Double-click a texture pack to include/remove
 stackem.gui.hint2=Only "§e.zip§r" texturepacks are §esupported§r!
@@ -17,6 +18,10 @@ stackem.button.movedown=Move down
 stackem.button.website.0=Open texturepack website
 stackem.button.website.1=Author: %s
 stackem.button.website.2=Author: %s (click to open website)
+
+# charmap
+stackem.charmap.page=[page %s/%s]
+stackem.charmap.close=Go Back
 
 # categories
 stackem.category.audio=§e♫ Audio
