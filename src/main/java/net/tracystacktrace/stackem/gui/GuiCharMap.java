@@ -30,15 +30,23 @@ public class GuiCharMap extends GuiScreen {
 
     private final GuiButton[] charmapButtons = new GuiButton[16 * 16];
     private final char[][] charmapSets = new char[FONT_IDENTIFIERS.length][];
+    private final String clickAtCharString;
 
+    //page properties
     private String titlePage = "";
+    private byte index = 0;
     private GuiButton buttonLeft;
     private GuiButton buttonRight;
-    private byte index = 0;
+
+    //single char properties
+    private int selectedChar = -1;
+    private String[] selectedCharDetails;
+
 
     public GuiCharMap(GuiScreen parentScreen) {
         this.parentScreen = parentScreen;
         this.fetchFontTxtFile();
+        this.clickAtCharString = StringTranslate.getInstance().translateKey("stackem.charmap.detail.empty");
     }
 
     @Override
@@ -62,9 +70,9 @@ public class GuiCharMap extends GuiScreen {
     }
 
     @Override
-    protected void actionPerformed(GuiButton guiButton) {
-        if(guiButton.enabled) {
-            if(guiButton.id == -1) {
+    protected void actionPerformed(GuiButton button) {
+        if(button.enabled) {
+            if(button.id == -1) {
                 if(this.index > 0) {
                     this.index--;
                     this.moveToPage(this.index);
@@ -72,7 +80,7 @@ public class GuiCharMap extends GuiScreen {
                 return;
             }
 
-            if(guiButton.id == -2) {
+            if(button.id == -2) {
                 if(this.index + 1 < FONT_IDENTIFIERS.length) {
                     this.index++;
                     this.moveToPage(this.index);
@@ -80,14 +88,32 @@ public class GuiCharMap extends GuiScreen {
                 return;
             }
 
-            if(guiButton.id == -3) {
+            if(button.id == -3) {
                 this.mc.displayGuiScreen(this.parentScreen);
                 return;
             }
 
 
-            if(guiButton.id >= 0 && guiButton.id < 256) {
+            if(button.id >= 0 && button.id < 256) {
+                if(this.selectedChar != -1) {
+                    this.charmapButtons[this.selectedChar].displayString = Character.toString(this.charmapSets[index][this.selectedChar]);
+                }
 
+                this.selectedChar = button.id;
+
+                final char val = this.charmapSets[index][this.selectedChar];
+
+                this.charmapButtons[this.selectedChar].displayString = "§b" + val;
+
+                final StringTranslate translate = StringTranslate.getInstance();
+                this.selectedCharDetails = new String[] {
+                        translate.translateKey("stackem.charmap.detail.1"),
+                        translate.translateKeyFormat("stackem.charmap.detail.2", String.format("\\u%04x", (int) val)),
+                        translate.translateKeyFormat("stackem.charmap.detail.3", fontRenderer.getCharWidth(val)),
+                };
+
+                GuiScreen.setClipboardString(Character.toString(val));
+                return;
             }
         }
     }
@@ -96,9 +122,20 @@ public class GuiCharMap extends GuiScreen {
     public void drawScreen(float mouseX, float mouseY, float deltaTicks) {
         this.drawDefaultBackground();
 
-        fontRenderer.drawString("CharMap", 5, 11, 0xFFFFFFFF);
+        fontRenderer.drawString("§2Char§cMap", 5, 11, 0xFFFFFFFF);
         fontRenderer.drawString(this.titlePage, 5, 23, 0xFFFFFFFF);
-        fontRenderer.drawString(FONT_IDENTIFIERS[index], 5, 47, 0xFFFFFFFF);
+
+        final String[] split1 = FONT_IDENTIFIERS[index].split(" - ");
+        fontRenderer.drawString(split1[0], 5, 47, 0xFFFFFFFF);
+        fontRenderer.drawString(split1[1], 5, 59, 0xFFFFFFFF);
+
+        if(this.selectedChar != -1) {
+            for(int i = 0; i < this.selectedCharDetails.length; i++) {
+                fontRenderer.drawString(this.selectedCharDetails[i], 5, 83 + (i * 12), 0xFFFFFFFF);
+            }
+        } else {
+            fontRenderer.drawString(this.clickAtCharString, 5, 83, 0xFFFFFFFF);
+        }
 
         super.drawScreen(mouseX, mouseY, deltaTicks);
     }
@@ -123,6 +160,8 @@ public class GuiCharMap extends GuiScreen {
     }
 
     private void moveToPage(int i) {
+        this.selectedChar = -1;
+        this.selectedCharDetails = null;
         this.buttonLeft.enabled = i > 0;
         this.buttonRight.enabled = (i + 1) < this.charmapSets.length;
 

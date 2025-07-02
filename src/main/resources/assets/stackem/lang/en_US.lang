@@ -23,6 +23,11 @@ stackem.button.website.2=Author: %s (click to open website)
 stackem.charmap.page=[page %s/%s]
 stackem.charmap.close=Go Back
 
+stackem.charmap.detail.empty=§eClick at char for details
+stackem.charmap.detail.1=§eCopied to Clipboard!
+stackem.charmap.detail.2=Unicode Escape: %s
+stackem.charmap.detail.3=Character Width: %s
+
 # categories
 stackem.category.audio=§e♫ Audio
 stackem.category.blocks=§1⛏ Blocks
