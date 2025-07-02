@@ -39,8 +39,8 @@ public class StackEm extends Mod {
     }
 
     public static String[] unpackSaveString(String input) {
-        int start = input.indexOf('[');
-        int end = input.indexOf(']');
+        int start = input.indexOf('{');
+        int end = input.indexOf('}');
 
         if (start == -1 || end == -1 || !input.contains("stackem")) {
             return new String[0];
@@ -51,9 +51,9 @@ public class StackEm extends Mod {
 
     public static String packSaveString(String[] input) {
         if (input == null || input.length < 1) {
-            return "stackem[]";
+            return "stackem{}";
         }
-        return "stackem[" + String.join(";", input) + "]";
+        return "stackem{" + String.join(";", input) + "}";
     }
 
     public static boolean isValidWebsite(String website) {
