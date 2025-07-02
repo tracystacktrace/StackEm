@@ -1,4 +1,6 @@
-package net.tracystacktrace.stackem.hack;
+package net.tracystacktrace.stackem.tools;
+
+import org.jetbrains.annotations.NotNull;
 
 /**
  * This is a set of quick RNGs (right now there's only one afaik)
@@ -35,7 +37,7 @@ public final class QuickRNG {
         return (int) (min + (Math.random() * ((max - min) + 1)));
     }
 
-    public static String getRandomIdentifier() {
+    public static @NotNull String getRandomIdentifier() {
         return "stackem" + getRandomDigits(5);
     }
 }

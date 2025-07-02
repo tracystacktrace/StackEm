@@ -1,6 +1,6 @@
 package net.tracystacktrace.stackem.processor.moon;
 
-import net.tracystacktrace.stackem.hack.QuickRNG;
+import net.tracystacktrace.stackem.tools.QuickRNG;
 import org.jetbrains.annotations.Nullable;
 
 public enum EnumMoonCycle {
@@ -22,14 +22,14 @@ public enum EnumMoonCycle {
                 return 0;
             }
             case DEFAULT -> {
-                return ((int)(timeTicks / 24000L)) % total;
+                return ((int) (timeTicks / 24000L)) % total;
             }
             case REVERSE -> {
-                final int phase = ((int)(timeTicks / 24000L)) % total;
+                final int phase = ((int) (timeTicks / 24000L)) % total;
                 return (total - phase) % total;
             }
             case RANDOM -> {
-                return QuickRNG.getBetween((int)(timeTicks / 24000L), 0, total);
+                return QuickRNG.getBetween((int) (timeTicks / 24000L), 0, total);
             }
             default -> {
                 return -1;
@@ -38,11 +38,11 @@ public enum EnumMoonCycle {
     }
 
     public static @Nullable EnumMoonCycle getType(String name) {
-        if(name == null || name.isEmpty()) {
+        if (name == null || name.isEmpty()) {
             return null;
         }
-        for(EnumMoonCycle cycle : values()) {
-            if(cycle.id.equalsIgnoreCase(name)) {
+        for (EnumMoonCycle cycle : values()) {
+            if (cycle.id.equalsIgnoreCase(name)) {
                 return cycle;
             }
         }

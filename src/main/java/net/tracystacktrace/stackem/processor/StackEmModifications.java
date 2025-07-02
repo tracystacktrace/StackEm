@@ -8,8 +8,8 @@ import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
-import net.tracystacktrace.stackem.processor.moon.MoonCycleCooker;
 import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
+import net.tracystacktrace.stackem.processor.moon.MoonCycleCooker;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -64,7 +64,7 @@ public final class StackEmModifications {
         }
 
         //stackem.moon.json
-        if(stacked.checkIfFileExists("/stackem.moon.json")) {
+        if (stacked.checkIfFileExists("/stackem.moon.json")) {
             String collectedJsonString = null;
             try (InputStream inputStream = stacked.getResourceAsStream("/stackem.moon.json");
                  BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
@@ -74,9 +74,9 @@ public final class StackEmModifications {
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
             }
 
-            if(collectedJsonString != null && !collectedJsonString.isEmpty()) {
+            if (collectedJsonString != null && !collectedJsonString.isEmpty()) {
                 CelestialMeta metadata = MoonCycleCooker.read(collectedJsonString);
-                if(metadata != null) {
+                if (metadata != null) {
                     stacked.getDeepMeta().setMoonData(metadata);
                     StackEm.LOGGER.info("Loaded custom moon: " + metadata.path);
                 }

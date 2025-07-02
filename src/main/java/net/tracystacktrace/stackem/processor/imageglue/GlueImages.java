@@ -5,8 +5,8 @@ import net.minecraft.client.renderer.block.TexturePackDefault;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
-import net.tracystacktrace.stackem.hack.ImageHelper;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
+import net.tracystacktrace.stackem.tools.ImageHelper;
 
 import javax.imageio.ImageIO;
 import java.awt.*;

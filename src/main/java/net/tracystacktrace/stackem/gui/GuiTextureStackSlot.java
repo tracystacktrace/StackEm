@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.world.Tessellator;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
-import net.tracystacktrace.stackem.hack.StringFeatures;
+import net.tracystacktrace.stackem.tools.StringFeatures;
 
 public class GuiTextureStackSlot extends GuiSlot {
 

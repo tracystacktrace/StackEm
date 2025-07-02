@@ -1,7 +1,7 @@
 package net.tracystacktrace.stackem.impl;
 
-import net.tracystacktrace.stackem.processor.moon.EnumMoonCycle;
 import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
+import net.tracystacktrace.stackem.processor.moon.EnumMoonCycle;
 
 public class DeepMeta {
 
@@ -27,14 +27,6 @@ public class DeepMeta {
 
     public int getMoonVerticals() {
         return this.moonData.number_y;
-    }
-
-    public boolean isCustomMoon() {
-        return moonData != null;
-    }
-
-    public CelestialMeta getMoonData() {
-        return this.moonData;
     }
 
     public void setMoonData(CelestialMeta metadata) {

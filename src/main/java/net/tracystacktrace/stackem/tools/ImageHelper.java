@@ -1,6 +1,8 @@
-package net.tracystacktrace.stackem.hack;
+package net.tracystacktrace.stackem.tools;
 
 import net.minecraft.client.renderer.block.ITexturePack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -12,11 +14,14 @@ import java.util.zip.ZipFile;
 
 public final class ImageHelper {
 
-    public static boolean isValidTexture(BufferedImage check) {
+    public static boolean isValidTexture(@Nullable BufferedImage check) {
         return check != null && check.getWidth() == check.getHeight();
     }
 
-    public static BufferedImage scaleImage(BufferedImage original, int targetWidth, int targetHeight) {
+    public static BufferedImage scaleImage(
+            @NotNull BufferedImage original,
+            int targetWidth, int targetHeight
+    ) {
         Image resultingImage = original.getScaledInstance(targetWidth, targetHeight, Image.SCALE_DEFAULT);
         BufferedImage outputImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
 
@@ -27,7 +32,10 @@ public final class ImageHelper {
         return outputImage;
     }
 
-    public static BufferedImage readImage(ITexturePack texturePack, String name) {
+    public static @NotNull BufferedImage readImage(
+            @NotNull ITexturePack texturePack,
+            @NotNull String name
+    ) {
         try {
             final InputStream inputStream = texturePack.getResourceAsStream(name);
             BufferedImage image = ImageIO.read(inputStream);
@@ -38,7 +46,10 @@ public final class ImageHelper {
         }
     }
 
-    public static BufferedImage readImage(ZipFile zipFile, String name) {
+    public static @Nullable BufferedImage readImage(
+            @NotNull ZipFile zipFile,
+            @NotNull String name
+    ) {
         try {
             final ZipEntry entry = zipFile.getEntry(name.substring(1));
             if (entry != null) {

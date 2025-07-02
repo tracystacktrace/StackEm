@@ -1,9 +1,11 @@
 
 ## [0.3.4] - TBA
 
-- Refurbished resource debug output, now it looks fancier
 - Experimental `stackem.moon.json` with the support of moon cycles!
 - Added a button in GUI to import `.zip` files from local storage
+
+- Refurbished resource debug output, now it looks fancier
+- Fixed a typo: it's generic resources, not only audio stuff (in debug)
 
 ## [0.3.3] - 2025-06-29
 

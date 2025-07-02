@@ -1,7 +1,7 @@
 package net.tracystacktrace.stackem.processor.category;
 
 import net.minecraft.common.util.i18n.StringTranslate;
-import net.tracystacktrace.stackem.hack.StringFeatures;
+import net.tracystacktrace.stackem.tools.StringFeatures;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ public enum EnumCategory {
     ANIMATION("animation"),
     BLOCKS("blocks"),
     ENTITIES("entities"),
+    ENVIRONMENT("environment"),
     FONTS("fonts"),
     GUI("gui"),
     HUD("hud"),
@@ -34,20 +35,15 @@ public enum EnumCategory {
             return null;
         }
 
-        return switch (id.trim().toLowerCase()) {
-            case "audio" -> AUDIO;
-            case "animation" -> ANIMATION;
-            case "blocks" -> BLOCKS;
-            case "entities" -> ENTITIES;
-            case "fonts" -> FONTS;
-            case "gui" -> GUI;
-            case "hud" -> HUD;
-            case "items" -> ITEMS;
-            case "paintings" -> PAINTINGS;
-            case "qol" -> QOL;
-            case "queer" -> QUEER;
-            default -> null;
-        };
+        final String lmfao = id.trim();
+
+        for (EnumCategory category : values()) {
+            if (category.id.equalsIgnoreCase(lmfao)) {
+                return category;
+            }
+        }
+
+        return null;
     }
 
     @SuppressWarnings({"ForLoopReplaceableByForEach", "ManualArrayToCollectionCopy", "UseBulkOperation"})
@@ -70,6 +66,6 @@ public enum EnumCategory {
             return null;
         }
 
-        return StringFeatures.provideCategoryCombinations(names, 56).toArray(new String[0]);
+        return StringFeatures.provideCategoryCombinations(names, 56);
     }
 }

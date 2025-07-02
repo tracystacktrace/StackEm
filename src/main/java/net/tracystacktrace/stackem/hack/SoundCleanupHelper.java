@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.audio;
+package net.tracystacktrace.stackem.hack;
 
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.client.sound.SoundPool;
@@ -6,6 +6,9 @@ import net.tracystacktrace.stackem.mixins.AccessorSoundManager;
 import net.tracystacktrace.stackem.mixins.AccessorSoundPool;
 import paulscode.sound.SoundSystem;
 
+/**
+ * A small hijack stuff
+ */
 public class SoundCleanupHelper {
 
     public static void cleanupSoundSources(SoundManager manager) {
@@ -25,7 +28,10 @@ public class SoundCleanupHelper {
         cleanSound(soundSystem, accessor.stackem$sp9());
     }
 
-    static void cleanSound(SoundSystem soundSystem, SoundPool pool) {
+    static void cleanSound(
+            final SoundSystem soundSystem,
+            final SoundPool pool
+    ) {
         ((AccessorSoundPool) pool).stackem$entryList().forEach(entry -> {
             soundSystem.unloadSound(entry.soundName);
             soundSystem.removeSource(entry.soundName);

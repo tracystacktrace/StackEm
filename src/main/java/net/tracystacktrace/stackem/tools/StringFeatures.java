@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.hack;
+package net.tracystacktrace.stackem.tools;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -24,7 +24,7 @@ public final class StringFeatures {
         return result;
     }
 
-    public static List<String> provideCategoryCombinations(List<String> input, int maxLength) {
+    public static String[] provideCategoryCombinations(List<String> input, int maxLength) {
         final List<String> strings = new ArrayList<>(input);
         strings.sort(Comparator.comparingInt(String::length));
 
@@ -65,7 +65,7 @@ public final class StringFeatures {
             result.add(String.join(" §r§7|§r ", currentGroup));
         }
 
-        return result;
+        return result.toArray(new String[0]);
     }
 
     private static String truncateString(String str, int maxLength) {

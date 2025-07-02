@@ -190,6 +190,6 @@ public class TexturePackStacked extends TexturePackBase {
     }
 
     public boolean isCustomMoon() {
-        return this.deepMeta.isCustomMoon();
+        return this.deepMeta.moonData != null;
     }
 }

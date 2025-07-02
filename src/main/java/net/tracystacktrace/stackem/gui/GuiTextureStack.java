@@ -6,11 +6,11 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.hack.QuickRNG;
 import net.tracystacktrace.stackem.hack.SmartHacks;
+import net.tracystacktrace.stackem.hack.SoundCleanupHelper;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
-import net.tracystacktrace.stackem.processor.audio.SoundCleanupHelper;
+import net.tracystacktrace.stackem.tools.QuickRNG;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
