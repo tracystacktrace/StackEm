@@ -110,7 +110,7 @@ public class GuiTextureStack extends GuiScreen {
                 return;
             }
 
-            if(button.id == -3) {
+            if (button.id == -3) {
                 this.mc.displayGuiScreen(new GuiCharMap(this));
                 return;
             }

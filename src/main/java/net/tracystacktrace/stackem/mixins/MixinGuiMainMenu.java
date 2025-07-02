@@ -3,7 +3,6 @@ package net.tracystacktrace.stackem.mixins;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiMainMenu;
 import net.minecraft.client.gui.GuiScreen;
-import net.minecraft.client.gui.GuiTexturePacks;
 import net.tracystacktrace.stackem.gui.GuiTextureStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

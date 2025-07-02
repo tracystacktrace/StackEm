@@ -9,6 +9,7 @@
 
 
 - Refurbished resource debug output, now it looks fancier
+- Fixed a bug where sometimes texturepacks aren't loaded in order
 - Fixed a bug where a main menu texturepacks button wouldn't load modified gui
 - Fixed a typo: it's generic resources, not only audio stuff (in debug)
 

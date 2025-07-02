@@ -6,7 +6,6 @@ import net.minecraft.client.renderer.block.TexturePackList;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.tools.QuickRNG;
-import org.lwjgl.Sys;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -45,7 +44,7 @@ public abstract class MixinTexturePackList {
         if (this.mc.gameSettings.texturePack.startsWith("stackem")) {
             final String[] candidates = StackEm.unpackSaveString(this.mc.gameSettings.texturePack);
             List<File> files = getTexturePackDirContents();
-            
+
             Arrays.stream(candidates)
                     .map(c -> files.stream()
                             .filter(f -> f.getName().toLowerCase().endsWith(".zip"))

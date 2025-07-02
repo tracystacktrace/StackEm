@@ -10,6 +10,7 @@ This is achieved by replacing a standard `ITexturePack` instance with custom one
 
 ![Texturepacks menu GUI](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_1.png)
 ![Showcase of gluing system](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_2.png)
+![CharMap](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_3.png)
 
 ## Features
 
