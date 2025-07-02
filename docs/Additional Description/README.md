@@ -70,6 +70,7 @@ A list of in-built categories:
 - `animation`: Adds/changes animation to blocks/items
 - `blocks`: Changes block(s) textures
 - `entities`: Changes entity(ies) textures
+- `environment`: Changes environment (sky, moon, sun, etc.) textures
 - `fonts`: Changes font(s) textures
 - `gui`: Changes GUI (interface) textures
 - `hud`: Changes HUD (in-game) textures

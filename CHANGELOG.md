@@ -4,9 +4,8 @@
 **[View changes between 0.3.3 with 0.3.4](https://github.com/tracystacktrace/StackEm/compare/0.3.3...0.3.4)**
 
 - Experimental `stackem.moon.json` with the support of moon cycles!
-- Also, there is an equivalent of `stackem.sun.json`, but it changes the Sun!
+- Also, there is an equivalent `stackem.sun.json` that modifies the Sun!
 - Added CharMap interface that is... basically a list of possible standard font characters
-- Added a button in GUI to import `.zip` files from local storage
 
 
 - Refurbished resource debug output, now it looks fancier
