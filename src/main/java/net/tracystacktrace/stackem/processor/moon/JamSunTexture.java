@@ -4,18 +4,27 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParseException;
 import com.google.gson.JsonParser;
 import net.tracystacktrace.stackem.StackEm;
+import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.processor.IJam;
+import org.jetbrains.annotations.NotNull;
 
-public final class MoonCycleCooker {
+public class JamSunTexture implements IJam {
 
-    public static CelestialMeta read(String content) {
+    @Override
+    public @NotNull String getPath() {
+        return "/stackem.sun.json";
+    }
+
+    @Override
+    public void process(@NotNull TexturePackStacked stacked, @NotNull String rawJsonContent) {
         try {
-            final JsonObject root = JsonParser.parseString(content).getAsJsonObject();
+            final JsonObject root = JsonParser.parseString(rawJsonContent).getAsJsonObject();
 
-            String texture_path = "/textures/environment/moon_phases.png";
-            EnumMoonCycle cycle = EnumMoonCycle.DEFAULT;
+            String texture_path = "/textures/environment/sun.png";
+            EnumCelestialCycle cycle = EnumCelestialCycle.STATIC;
             float scale = 1.0f;
-            int number_x = 4;
-            int number_y = 2;
+            int number_x = 1;
+            int number_y = 1;
 
             if (root.has("path")) {
                 String value1 = root.get("path").getAsString();
@@ -30,7 +39,7 @@ public final class MoonCycleCooker {
             if (root.has("cycle")) {
                 final String value2 = root.get("cycle").getAsString();
                 if (!value2.isEmpty()) {
-                    final EnumMoonCycle temp = EnumMoonCycle.getType(value2);
+                    final EnumCelestialCycle temp = EnumCelestialCycle.getType(value2);
                     if (temp != null) cycle = temp;
                 }
             }
@@ -52,11 +61,11 @@ public final class MoonCycleCooker {
                 if (value4 > 0) number_y = value4;
             }
 
-            return new CelestialMeta(texture_path, cycle, scale, number_x, number_y);
+            stacked.getDeepMeta().setSunData(new CelestialMeta(texture_path, cycle, scale, number_x, number_y));
         } catch (JsonParseException e) {
-            StackEm.LOGGER.severe("Failed to process stackem.moon.json for top texturepack");
-            StackEm.LOGGER.throwing("MoonCycleCooker", "read", e);
-            return null;
+            StackEm.LOGGER.severe("Failed to process stackem.sun.json for top texturepack");
+            StackEm.LOGGER.throwing("JamSunTexture", "read", e);
         }
     }
+
 }

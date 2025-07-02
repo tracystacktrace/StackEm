@@ -8,8 +8,8 @@ import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
-import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
-import net.tracystacktrace.stackem.processor.moon.MoonCycleCooker;
+import net.tracystacktrace.stackem.processor.moon.JamMoonTexture;
+import net.tracystacktrace.stackem.processor.moon.JamSunTexture;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -22,6 +22,10 @@ import java.util.stream.Collectors;
  * A main entrypoint for most texture/sound modifications handled by this mod
  */
 public final class StackEmModifications {
+
+    public static final IJam[] JAMS = new IJam[]{
+            new JamMoonTexture(), new JamSunTexture()
+    };
 
     /**
      * This is the actual code you should call upon refreshing textures
@@ -54,35 +58,36 @@ public final class StackEmModifications {
 
             if (SmartHacks.getTextureMap(renderEngine).containsKey(value.texture)) {
                 //hack solution - simply overwrite the texture with the in-built code
-                int id = SmartHacks.getTextureMap(renderEngine).getInt(value.texture);
+                final int id = SmartHacks.getTextureMap(renderEngine).getInt(value.texture);
                 renderEngine.setupTexture(image, id);
             } else {
                 //no id present - we will add it then
-                int i = renderEngine.allocateAndSetupTexture(image);
-                SmartHacks.getTextureMap(renderEngine).put(value.texture, i);
+                final int loc = renderEngine.allocateAndSetupTexture(image);
+                SmartHacks.getTextureMap(renderEngine).put(value.texture, loc);
             }
         }
 
-        //stackem.moon.json
-        if (stacked.checkIfFileExists("/stackem.moon.json")) {
+        //read through different
+        for (IJam jam : JAMS) {
+            if (!stacked.checkIfFileExists(jam.getPath())) {
+                continue;
+            }
+
             String collectedJsonString = null;
-            try (InputStream inputStream = stacked.getResourceAsStream("/stackem.moon.json");
+            try (InputStream inputStream = stacked.getResourceAsStream(jam.getPath());
                  BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 collectedJsonString = reader.lines().collect(Collectors.joining());
             } catch (IOException e) {
-                StackEm.LOGGER.severe("Couldn't read file (stackem.moon.json), ignoring...");
+                StackEm.LOGGER.severe("Couldn't read file: " + jam.getPath());
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
+                continue;
             }
 
-            if (collectedJsonString != null && !collectedJsonString.isEmpty()) {
-                CelestialMeta metadata = MoonCycleCooker.read(collectedJsonString);
-                if (metadata != null) {
-                    stacked.getDeepMeta().setMoonData(metadata);
-                    StackEm.LOGGER.info("Loaded custom moon: " + metadata.path);
-                }
+            if (!collectedJsonString.isEmpty()) {
+                jam.process(stacked, collectedJsonString);
+                StackEm.LOGGER.info("Loaded JAM: " + jam.getPath());
             }
         }
-
     }
 
 }

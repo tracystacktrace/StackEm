@@ -9,7 +9,7 @@ import paulscode.sound.SoundSystem;
 /**
  * A small hijack stuff
  */
-public class SoundCleanupHelper {
+public final class SoundCleanupHelper {
 
     public static void cleanupSoundSources(SoundManager manager) {
         final SoundSystem soundSystem = ((AccessorSoundManager) manager).stackem$getSoundSystem();

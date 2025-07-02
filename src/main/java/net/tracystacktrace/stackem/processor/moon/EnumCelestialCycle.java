@@ -3,7 +3,7 @@ package net.tracystacktrace.stackem.processor.moon;
 import net.tracystacktrace.stackem.tools.QuickRNG;
 import org.jetbrains.annotations.Nullable;
 
-public enum EnumMoonCycle {
+public enum EnumCelestialCycle {
     STATIC("static"),
     DEFAULT("default"),
     REVERSE("reverse"),
@@ -11,12 +11,12 @@ public enum EnumMoonCycle {
 
     public final String id;
 
-    EnumMoonCycle(String id) {
+    EnumCelestialCycle(String id) {
         this.id = id;
     }
 
     //total - total amount of moon cycles available
-    public static int getMoon(EnumMoonCycle cycle, long timeTicks, int total) {
+    public static int getMoon(EnumCelestialCycle cycle, long timeTicks, int total) {
         switch (cycle) {
             case STATIC -> {
                 return 0;
@@ -37,11 +37,11 @@ public enum EnumMoonCycle {
         }
     }
 
-    public static @Nullable EnumMoonCycle getType(String name) {
+    public static @Nullable EnumCelestialCycle getType(String name) {
         if (name == null || name.isEmpty()) {
             return null;
         }
-        for (EnumMoonCycle cycle : values()) {
+        for (EnumCelestialCycle cycle : values()) {
             if (cycle.id.equalsIgnoreCase(name)) {
                 return cycle;
             }

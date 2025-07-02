@@ -1,36 +1,39 @@
 package net.tracystacktrace.stackem.impl;
 
 import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
-import net.tracystacktrace.stackem.processor.moon.EnumMoonCycle;
+import net.tracystacktrace.stackem.processor.moon.EnumCelestialCycle;
 
 public class DeepMeta {
 
-    protected CelestialMeta moonData;
+    public CelestialMeta moonData;
+    public CelestialMeta sunData;
 
     /* moon data related stuff */
 
     public int getMoonCycle(long ticks) {
-        return EnumMoonCycle.getMoon(moonData.cycle, ticks, moonData.total);
+        return EnumCelestialCycle.getMoon(moonData.cycle, ticks, moonData.total);
     }
 
     public float getMoonScale() {
         return 20.0F * moonData.scale;
     }
 
-    public String getMoonTexture() {
-        return this.moonData.path;
-    }
-
-    public int getMoonHorizontals() {
-        return this.moonData.number_x;
-    }
-
-    public int getMoonVerticals() {
-        return this.moonData.number_y;
-    }
-
     public void setMoonData(CelestialMeta metadata) {
         this.moonData = metadata;
+    }
+
+    /* sun data related stuff */
+
+    public int getSunCycle(long ticks) {
+        return EnumCelestialCycle.getMoon(sunData.cycle, ticks, sunData.total);
+    }
+
+    public float getSunScale() {
+        return 30.0F * sunData.scale;
+    }
+
+    public void setSunData(CelestialMeta metadata) {
+        this.sunData = metadata;
     }
 
     /* general methods */
