@@ -6,6 +6,7 @@
   "mixins": [
     "AccessorSoundManager",
     "AccessorSoundPool",
+    "MixinGuiMainMenu",
     "MixinGuiVideoSettings",
     "MixinMinecraft",
     "MixinRenderEngine",
