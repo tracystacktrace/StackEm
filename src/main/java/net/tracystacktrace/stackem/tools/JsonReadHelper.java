@@ -14,20 +14,20 @@ public final class JsonReadHelper {
 
     public static int[] readIntArray(@NotNull JsonArray array) {
         int[] result = new int[array.size()];
-        for(int i = 0; i < result.length; i++) {
+        for (int i = 0; i < result.length; i++) {
             result[i] = array.get(i).getAsInt();
         }
         return result;
     }
 
-    public static  <T> T[] readObjectArray(JsonObject root, String arrayName, Function<JsonObject, T> generator, T[] empty) {
-        if(arrayName == null || arrayName.isEmpty() || !root.has(arrayName)) {
+    public static <T> T[] readObjectArray(JsonObject root, String arrayName, Function<JsonObject, T> generator, T[] empty) {
+        if (arrayName == null || arrayName.isEmpty() || !root.has(arrayName)) {
             return null;
         }
         final Set<T> collector = new HashSet<>();
 
-        for(JsonElement element : root.get(arrayName).getAsJsonArray()) {
-            if(!element.isJsonObject()) {
+        for (JsonElement element : root.get(arrayName).getAsJsonArray()) {
+            if (!element.isJsonObject()) {
                 continue;
             }
             try {

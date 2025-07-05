@@ -12,7 +12,7 @@ import paulscode.sound.SoundSystem;
 public final class SoundCleanupHelper {
 
     public static void cleanupSoundSources(SoundManager manager) {
-        final SoundSystem soundSystem = ((AccessorSoundManager)manager).stackem$getSoundSystem();
+        final SoundSystem soundSystem = ((AccessorSoundManager) manager).stackem$getSoundSystem();
         final AccessorSoundManager accessor = (AccessorSoundManager) manager;
 
         soundSystem.removeTemporarySources();

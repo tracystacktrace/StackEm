@@ -11,8 +11,4 @@ public interface IJam {
             @NotNull TexturePackStacked stacked,
             @NotNull String rawJsonContent
     );
-
-    default boolean readEveryStack() {
-        return false;
-    }
 }

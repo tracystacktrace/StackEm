@@ -1,7 +1,6 @@
 package net.tracystacktrace.stackem.mixins;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.processor.StackEmModifications;
 import org.lwjgl.input.Keyboard;
@@ -17,7 +16,7 @@ public class MixinMinecraft {
             target = "Lnet/minecraft/client/gui/FontRenderer;setBidiFlag(Z)V"))
     private void stackem$injectPreloadTextures(CallbackInfo ci) {
         StackEmModifications.fetchTextureModifications();
-        StackEmModifications.fetchIconModifications();
+        //StackEmModifications.fetchIconModifications();
     }
 
     @Inject(method = "run", at = @At(

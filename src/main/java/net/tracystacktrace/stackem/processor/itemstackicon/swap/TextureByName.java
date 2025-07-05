@@ -12,7 +12,7 @@ public class TextureByName {
     public static final byte EQUALS = 0;
     public static final byte EQUALS_IGNORE_CASE = 1;
     public static final byte CONTAINS = 2;
-    public static final byte REGEX = 3;
+    public static final byte REGEX = 3; //todo: add regex support
 
     public final byte compareCode;
     public final String targetString;

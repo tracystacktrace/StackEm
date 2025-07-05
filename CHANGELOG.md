@@ -5,6 +5,8 @@
 
 - Added support for custom texture swap of items based on either name or metadata value
 - Fixed a bug where modifications occur even with disabled texturepacks
+- Optimized a code related to receiving info about texturepack folder zip files
+- Enforced UTF-8, so color chars could be read correctly
 - Updated toolchain to FoxLoader `2.0-alpha29` (ReIndev `2.9_03`)
 
 ## [0.3.4] - 2025-07-03

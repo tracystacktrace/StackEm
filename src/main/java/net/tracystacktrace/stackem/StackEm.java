@@ -5,6 +5,7 @@ import com.fox2code.foxloader.event.client.GuiItemInfoEvent;
 import com.fox2code.foxloader.loader.Mod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.common.util.i18n.StringTranslate;
+import net.tracystacktrace.stackem.impl.DeepMeta;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.category.DescriptionFileCooker;
@@ -26,6 +27,10 @@ public class StackEm extends Mod {
 
     public static TexturePackStacked getContainerInstance() {
         return (TexturePackStacked) Minecraft.getInstance().texturePackList.getSelectedTexturePack();
+    }
+
+    public static DeepMeta getContainerDeepMeta() {
+        return getContainerInstance().getDeepMeta();
     }
 
     public static void toggleDebug() {

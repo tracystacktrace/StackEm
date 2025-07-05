@@ -8,7 +8,6 @@ import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
-import net.tracystacktrace.stackem.processor.itemstackicon.GlobalSwapCandidates;
 import net.tracystacktrace.stackem.processor.itemstackicon.JamItemStackTexture;
 import net.tracystacktrace.stackem.processor.moon.JamMoonTexture;
 import net.tracystacktrace.stackem.processor.moon.JamSunTexture;
@@ -29,8 +28,10 @@ import java.util.zip.ZipFile;
 public final class StackEmModifications {
 
     public static final IJam[] JAMS = new IJam[]{
-            new JamMoonTexture(), new JamSunTexture(), new JamItemStackTexture()
+            new JamMoonTexture(), new JamSunTexture()
     };
+
+    private static final IJam JAM_IS_SWAP = new JamItemStackTexture();
 
     /**
      * This is the actual code you should call upon refreshing textures
@@ -78,15 +79,12 @@ public final class StackEmModifications {
 
         //read through different ONLY-TOP jams
         for (IJam jam : JAMS) {
-            if (jam.readEveryStack()) {
-                continue;
-            }
 
             if (!stacked.checkIfFileExists(jam.getPath())) {
                 continue;
             }
 
-            String collectedJsonString = null;
+            String collectedJsonString;
             try (InputStream inputStream = stacked.getResourceAsStream(jam.getPath());
                  BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
                 collectedJsonString = reader.lines().collect(Collectors.joining());
@@ -104,13 +102,9 @@ public final class StackEmModifications {
     }
 
     public static void fetchIconModifications(RenderEngine render) {
-        //let reset custom icons
-        //GlobalSwapCandidates.flushEverything();
-
         if (render == null || StackEm.DEBUG_DISABLE) {
             return;
         }
-
         final TexturePackStacked stacked = StackEm.getContainerInstance();
 
         //no textures - no changes
@@ -119,22 +113,16 @@ public final class StackEmModifications {
         }
 
         //process EVERY-STACK jams
-        for (IJam jam : JAMS) {
-            if (!jam.readEveryStack()) {
-                continue;
-            }
+        for (ZipFile file : stacked.getZipFiles()) {
+            final ZipEntry entry = ZipFileHelper.getEntryFor(file, JAM_IS_SWAP.getPath());
+            if (entry == null) continue;
 
-            for (ZipFile file : stacked.getZipFiles()) {
-                final ZipEntry entry = ZipFileHelper.getEntryFor(file, jam.getPath());
-                if (entry == null) continue;
-
-                try {
-                    final String data = ZipFileHelper.readTextFile(file, entry);
-                    jam.process(stacked, data);
-                } catch (ZipFileHelper.CustomZipOperationException e) {
-                    StackEm.LOGGER.severe("Failed during JAM fetch: " + jam.getPath());
-                    StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
-                }
+            try {
+                final String data = ZipFileHelper.readTextFile(file, entry);
+                JAM_IS_SWAP.process(stacked, data);
+            } catch (ZipFileHelper.CustomZipOperationException e) {
+                StackEm.LOGGER.severe("Failed during JAM fetch: " + JAM_IS_SWAP.getPath());
+                StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
             }
         }
     }
