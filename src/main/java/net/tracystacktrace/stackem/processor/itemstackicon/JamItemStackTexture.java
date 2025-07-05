@@ -63,8 +63,8 @@ public class JamItemStackTexture implements IJam {
             return;
         }
 
-        final TextureByName[] textureByNames = JsonReadHelper.readObjectArray(object, "onname", TextureByName::fromJson, new TextureByName[0]);
-        final TextureByMetadata[] textureByMetadata = JsonReadHelper.readObjectArray(object, "onmeta", TextureByMetadata::fromJson, new TextureByMetadata[0]);
+        final TextureByName[] textureByNames = JsonReadHelper.readObjectArray(object, "onName", TextureByName::fromJson, new TextureByName[0]);
+        final TextureByMetadata[] textureByMetadata = JsonReadHelper.readObjectArray(object, "onMeta", TextureByMetadata::fromJson, new TextureByMetadata[0]);
 
         // dumb way to "prevent" excess swaps per single item id
         if (!GlobalSwapCandidates.CODEX.containsKey(targetItemID)) {

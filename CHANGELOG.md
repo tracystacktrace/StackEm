@@ -1,5 +1,7 @@
 
-## [0.3.5] - 2025-07-05
+## [0.3.5] - TBA
+
+**[View changes between 0.3.4 with 0.3.5](https://github.com/tracystacktrace/StackEm/compare/0.3.4...0.3.5)**
 
 - Added support for custom texture swap of items based on either name or metadata value
 - Fixed a bug where modifications occur even with disabled texturepacks

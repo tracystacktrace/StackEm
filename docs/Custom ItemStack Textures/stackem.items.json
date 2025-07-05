@@ -1,0 +1,36 @@
+{
+  "data": [
+    {
+      "item": "item.diamond_sword",
+
+      "onName": [
+        {
+          "equals": "Diamond Giant Sword",
+          "texture": "myitems/diamond_giant_sword"
+        }
+      ]
+    },
+    {
+      "item": "item.wooden_pickaxe",
+
+      "onMeta": [
+        {
+          "between": [0, 16],
+          "texture": "myitems/wooden_pickaxe_0"
+        },
+        {
+          "between": [17, 32],
+          "texture": "myitems/wooden_pickaxe_1"
+        },
+        {
+          "between": [33, 48],
+          "texture": "myitems/wooden_pickaxe_2"
+        },
+        {
+          "between": [49, 64],
+          "texture": "myitems/wooden_pickaxe_3"
+        }
+      ]
+    }
+  ]
+}
