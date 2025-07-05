@@ -10,9 +10,7 @@ import paulscode.sound.SoundSystem;
 public interface AccessorSoundManager {
 
     @Accessor("sndSystem")
-    static SoundSystem stackem$getSoundSystem() {
-        throw new AssertionError(null);
-    }
+    SoundSystem stackem$getSoundSystem();
 
     @Accessor("soundPoolSounds")
     SoundPool stackem$sp1();
