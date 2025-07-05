@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.zip.ZipFile;
 
-public class GlueImages {
+public final class GlueImages {
 
     public static class ImageGlueContainer {
         public BufferedImage original;

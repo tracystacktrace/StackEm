@@ -1,5 +1,5 @@
 
-## [0.3.4] - TBA
+## [0.3.4] - 2025-07-03
 
 **[View changes between 0.3.3 with 0.3.4](https://github.com/tracystacktrace/StackEm/compare/0.3.3...0.3.4)**
 

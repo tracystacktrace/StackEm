@@ -40,7 +40,7 @@ public final class StackEmModifications {
      * This is the actual code you should call upon refreshing textures
      */
     public static void fetchTextureModifications(RenderEngine renderEngine) {
-        if (renderEngine == null) {
+        if (renderEngine == null || StackEm.DEBUG_DISABLE) {
             return;
         }
 

@@ -7,7 +7,7 @@ import net.tracystacktrace.stackem.impl.TagTexturePack;
 import java.util.Objects;
 import java.util.stream.StreamSupport;
 
-public class DescriptionFileCooker {
+public final class DescriptionFileCooker {
 
     public static void read(TagTexturePack texturePack, String content) {
         try {
