@@ -8,14 +8,15 @@ import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.category.DescriptionFileCooker;
+import net.tracystacktrace.stackem.tools.ZipFileHelper;
+import org.lwjgl.input.Keyboard;
 
-import javax.imageio.ImageIO;
-import java.io.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
-import java.util.stream.Collectors;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class StackEm extends Mod {
@@ -41,8 +42,8 @@ public class StackEm extends Mod {
     }
 
     public static String[] unpackSaveString(String input) {
-        int start = input.indexOf('{');
-        int end = input.indexOf('}');
+        final int start = input.indexOf('[');
+        final int end = input.indexOf(']');
 
         if (start == -1 || end == -1 || !input.contains("stackem")) {
             return new String[0];
@@ -53,16 +54,16 @@ public class StackEm extends Mod {
 
     public static String packSaveString(String[] input) {
         if (input == null || input.length < 1) {
-            return "stackem{}";
+            return "stackem[]";
         }
-        return "stackem{" + String.join(";", input) + "}";
+        return "stackem[" + String.join(";", input) + "]";
     }
 
     public static boolean isValidWebsite(String website) {
         return website != null && (website.startsWith("https://") || website.startsWith("http://"));
     }
 
-    public static List<TagTexturePack> buildTexturePackList() {
+    public static List<TagTexturePack> fetchTexturepackList() {
         final File texturepacksDir = new File(Minecraft.getInstance().getMinecraftDir(), "texturepacks");
 
         if (!texturepacksDir.exists() || !texturepacksDir.isDirectory()) {
@@ -72,7 +73,7 @@ public class StackEm extends Mod {
         final List<TagTexturePack> collector = new ArrayList<>();
 
         for (File file : texturepacksDir.listFiles()) {
-            final TagTexturePack tagTexturePack = processFile(file);
+            final TagTexturePack tagTexturePack = fetchTexturepackFromZip(file);
             if (tagTexturePack != null) {
                 collector.add(tagTexturePack);
             }
@@ -81,84 +82,61 @@ public class StackEm extends Mod {
         return collector;
     }
 
-    public static TagTexturePack processFile(File file) {
-        final Object[] collect$1 = fetchDefaultObjects(file);
-
-        if (collect$1 == null) {
-            return null;
-        }
-
-        //safely handle data
-        if (collect$1[0] == null || ((String) collect$1[0]).isEmpty()) {
-            collect$1[0] = "";
-        }
-
-        if (collect$1[1] == null || ((String) collect$1[1]).isEmpty()) {
-            collect$1[1] = "";
-        }
-
-        final TagTexturePack tagTexturePack = new TagTexturePack(file, file.getName(), (String) collect$1[0], (String) collect$1[1]);
-
-        if (collect$1[2] != null) {
-            tagTexturePack.setThumbnail((java.awt.image.BufferedImage) collect$1[2]);
-        }
-
-        if (collect$1[3] != null) {
-            DescriptionFileCooker.read(tagTexturePack, (String) collect$1[3]);
-        }
-
-        return tagTexturePack;
-    }
-
-    private static Object[] fetchDefaultObjects(File file) {
+    private static TagTexturePack fetchTexturepackFromZip(File file) {
         //first line, second line, thumbnail image
-        final Object[] objects = new Object[4];
-        boolean canBeAdded = false;
+        try (final ZipFile zipFile = new ZipFile(file)) {
 
-        try {
-            ZipFile zipFile = new ZipFile(file);
+            //pack.txt of two strings
+            final String[] packTxtContent = ZipFileHelper.readTextFile(zipFile, "pack.txt", reader -> {
+                final String line1 = reader.readLine();
+                final String line2 = reader.readLine();
+                return new String[]{line1, line2};
+            });
 
-            //0 and 1 - pack.txt two strings
-            ZipEntry packTxt = zipFile.getEntry("pack.txt");
-            if (packTxt != null) {
-                try (InputStream inputStream = zipFile.getInputStream(packTxt); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-                    objects[0] = reader.readLine();
-                    objects[1] = reader.readLine();
-                    canBeAdded = true;
-                } catch (IOException ignored) {
-                }
+            if (packTxtContent == null) {
+                return null;
             }
 
+            //safely handle data
+            if (packTxtContent[0] == null || packTxtContent[0].isEmpty()) {
+                packTxtContent[0] = "";
+            }
+
+            if (packTxtContent[1] == null || packTxtContent[1].isEmpty()) {
+                packTxtContent[1] = "";
+            }
+
+            //build an instance
+            final TagTexturePack tagTexturePack = new TagTexturePack(file, file.getName(), packTxtContent[0], packTxtContent[1]);
+
             //2 - pack.png image (BufferedImage)
-            ZipEntry packPng = zipFile.getEntry("pack.png");
-            if (packPng != null) {
-                try (InputStream inputStream = zipFile.getInputStream(packPng)) {
-                    objects[2] = ImageIO.read(inputStream);
-                    canBeAdded = true;
-                } catch (IOException ignored) {
-                }
+            final BufferedImage packPngImage = ZipFileHelper.readImage(zipFile, "pack.png");
+            if (packPngImage != null) {
+                tagTexturePack.setThumbnail(packPngImage);
             }
 
             //3 - stackem.json
-            ZipEntry stackemJson = zipFile.getEntry("stackem.json");
-            if (stackemJson != null) {
-                try (InputStream inputStream = zipFile.getInputStream(stackemJson); BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-                    objects[3] = reader.lines().collect(Collectors.joining());
-                    canBeAdded = true;
-                } catch (IOException ignored) {
-                }
+            final String stackemJsonContent = ZipFileHelper.readTextFile(zipFile, "stackem.json");
+            if (stackemJsonContent != null) {
+                DescriptionFileCooker.read(tagTexturePack, stackemJsonContent);
             }
 
             zipFile.close();
-            return canBeAdded ? objects : null;
+            return tagTexturePack;
         } catch (IOException e) {
             return null;
         }
     }
 
+    /**
+     * @deprecated Remove this before release or change the behaviour
+     */
+    @Deprecated
     @EventHandler
     public void shitTestRemoveMe(GuiItemInfoEvent event) {
-        event.addDescriptionLine("ass: " + event.getItemStack().getItemDamage() + " go: " + event.getItemStack().getMaxDamage());
+        if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
+            event.addDescriptionLine("§8[meta/max]: " + event.getItemStack().getItemDamage() + "/" + event.getItemStack().getMaxDamage());
+        }
     }
 
 }

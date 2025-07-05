@@ -224,7 +224,7 @@ public class GuiTextureStack extends GuiScreen {
     /* code to obtain info from outside */
 
     private void fetchCacheFromOuterworld(String[] previousCached) {
-        List<TagTexturePack> candidates = StackEm.buildTexturePackList();
+        List<TagTexturePack> candidates = StackEm.fetchTexturepackList();
         if (candidates == null) {
             this.sequoiaCache = new ArrayList<>();
             return;

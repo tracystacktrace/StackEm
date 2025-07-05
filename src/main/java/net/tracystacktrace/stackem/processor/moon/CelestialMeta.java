@@ -1,7 +1,6 @@
 package net.tracystacktrace.stackem.processor.moon;
 
 public class CelestialMeta {
-
     public final String path;
     public final EnumCelestialCycle cycle;
     public final float scale;
@@ -17,9 +16,4 @@ public class CelestialMeta {
         this.number_y = numberY;
         this.total = numberX * numberY;
     }
-
-    public boolean isSingleStatic() {
-        return this.total == 1;
-    }
-
 }

@@ -10,6 +10,7 @@ import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByMetadat
 import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByName;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public class JamItemStackTexture implements IJam {
     @Override
@@ -49,12 +50,12 @@ public class JamItemStackTexture implements IJam {
         }
 
         if (object.has("item")) {
-            targetItemID = this.getIntFor(object.get("item").getAsString());
+            targetItemID = this.getItemIDByName(object.get("item").getAsString());
         }
 
         if (object.has("id")) {
             final int value = object.get("id").getAsInt();
-            if (this.checkItemId(value)) {
+            if (this.isValidItemID(value)) {
                 targetItemID = value;
             }
         }
@@ -75,20 +76,21 @@ public class JamItemStackTexture implements IJam {
         GlobalSwapCandidates.CODEX.get(targetItemID).candidates.add(swapSet);
     }
 
-    private boolean checkItemId(int i) {
+    private boolean isValidItemID(int i) {
         if (i < 0 || i >= Items.ITEMS_LIST.length) {
             return false;
         }
 
         try {
+            //noinspection unused
             Item item = Items.ITEMS_LIST[i];
-            return true;
+            return item != null;
         } catch (Exception e) {
             return false;
         }
     }
 
-    private int getIntFor(String itemName) {
+    private int getItemIDByName(@Nullable String itemName) {
         if (itemName == null || itemName.isEmpty()) {
             return -1;
         }

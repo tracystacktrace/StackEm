@@ -12,12 +12,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GlobalSwapCandidates {
+
+    /* static work methods */
+
     public static final Int2ObjectMap<GlobalSwapCandidates> CODEX = new Int2ObjectOpenHashMap<>();
 
+    /**
+     * Checks whenever the swap manager contains the following item id
+     */
     public static boolean contains(int itemID) {
         return CODEX.containsKey(itemID);
     }
 
+    /**
+     * Returns a custom icon based on ItemStack features
+     */
     public static @Nullable Icon getCustomIcon(@NotNull ItemStack stack) {
         return CODEX.get(stack.getItemID()).getIcon(stack);
     }
@@ -26,6 +35,8 @@ public class GlobalSwapCandidates {
         CODEX.forEach((integer, globalSwapCandidates) -> globalSwapCandidates.flush());
         CODEX.clear();
     }
+
+    /* local instance fields/methods */
 
     public final List<TexturepackSwapSet> candidates = new ArrayList<>();
 

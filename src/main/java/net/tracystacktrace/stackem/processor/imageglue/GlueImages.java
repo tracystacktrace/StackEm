@@ -119,7 +119,7 @@ public final class GlueImages {
         //fetching texturepacks that can into gluing
         List<ZipFile> zipFiles = stacked.getZipFiles();
         for (int i = zipFiles.size() - 1; i >= 0; i--) {
-            ZipFile zipFile = zipFiles.get(i);
+            final ZipFile zipFile = zipFiles.get(i);
             final BufferedImage image = ImageHelper.readImage(zipFile, name.texture);
             if (ImageHelper.isValidTexture(image)) {
                 images.add(image);
