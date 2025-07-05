@@ -67,7 +67,7 @@ public class JamItemStackTexture implements IJam {
         final TextureByName[] textureByNames = JsonReadHelper.readObjectArray(object, "onName", TextureByName::fromJson, new TextureByName[0]);
         final TextureByMetadata[] textureByMetadata = JsonReadHelper.readObjectArray(object, "onMeta", TextureByMetadata::fromJson, new TextureByMetadata[0]);
 
-        StackEm.getContainerDeepMeta().addCodex(targetItemID, new TexturepackSwapSet(targetItemID, textureByNames, textureByMetadata));
+        StackEm.getContainerDeepMeta().addCodex(targetItemID, new SingleItemSwap(targetItemID, textureByNames, textureByMetadata));
     }
 
     private boolean isValidItemID(int i) {

@@ -5,18 +5,20 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.minecraft.common.item.ItemStack;
-import net.tracystacktrace.stackem.processor.itemstackicon.TexturepackModify1;
-import net.tracystacktrace.stackem.processor.itemstackicon.TexturepackSwapSet;
+import net.tracystacktrace.stackem.processor.itemstackicon.SingleItemSwap;
 import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
 import net.tracystacktrace.stackem.processor.moon.EnumCelestialCycle;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class DeepMeta {
 
     public CelestialMeta moonData;
     public CelestialMeta sunData;
-    protected final Int2ObjectMap<TexturepackModify1> map1 = new Int2ObjectOpenHashMap<>();
+    protected final Int2ObjectMap<List<SingleItemSwap>> mapTexturepacksSwap = new Int2ObjectOpenHashMap<>();
 
     /* moon data related stuff */
 
@@ -48,24 +50,34 @@ public class DeepMeta {
 
     /* icon methods */
     public boolean containsCodex(int itemID) {
-        return map1.containsKey(itemID);
+        return mapTexturepacksSwap.containsKey(itemID);
     }
 
     public @Nullable Icon getCustomIcon(@NotNull ItemStack stack) {
-        return map1.get(stack.getItemID()).getIcon(stack);
+        final List<SingleItemSwap> candidates = mapTexturepacksSwap.get(stack.getItemID());
+        //noinspection ForLoopReplaceableByForEach
+        for (int i = 0; i < candidates.size(); i++) {
+            Icon value = candidates.get(i).getIcon(stack);
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
     }
 
     public void registerAllIcons(IconRegister register) {
-        for (TexturepackModify1 desc : map1.values()) {
-            desc.registerIcon(register);
+        for (List<SingleItemSwap> listSwaps : mapTexturepacksSwap.values()) {
+            for (SingleItemSwap single : listSwaps) {
+                single.registerIcon(register);
+            }
         }
     }
 
-    public void addCodex(int itemID, @NotNull TexturepackSwapSet set) {
-        if (!map1.containsKey(itemID)) {
-            map1.put(itemID, new TexturepackModify1());
+    public void addCodex(int itemID, @NotNull SingleItemSwap set) {
+        if (!mapTexturepacksSwap.containsKey(itemID)) {
+            mapTexturepacksSwap.put(itemID, new ArrayList<>());
         }
-        map1.get(itemID).add(set);
+        mapTexturepacksSwap.get(itemID).add(set);
     }
 
     /* general methods */
@@ -73,6 +85,7 @@ public class DeepMeta {
     public void flush() {
         this.moonData = null;
         this.sunData = null;
-        this.map1.clear();
+        this.mapTexturepacksSwap.forEach((i, s) -> s.clear());
+        this.mapTexturepacksSwap.clear();
     }
 }

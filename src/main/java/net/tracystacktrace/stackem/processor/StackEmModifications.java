@@ -79,7 +79,6 @@ public final class StackEmModifications {
 
         //read through different ONLY-TOP jams
         for (IJam jam : JAMS) {
-
             if (!stacked.checkIfFileExists(jam.getPath())) {
                 continue;
             }
@@ -105,6 +104,7 @@ public final class StackEmModifications {
         if (render == null || StackEm.DEBUG_DISABLE) {
             return;
         }
+
         final TexturePackStacked stacked = StackEm.getContainerInstance();
 
         //no textures - no changes
@@ -112,7 +112,6 @@ public final class StackEmModifications {
             return;
         }
 
-        //process EVERY-STACK jams
         for (ZipFile file : stacked.getZipFiles()) {
             final ZipEntry entry = ZipFileHelper.getEntryFor(file, JAM_IS_SWAP.getPath());
             if (entry == null) continue;
@@ -121,7 +120,7 @@ public final class StackEmModifications {
                 final String data = ZipFileHelper.readTextFile(file, entry);
                 JAM_IS_SWAP.process(stacked, data);
             } catch (ZipFileHelper.CustomZipOperationException e) {
-                StackEm.LOGGER.severe("Failed during JAM fetch: " + JAM_IS_SWAP.getPath());
+                StackEm.LOGGER.severe("Failed during custom JAM fetch: " + JAM_IS_SWAP.getPath());
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
             }
         }

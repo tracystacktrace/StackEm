@@ -78,6 +78,10 @@ public class StackEm extends Mod {
         final List<TagTexturePack> collector = new ArrayList<>();
 
         for (File file : texturepacksDir.listFiles()) {
+            if(file.isDirectory() || !file.getName().toLowerCase().endsWith(".zip")) {
+                continue;
+            }
+
             final TagTexturePack tagTexturePack = fetchTexturepackFromZip(file);
             if (tagTexturePack != null) {
                 collector.add(tagTexturePack);
@@ -90,7 +94,6 @@ public class StackEm extends Mod {
     private static TagTexturePack fetchTexturepackFromZip(File file) {
         //first line, second line, thumbnail image
         try (final ZipFile zipFile = new ZipFile(file)) {
-
             //pack.txt of two strings
             final String[] packTxtContent = ZipFileHelper.readTextFile(zipFile, "pack.txt", reader -> {
                 final String line1 = reader.readLine();

@@ -11,12 +11,12 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class TexturepackSwapSet {
+public class SingleItemSwap {
     public final int target;
     public final TextureByName[] textureByNames;
     public final TextureByMetadata[] textureByMetadata;
 
-    public TexturepackSwapSet(int target, TextureByName[] textureByNames, TextureByMetadata[] textureByMetadata) {
+    public SingleItemSwap(int target, TextureByName[] textureByNames, TextureByMetadata[] textureByMetadata) {
         this.target = target;
         this.textureByNames = textureByNames;
         this.textureByMetadata = textureByMetadata;
@@ -54,7 +54,7 @@ public class TexturepackSwapSet {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        TexturepackSwapSet desc = (TexturepackSwapSet) o;
+        SingleItemSwap desc = (SingleItemSwap) o;
         return target == desc.target && Objects.deepEquals(textureByNames, desc.textureByNames) && Objects.deepEquals(textureByMetadata, desc.textureByMetadata);
     }
 
