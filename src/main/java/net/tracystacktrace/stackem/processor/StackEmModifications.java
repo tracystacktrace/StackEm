@@ -45,8 +45,6 @@ public final class StackEmModifications {
      * This is the actual code you should call upon refreshing textures
      */
     public static void fetchTextureModifications(RenderEngine renderEngine) {
-        GlobalSwapCandidates.flushEverything();
-
         if (renderEngine == null || StackEm.DEBUG_DISABLE) {
             return;
         }

@@ -39,13 +39,13 @@ public class TexturepackSwapSet {
     }
 
     public void registerIcon(IconRegister register) {
-        if(this.hasOnMetas()) {
-            for(TextureByMetadata meta : this.textureByMetadata) {
+        if (this.hasOnMetas()) {
+            for (TextureByMetadata meta : this.textureByMetadata) {
                 meta.registerIcon(register);
             }
         }
-        if(this.hasOnNames()) {
-            for(TextureByName name : this.textureByNames) {
+        if (this.hasOnNames()) {
+            for (TextureByName name : this.textureByNames) {
                 name.registerIcon(register);
             }
         }

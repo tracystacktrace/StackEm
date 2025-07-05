@@ -1,6 +1,5 @@
 package net.tracystacktrace.stackem.tools;
 
-import net.tracystacktrace.stackem.StackEm;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -12,7 +11,7 @@ import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
-public class ZipFileHelper {
+public final class ZipFileHelper {
 
     public static class CustomZipOperationException extends Exception {
         public CustomZipOperationException(@NotNull String info, @NotNull IOException e) {
@@ -21,7 +20,7 @@ public class ZipFileHelper {
     }
 
     public static @Nullable ZipEntry getEntryFor(@NotNull ZipFile file, @Nullable String string) {
-        if(string == null || string.isEmpty()) {
+        if (string == null || string.isEmpty()) {
             return null;
         }
         return file.getEntry(string);

@@ -2,6 +2,7 @@ package net.tracystacktrace.stackem.mixins;
 
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.processor.StackEmModifications;
+import net.tracystacktrace.stackem.processor.itemstackicon.GlobalSwapCandidates;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,5 +13,10 @@ public class MixinRenderEngine {
     @Inject(method = "refreshTextures", at = @At("TAIL"))
     private void stackem$injectRefreshTextures(CallbackInfo ci) {
         StackEmModifications.fetchTextureModifications();
+    }
+
+    @Inject(method = "refreshTextureMaps", at = @At("HEAD"))
+    private void stackem$injectReshreshMapTextures(CallbackInfo ci) {
+        GlobalSwapCandidates.flushEverything();
     }
 }

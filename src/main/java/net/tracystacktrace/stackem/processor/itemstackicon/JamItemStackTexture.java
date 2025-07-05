@@ -8,11 +8,8 @@ import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.IJam;
 import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByMetadata;
 import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByName;
+import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.HashSet;
-import java.util.Set;
-import java.util.function.Function;
 
 public class JamItemStackTexture implements IJam {
     @Override
@@ -28,10 +25,10 @@ public class JamItemStackTexture implements IJam {
         try {
             final JsonObject root = JsonParser.parseString(rawJsonContent).getAsJsonObject();
 
-            if(root.has("data")) {
+            if (root.has("data")) {
                 JsonArray array = root.getAsJsonArray("data");
-                for(JsonElement element : array) {
-                    if(element.isJsonObject()) {
+                for (JsonElement element : array) {
+                    if (element.isJsonObject()) {
                         processItem(element.getAsJsonObject());
                     }
                 }
@@ -53,7 +50,7 @@ public class JamItemStackTexture implements IJam {
 
         if (object.has("item")) {
             final int value = this.getIntFor(object.get("item").getAsString());
-            if(value != -1) {
+            if (value != -1) {
                 targetItemID = value;
             }
         }
@@ -65,43 +62,20 @@ public class JamItemStackTexture implements IJam {
             }
         }
 
-        if(targetItemID == -1) {
+        if (targetItemID == -1) {
             return;
         }
 
-        final TextureByName[] textureByNames = this.readArray(object, "name", TextureByName::fromJson, new TextureByName[0]);
-        final TextureByMetadata[] textureByMetadata = this.readArray(object, "meta", TextureByMetadata::fromJson, new TextureByMetadata[0]);
+        final TextureByName[] textureByNames = JsonReadHelper.readObjectArray(object, "onname", TextureByName::fromJson, new TextureByName[0]);
+        final TextureByMetadata[] textureByMetadata = JsonReadHelper.readObjectArray(object, "onmeta", TextureByMetadata::fromJson, new TextureByMetadata[0]);
 
         // dumb way to "prevent" excess swaps per single item id
-        if(!GlobalSwapCandidates.CODEX.containsKey(targetItemID)) {
+        if (!GlobalSwapCandidates.CODEX.containsKey(targetItemID)) {
             GlobalSwapCandidates.CODEX.put(targetItemID, new GlobalSwapCandidates());
         }
 
         GlobalSwapCandidates.CODEX.get(targetItemID).candidates.add(new TexturepackSwapSet(targetItemID, textureByNames, textureByMetadata));
     }
-
-    private <T> T[] readArray(JsonObject object, String name, Function<JsonObject, T> generator, T[] empty) {
-        if(name == null || name.isEmpty() || !object.has(name)) {
-            return null;
-        }
-        final Set<T> collector = new HashSet<>();
-
-        for(JsonElement element : object.get(name).getAsJsonArray()) {
-            if(!element.isJsonObject()) {
-                continue;
-            }
-            try {
-                final T value = generator.apply(element.getAsJsonObject());
-                collector.add(value);
-            } catch (IllegalArgumentException e) {
-                StackEm.LOGGER.severe("Failed to process item [" + name + "] swap data!");
-                StackEm.LOGGER.throwing("ItemStackCooker", "read", e);
-            }
-        }
-
-        return collector.isEmpty() ? null : collector.toArray(empty);
-    }
-
 
     private boolean checkItemId(int i) {
         if (i < 0 || i >= Items.ITEMS_LIST.length) {
@@ -118,14 +92,14 @@ public class JamItemStackTexture implements IJam {
     }
 
     private int getIntFor(String itemName) {
-        if(itemName == null || itemName.isEmpty()) {
+        if (itemName == null || itemName.isEmpty()) {
             return -1;
         }
 
-        for(Item item : Items.ITEMS_LIST) {
-            if(item == null) continue;
+        for (Item item : Items.ITEMS_LIST) {
+            if (item == null) continue;
 
-            if(item.getItemName().equals(itemName)) {
+            if (item.getItemName().equals(itemName)) {
                 return item.itemID;
             }
         }

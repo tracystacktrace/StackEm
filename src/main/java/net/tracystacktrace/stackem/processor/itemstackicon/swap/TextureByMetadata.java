@@ -1,9 +1,9 @@
 package net.tracystacktrace.stackem.processor.itemstackicon.swap;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
+import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 
 public class TextureByMetadata {
@@ -41,8 +41,8 @@ public class TextureByMetadata {
             }
             case FOLLOWING -> {
                 //noinspection ForLoopReplaceableByForEach
-                for(int i = 0; i < this.compareInts.length; i++) {
-                    if(this.compareInts[i] == meta) {
+                for (int i = 0; i < this.compareInts.length; i++) {
+                    if (this.compareInts[i] == meta) {
                         return true;
                     }
                 }
@@ -61,32 +61,32 @@ public class TextureByMetadata {
         byte compareCode = -1;
         int[] compareInts = null;
 
-        if(object.has("static")) {
+        if (object.has("static")) {
             compareCode = TextureByMetadata.STATIC;
-            compareInts = new int[] { object.get("static").getAsInt() };
+            compareInts = new int[]{object.get("static").getAsInt()};
         }
 
-        if(object.has("between")) {
+        if (object.has("between")) {
             compareCode = TextureByMetadata.BETWEEN;
-            compareInts = readArray(object.getAsJsonArray("between"));
+            compareInts = JsonReadHelper.readIntArray(object.getAsJsonArray("between"));
         }
 
-        if(object.has("before")) {
+        if (object.has("before")) {
             compareCode = TextureByMetadata.BEFORE;
-            compareInts = new int[] { object.get("before").getAsInt() };
+            compareInts = new int[]{object.get("before").getAsInt()};
         }
 
-        if(object.has("after")) {
+        if (object.has("after")) {
             compareCode = TextureByMetadata.AFTER;
-            compareInts = new int[] { object.get("after").getAsInt() };
+            compareInts = new int[]{object.get("after").getAsInt()};
         }
 
-        if(object.has("following")) {
+        if (object.has("following")) {
             compareCode = TextureByMetadata.FOLLOWING;
-            compareInts = readArray(object.getAsJsonArray("following"));
+            compareInts = JsonReadHelper.readIntArray(object.getAsJsonArray("following"));
         }
 
-        if(compareCode == -1 || compareInts == null) {
+        if (compareCode == -1 || compareInts == null) {
             throw new IllegalArgumentException("Item texture swap builder error! Cannot fetch some crap!");
         }
 
@@ -95,11 +95,4 @@ public class TextureByMetadata {
         return new TextureByMetadata(compareCode, compareInts, texture);
     }
 
-    private static int[] readArray(JsonArray array) {
-        int[] result = new int[array.size()];
-        for(int i = 0; i < result.length; i++) {
-            result[i] = array.get(i).getAsInt();
-        }
-        return result;
-    }
 }

@@ -53,7 +53,7 @@ public class GlobalSwapCandidates {
     public final List<TexturepackSwapSet> candidates = new ArrayList<>();
 
     public void registerIcon(IconRegister register) {
-        for(TexturepackSwapSet desc : this.candidates) {
+        for (TexturepackSwapSet desc : this.candidates) {
             desc.registerIcon(register);
         }
     }
