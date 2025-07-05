@@ -49,10 +49,7 @@ public class JamItemStackTexture implements IJam {
         }
 
         if (object.has("item")) {
-            final int value = this.getIntFor(object.get("item").getAsString());
-            if (value != -1) {
-                targetItemID = value;
-            }
+            targetItemID = this.getIntFor(object.get("item").getAsString());
         }
 
         if (object.has("id")) {
@@ -74,7 +71,8 @@ public class JamItemStackTexture implements IJam {
             GlobalSwapCandidates.CODEX.put(targetItemID, new GlobalSwapCandidates());
         }
 
-        GlobalSwapCandidates.CODEX.get(targetItemID).candidates.add(new TexturepackSwapSet(targetItemID, textureByNames, textureByMetadata));
+        TexturepackSwapSet swapSet = new TexturepackSwapSet(targetItemID, textureByNames, textureByMetadata);
+        GlobalSwapCandidates.CODEX.get(targetItemID).candidates.add(swapSet);
     }
 
     private boolean checkItemId(int i) {
@@ -84,7 +82,6 @@ public class JamItemStackTexture implements IJam {
 
         try {
             Item item = Items.ITEMS_LIST[i];
-            System.out.println("Test: " + item.itemID);
             return true;
         } catch (Exception e) {
             return false;

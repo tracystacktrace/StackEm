@@ -4,14 +4,14 @@ buildscript {
         maven { url 'https://cdn.fox2code.com/maven' }
     }
     dependencies {
-        classpath('com.fox2code.FoxLoader:dev:2.0-alpha28')
+        classpath('com.fox2code.FoxLoader:dev:2.0-alpha29')
     }
 }
 
 apply plugin: 'foxloader.dev'
 
 group = 'net.tracystacktrace'
-version = '0.3.4'
+version = '0.3.5'
 
 dependencies {
     api 'org.semver4j:semver4j:5.3.0'

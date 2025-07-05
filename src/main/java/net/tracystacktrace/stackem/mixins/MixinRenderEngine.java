@@ -12,11 +12,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinRenderEngine {
     @Inject(method = "refreshTextures", at = @At("TAIL"))
     private void stackem$injectRefreshTextures(CallbackInfo ci) {
-        StackEmModifications.fetchTextureModifications();
+        StackEmModifications.fetchTextureModifications(RenderEngine.class.cast(this));
     }
 
     @Inject(method = "refreshTextureMaps", at = @At("HEAD"))
-    private void stackem$injectReshreshMapTextures(CallbackInfo ci) {
-        GlobalSwapCandidates.flushEverything();
+    private void stackem$injectRefreshTextureMaps(CallbackInfo ci) {
+        StackEmModifications.fetchIconModifications(RenderEngine.class.cast(this));
     }
 }

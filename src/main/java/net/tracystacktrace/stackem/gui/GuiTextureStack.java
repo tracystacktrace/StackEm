@@ -10,6 +10,7 @@ import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.hack.SoundCleanupHelper;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.processor.itemstackicon.GlobalSwapCandidates;
 import net.tracystacktrace.stackem.tools.QuickRNG;
 import org.lwjgl.opengl.Display;
 
@@ -304,6 +305,7 @@ public class GuiTextureStack extends GuiScreen {
         }
 
         StackEm.DEBUG_DISABLE = false;
+        GlobalSwapCandidates.flushEverything();
         StackEm.getContainerInstance().deleteTexturePack(mc.renderEngine);
 
         final TexturePackStacked stacked = new TexturePackStacked(QuickRNG.getRandomIdentifier(), SmartHacks.getDefaultTexturePack(), files);

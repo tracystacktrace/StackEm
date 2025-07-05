@@ -41,6 +41,10 @@ public final class StackEmModifications {
         StackEmModifications.fetchTextureModifications(Minecraft.getInstance().renderEngine);
     }
 
+    public static void fetchIconModifications() {
+        StackEmModifications.fetchIconModifications(Minecraft.getInstance().renderEngine);
+    }
+
     /**
      * This is the actual code you should call upon refreshing textures
      */
@@ -97,6 +101,22 @@ public final class StackEmModifications {
                 StackEm.LOGGER.info("Loaded JAM: " + jam.getPath());
             }
         }
+    }
+
+    public static void fetchIconModifications(RenderEngine render) {
+        //let reset custom icons
+        //GlobalSwapCandidates.flushEverything();
+
+        if (render == null || StackEm.DEBUG_DISABLE) {
+            return;
+        }
+
+        final TexturePackStacked stacked = StackEm.getContainerInstance();
+
+        //no textures - no changes
+        if (stacked.isEmpty()) {
+            return;
+        }
 
         //process EVERY-STACK jams
         for (IJam jam : JAMS) {
@@ -113,10 +133,9 @@ public final class StackEmModifications {
                     jam.process(stacked, data);
                 } catch (ZipFileHelper.CustomZipOperationException e) {
                     StackEm.LOGGER.severe("Failed during JAM fetch: " + jam.getPath());
-                    StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
+                    StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
                 }
             }
         }
     }
-
 }

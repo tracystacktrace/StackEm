@@ -1,4 +1,10 @@
 
+## [0.3.5] - 2025-07-05
+
+- Added support for custom texture swap of items based on either name or metadata value
+- Fixed a bug where modifications occur even with disabled texturepacks
+- Updated toolchain to FoxLoader `2.0-alpha29` (ReIndev `2.9_03`)
+
 ## [0.3.4] - 2025-07-03
 
 **[View changes between 0.3.3 with 0.3.4](https://github.com/tracystacktrace/StackEm/compare/0.3.3...0.3.4)**

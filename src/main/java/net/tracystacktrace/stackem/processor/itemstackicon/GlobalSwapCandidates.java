@@ -5,8 +5,8 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.minecraft.common.item.ItemStack;
-import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByMetadata;
-import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByName;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,35 +14,12 @@ import java.util.List;
 public class GlobalSwapCandidates {
     public static final Int2ObjectMap<GlobalSwapCandidates> CODEX = new Int2ObjectOpenHashMap<>();
 
-    public static boolean isIncluded(ItemStack stack) {
-        return CODEX.containsKey(stack.getItemID());
+    public static boolean contains(int itemID) {
+        return CODEX.containsKey(itemID);
     }
 
-    public static Icon getCustomIcon(ItemStack stack) {
-        List<TexturepackSwapSet> cands = CODEX.get(stack.getItemID()).candidates;
-
-        for (TexturepackSwapSet swapDesc : cands) {
-            if (swapDesc.hasOnMetas()) {
-                for (int i = 0; i < swapDesc.textureByMetadata.length; i++) {
-                    TextureByMetadata meta = swapDesc.textureByMetadata[i];
-                    if (meta.compare(stack.getItemDamage())) {
-                        return meta.textureIcon;
-                    }
-                }
-            }
-
-            if (swapDesc.hasOnNames()) {
-                for (int i = 0; i < swapDesc.textureByNames.length; i++) {
-                    TextureByName name = swapDesc.textureByNames[i];
-
-                    if (name.compareString(stack.getDisplayName())) {
-                        return name.textureIcon;
-                    }
-                }
-            }
-        }
-
-        return null;
+    public static @Nullable Icon getCustomIcon(@NotNull ItemStack stack) {
+        return CODEX.get(stack.getItemID()).getIcon(stack);
     }
 
     public static void flushEverything() {
@@ -52,7 +29,18 @@ public class GlobalSwapCandidates {
 
     public final List<TexturepackSwapSet> candidates = new ArrayList<>();
 
-    public void registerIcon(IconRegister register) {
+    public @Nullable Icon getIcon(@NotNull ItemStack stack) {
+        //noinspection ForLoopReplaceableByForEach
+        for (int i = 0; i < candidates.size(); i++) {
+            Icon value = candidates.get(i).getIcon(stack);
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
+    }
+
+    public void registerIcon(@NotNull IconRegister register) {
         for (TexturepackSwapSet desc : this.candidates) {
             desc.registerIcon(register);
         }
