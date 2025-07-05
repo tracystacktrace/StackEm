@@ -5,26 +5,26 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.minecraft.common.item.ItemStack;
-import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureOnMeta;
-import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureOnName;
+import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByMetadata;
+import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByName;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SwapCandidates {
-    public static final Int2ObjectMap<SwapCandidates> CODEX = new Int2ObjectOpenHashMap<>();
+public class GlobalSwapCandidates {
+    public static final Int2ObjectMap<GlobalSwapCandidates> CODEX = new Int2ObjectOpenHashMap<>();
 
     public static boolean isIncluded(ItemStack stack) {
         return CODEX.containsKey(stack.getItemID());
     }
 
     public static Icon getCustomIcon(ItemStack stack) {
-        List<TextureSwapDesc> cands = CODEX.get(stack.getItemID()).candidates;
+        List<TexturepackSwapSet> cands = CODEX.get(stack.getItemID()).candidates;
 
-        for (TextureSwapDesc swapDesc : cands) {
+        for (TexturepackSwapSet swapDesc : cands) {
             if (swapDesc.hasOnMetas()) {
-                for (int i = 0; i < swapDesc.textureOnMetas.length; i++) {
-                    TextureOnMeta meta = swapDesc.textureOnMetas[i];
+                for (int i = 0; i < swapDesc.textureByMetadata.length; i++) {
+                    TextureByMetadata meta = swapDesc.textureByMetadata[i];
                     if (meta.compare(stack.getItemDamage())) {
                         return meta.textureIcon;
                     }
@@ -32,8 +32,8 @@ public class SwapCandidates {
             }
 
             if (swapDesc.hasOnNames()) {
-                for (int i = 0; i < swapDesc.textureOnNames.length; i++) {
-                    TextureOnName name = swapDesc.textureOnNames[i];
+                for (int i = 0; i < swapDesc.textureByNames.length; i++) {
+                    TextureByName name = swapDesc.textureByNames[i];
 
                     if (name.compareString(stack.getDisplayName())) {
                         return name.textureIcon;
@@ -45,11 +45,20 @@ public class SwapCandidates {
         return null;
     }
 
-    public final List<TextureSwapDesc> candidates = new ArrayList<>();
+    public static void flushEverything() {
+        CODEX.forEach((integer, globalSwapCandidates) -> globalSwapCandidates.flush());
+        CODEX.clear();
+    }
+
+    public final List<TexturepackSwapSet> candidates = new ArrayList<>();
 
     public void registerIcon(IconRegister register) {
-        for(TextureSwapDesc desc : this.candidates) {
+        for(TexturepackSwapSet desc : this.candidates) {
             desc.registerIcon(register);
         }
+    }
+
+    public void flush() {
+        this.candidates.clear();
     }
 }

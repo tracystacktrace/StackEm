@@ -8,7 +8,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class TextureOnName {
+public class TextureByName {
     public static final byte EQUALS = 0;
     public static final byte EQUALS_IGNORE_CASE = 1;
     public static final byte CONTAINS = 2;
@@ -20,7 +20,7 @@ public class TextureOnName {
 
     public Icon textureIcon;
 
-    public TextureOnName(
+    public TextureByName(
             byte compareCode,
             @NotNull String targetString,
             @NotNull String texturePath
@@ -57,8 +57,8 @@ public class TextureOnName {
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        TextureOnName textureOnName = (TextureOnName) o;
-        return compareCode == textureOnName.compareCode && Objects.equals(targetString, textureOnName.targetString) && Objects.equals(texturePath, textureOnName.texturePath);
+        TextureByName textureByName = (TextureByName) o;
+        return compareCode == textureByName.compareCode && Objects.equals(targetString, textureByName.targetString) && Objects.equals(texturePath, textureByName.texturePath);
     }
 
     @Override
@@ -76,7 +76,7 @@ public class TextureOnName {
                 '}';
     }
 
-    public static @NotNull TextureOnName fromJson(@NotNull JsonObject object) throws IllegalArgumentException {
+    public static @NotNull TextureByName fromJson(@NotNull JsonObject object) throws IllegalArgumentException {
         if (!object.has("equals") && !object.has("equalsIgnoreCase") && !object.has("contains")) {
             throw new IllegalArgumentException("Item texture swap builder error! Cannot find correct [compareCode] for: " + object);
         }
@@ -86,17 +86,17 @@ public class TextureOnName {
 
         if (object.has("equals")) {
             targetString = object.get("equals").getAsString();
-            compareCode = TextureOnName.EQUALS;
+            compareCode = TextureByName.EQUALS;
         }
 
         if (object.has("equalsIgnoreCase")) {
             targetString = object.get("equalsIgnoreCase").getAsString();
-            compareCode = TextureOnName.EQUALS_IGNORE_CASE;
+            compareCode = TextureByName.EQUALS_IGNORE_CASE;
         }
 
         if (object.has("contains")) {
             targetString = object.get("contains").getAsString();
-            compareCode = TextureOnName.CONTAINS;
+            compareCode = TextureByName.CONTAINS;
         }
 
         if (compareCode == -1 || targetString == null) {
@@ -108,6 +108,6 @@ public class TextureOnName {
         }
 
         final String texture = object.get("texture").getAsString();
-        return new TextureOnName(compareCode, targetString, texture);
+        return new TextureByName(compareCode, targetString, texture);
     }
 }

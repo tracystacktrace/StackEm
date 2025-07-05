@@ -8,6 +8,7 @@ import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
+import net.tracystacktrace.stackem.processor.itemstackicon.GlobalSwapCandidates;
 import net.tracystacktrace.stackem.processor.itemstackicon.JamItemStackTexture;
 import net.tracystacktrace.stackem.processor.moon.JamMoonTexture;
 import net.tracystacktrace.stackem.processor.moon.JamSunTexture;
@@ -44,6 +45,8 @@ public final class StackEmModifications {
      * This is the actual code you should call upon refreshing textures
      */
     public static void fetchTextureModifications(RenderEngine renderEngine) {
+        GlobalSwapCandidates.flushEverything();
+
         if (renderEngine == null || StackEm.DEBUG_DISABLE) {
             return;
         }

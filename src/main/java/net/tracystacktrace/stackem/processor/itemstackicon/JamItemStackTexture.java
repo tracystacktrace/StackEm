@@ -6,8 +6,8 @@ import net.minecraft.common.item.Items;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.IJam;
-import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureOnMeta;
-import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureOnName;
+import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByMetadata;
+import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByName;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.HashSet;
@@ -69,15 +69,15 @@ public class JamItemStackTexture implements IJam {
             return;
         }
 
-        final TextureOnName[] textureOnNames = this.readArray(object, "onname", TextureOnName::fromJson, new TextureOnName[0]);
-        final TextureOnMeta[] textureOnMetas = this.readArray(object, "onmeta", TextureOnMeta::fromJson, new TextureOnMeta[0]);
+        final TextureByName[] textureByNames = this.readArray(object, "name", TextureByName::fromJson, new TextureByName[0]);
+        final TextureByMetadata[] textureByMetadata = this.readArray(object, "meta", TextureByMetadata::fromJson, new TextureByMetadata[0]);
 
         // dumb way to "prevent" excess swaps per single item id
-        if(!SwapCandidates.CODEX.containsKey(targetItemID)) {
-            SwapCandidates.CODEX.put(targetItemID, new SwapCandidates());
+        if(!GlobalSwapCandidates.CODEX.containsKey(targetItemID)) {
+            GlobalSwapCandidates.CODEX.put(targetItemID, new GlobalSwapCandidates());
         }
 
-        SwapCandidates.CODEX.get(targetItemID).candidates.add(new TextureSwapDesc(targetItemID, textureOnNames, textureOnMetas));
+        GlobalSwapCandidates.CODEX.get(targetItemID).candidates.add(new TexturepackSwapSet(targetItemID, textureByNames, textureByMetadata));
     }
 
     private <T> T[] readArray(JsonObject object, String name, Function<JsonObject, T> generator, T[] empty) {

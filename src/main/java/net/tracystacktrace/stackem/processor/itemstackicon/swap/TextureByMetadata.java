@@ -6,7 +6,7 @@ import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import org.jetbrains.annotations.NotNull;
 
-public class TextureOnMeta {
+public class TextureByMetadata {
     public static final byte STATIC = 0;
     public static final byte BETWEEN = 1;
     public static final byte BEFORE = 2;
@@ -19,7 +19,7 @@ public class TextureOnMeta {
 
     public Icon textureIcon;
 
-    public TextureOnMeta(byte compareCode, int @NotNull [] compareInts, @NotNull String texturePath) {
+    public TextureByMetadata(byte compareCode, int @NotNull [] compareInts, @NotNull String texturePath) {
         this.compareCode = compareCode;
         this.compareInts = compareInts;
         this.texturePath = texturePath;
@@ -57,32 +57,32 @@ public class TextureOnMeta {
         this.textureIcon = register.registerIcon(this.texturePath);
     }
 
-    public static @NotNull TextureOnMeta fromJson(@NotNull JsonObject object) throws IllegalArgumentException {
+    public static @NotNull TextureByMetadata fromJson(@NotNull JsonObject object) throws IllegalArgumentException {
         byte compareCode = -1;
         int[] compareInts = null;
 
         if(object.has("static")) {
-            compareCode = TextureOnMeta.STATIC;
+            compareCode = TextureByMetadata.STATIC;
             compareInts = new int[] { object.get("static").getAsInt() };
         }
 
         if(object.has("between")) {
-            compareCode = TextureOnMeta.BETWEEN;
+            compareCode = TextureByMetadata.BETWEEN;
             compareInts = readArray(object.getAsJsonArray("between"));
         }
 
         if(object.has("before")) {
-            compareCode = TextureOnMeta.BEFORE;
+            compareCode = TextureByMetadata.BEFORE;
             compareInts = new int[] { object.get("before").getAsInt() };
         }
 
         if(object.has("after")) {
-            compareCode = TextureOnMeta.AFTER;
+            compareCode = TextureByMetadata.AFTER;
             compareInts = new int[] { object.get("after").getAsInt() };
         }
 
         if(object.has("following")) {
-            compareCode = TextureOnMeta.FOLLOWING;
+            compareCode = TextureByMetadata.FOLLOWING;
             compareInts = readArray(object.getAsJsonArray("following"));
         }
 
@@ -92,7 +92,7 @@ public class TextureOnMeta {
 
         final String texture = object.get("texture").getAsString();
 
-        return new TextureOnMeta(compareCode, compareInts, texture);
+        return new TextureByMetadata(compareCode, compareInts, texture);
     }
 
     private static int[] readArray(JsonArray array) {
