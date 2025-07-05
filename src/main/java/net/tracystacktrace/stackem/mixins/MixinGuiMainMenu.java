@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class MixinGuiMainMenu extends GuiScreen {
 
     @Inject(method = "actionPerformed", at = @At("HEAD"), cancellable = true)
-    private void stacken$injectOpenMenuMM(GuiButton button, CallbackInfo ci) {
+    private void stackem$injectOpenMenuMM(GuiButton button, CallbackInfo ci) {
         if (button.id == 3 || button.id == 8) {
             this.mc.displayGuiScreen(new GuiTextureStack(this));
             ci.cancel();

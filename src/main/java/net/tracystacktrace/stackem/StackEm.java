@@ -1,5 +1,7 @@
 package net.tracystacktrace.stackem;
 
+import com.fox2code.foxevents.EventHandler;
+import com.fox2code.foxloader.event.client.GuiItemInfoEvent;
 import com.fox2code.foxloader.loader.Mod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.common.util.i18n.StringTranslate;
@@ -152,6 +154,11 @@ public class StackEm extends Mod {
         } catch (IOException e) {
             return null;
         }
+    }
+
+    @EventHandler
+    public void shitTestRemoveMe(GuiItemInfoEvent event) {
+        event.addDescriptionLine("ass: " + event.getItemStack().getItemDamage() + " go: " + event.getItemStack().getMaxDamage());
     }
 
 }

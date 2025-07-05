@@ -8,9 +8,11 @@
     "AccessorSoundPool",
     "MixinGuiMainMenu",
     "MixinGuiVideoSettings",
+    "MixinItemStack",
     "MixinMinecraft",
     "MixinRenderEngine",
     "MixinRenderGlobal",
+    "MixinTextureMap",
     "MixinTexturePackList"
   ]
 }

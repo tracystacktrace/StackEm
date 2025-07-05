@@ -8,8 +8,10 @@ import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
+import net.tracystacktrace.stackem.processor.itemstackicon.JamItemStackTexture;
 import net.tracystacktrace.stackem.processor.moon.JamMoonTexture;
 import net.tracystacktrace.stackem.processor.moon.JamSunTexture;
+import net.tracystacktrace.stackem.tools.ZipFileHelper;
 
 import java.awt.image.BufferedImage;
 import java.io.BufferedReader;
@@ -17,6 +19,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.stream.Collectors;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipFile;
 
 /**
  * A main entrypoint for most texture/sound modifications handled by this mod
@@ -24,7 +28,7 @@ import java.util.stream.Collectors;
 public final class StackEmModifications {
 
     public static final IJam[] JAMS = new IJam[]{
-            new JamMoonTexture(), new JamSunTexture()
+            new JamMoonTexture(), new JamSunTexture(), new JamItemStackTexture()
     };
 
     /**
@@ -67,8 +71,12 @@ public final class StackEmModifications {
             }
         }
 
-        //read through different
+        //read through different ONLY-TOP jams
         for (IJam jam : JAMS) {
+            if (jam.readEveryStack()) {
+                continue;
+            }
+
             if (!stacked.checkIfFileExists(jam.getPath())) {
                 continue;
             }
@@ -86,6 +94,26 @@ public final class StackEmModifications {
             if (!collectedJsonString.isEmpty()) {
                 jam.process(stacked, collectedJsonString);
                 StackEm.LOGGER.info("Loaded JAM: " + jam.getPath());
+            }
+        }
+
+        //process EVERY-STACK jams
+        for (IJam jam : JAMS) {
+            if (!jam.readEveryStack()) {
+                continue;
+            }
+
+            for (ZipFile file : stacked.getZipFiles()) {
+                final ZipEntry entry = ZipFileHelper.getEntryFor(file, jam.getPath());
+                if (entry == null) continue;
+
+                try {
+                    final String data = ZipFileHelper.readTextFile(file, entry);
+                    jam.process(stacked, data);
+                } catch (ZipFileHelper.CustomZipOperationException e) {
+                    StackEm.LOGGER.severe("Failed during JAM fetch: " + jam.getPath());
+                    StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
+                }
             }
         }
     }

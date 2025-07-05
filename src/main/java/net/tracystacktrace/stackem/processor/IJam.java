@@ -12,4 +12,7 @@ public interface IJam {
             @NotNull String rawJsonContent
     );
 
+    default boolean readEveryStack() {
+        return false;
+    }
 }
