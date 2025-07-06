@@ -50,14 +50,14 @@ public class TagTexturePack {
     }
 
     public void bindThumbnail(RenderEngine renderEngine) {
-        if (rendererThumbnailID == -1) {
+        if (this.rendererThumbnailID == -1) {
             this.rendererThumbnailID = renderEngine.allocateAndSetupTexture(this.thumbnail);
         }
-        RenderSystem.bindTexture2D(rendererThumbnailID);
+        RenderSystem.bindTexture2D(this.rendererThumbnailID);
     }
 
     public void removeThumbnail(RenderEngine renderEngine) {
-        if (rendererThumbnailID != -1) {
+        if (this.rendererThumbnailID != -1) {
             renderEngine.deleteTexture(this.rendererThumbnailID);
             this.thumbnail = null;
         }

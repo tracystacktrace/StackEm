@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(GuiMainMenu.class)
 public class MixinGuiMainMenu extends GuiScreen {
-
     @Inject(method = "actionPerformed", at = @At("HEAD"), cancellable = true)
     private void stackem$injectOpenMenuMM(GuiButton button, CallbackInfo ci) {
         if (button.id == 3 || button.id == 8) {
@@ -19,5 +18,4 @@ public class MixinGuiMainMenu extends GuiScreen {
             ci.cancel();
         }
     }
-
 }

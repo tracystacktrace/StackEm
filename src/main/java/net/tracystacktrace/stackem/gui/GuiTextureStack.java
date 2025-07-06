@@ -303,7 +303,7 @@ public class GuiTextureStack extends GuiScreen {
             stackemList.add(this.sequoiaCache.get(i).name);
         }
 
-        StackEm.DEBUG_DISABLE = false;
+        StackEm.DEBUG_FORCE_DEFAULT = false;
         StackEm.getContainerInstance().deleteTexturePack(mc.renderEngine);
 
         final TexturePackStacked stacked = new TexturePackStacked(QuickRNG.getRandomIdentifier(), SmartHacks.getDefaultTexturePack(), files);

@@ -23,9 +23,7 @@ Let's go and check an example of `stackem.items.json`:
 }
 ```
 
-## Part 1 - Understanding overall structure
-
-### **I. Global list**
+## Global List
 
 As you can see, you can provide multiple texture swaps within a single file, just keep it inside `"data"` section:
 ```json5
@@ -38,6 +36,36 @@ As you can see, you can provide multiple texture swaps within a single file, jus
 }
 ```
 
-### **II. Per item section**
+## Per Item Section
 
-Now let's move
+Now let's move to the part, where we create a pattern for a **single** item!
+
+### I. Providing `"item"`/`"id"`
+
+Let's say, we need to change the texture of an `iron sword`. For this, we need to know either the internal name or its id. You can open ReIndev, hover at the iron sword and hold `CTRL` to unveal some more data.
+
+The tooltip shows us:
+```
+Iron Sword
+Durability: 256/256
+#item.iron_sword:267
+```
+
+There are two different identifiers: `item.iron_sword` and `267`. You can use either of them, but if you implement them correctly. In order to put a string identifier, you need to provide it in `"item"` section, like this:
+```json5
+{
+  "item": "item.iron_sword",
+  /* other code */
+}
+```
+
+For a numerical id, you provide it inside `"id"` section:
+```json5
+{
+  "id": 267,
+  /* other code */
+}
+```
+
+### II. Swapping by meta
+

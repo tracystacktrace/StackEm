@@ -16,9 +16,9 @@ import java.util.List;
 
 public class DeepMeta {
 
+    protected final Int2ObjectMap<List<SingleItemSwap>> mapTexturepacksSwap = new Int2ObjectOpenHashMap<>();
     public CelestialMeta moonData;
     public CelestialMeta sunData;
-    protected final Int2ObjectMap<List<SingleItemSwap>> mapTexturepacksSwap = new Int2ObjectOpenHashMap<>();
 
     /* moon data related stuff */
 
@@ -65,7 +65,7 @@ public class DeepMeta {
         return null;
     }
 
-    public void registerAllIcons(IconRegister register) {
+    public void registerAllIcons(@NotNull IconRegister register) {
         for (List<SingleItemSwap> listSwaps : mapTexturepacksSwap.values()) {
             for (SingleItemSwap single : listSwaps) {
                 single.registerIcon(register);

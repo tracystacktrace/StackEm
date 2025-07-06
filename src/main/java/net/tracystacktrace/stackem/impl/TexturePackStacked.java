@@ -31,6 +31,7 @@ public class TexturePackStacked extends TexturePackBase {
         for (int i = 0; i < files.length; i++) {
             files[i] = texturepackArchives.get(i);
         }
+
         this.stackedTextures = new ArrayList<>();
         this.archives = files;
         this.defaultTexturePack = defaultTexturePack;
@@ -87,7 +88,7 @@ public class TexturePackStacked extends TexturePackBase {
 
         this.initialize();
 
-        if (StackEm.DEBUG_DISABLE) {
+        if (StackEm.DEBUG_FORCE_DEFAULT) {
             return this.defaultTexturePack.findResource(resourcePath, false);
         }
 
@@ -110,7 +111,7 @@ public class TexturePackStacked extends TexturePackBase {
             return null;
         }
 
-        if (StackEm.DEBUG_DISABLE) {
+        if (StackEm.DEBUG_FORCE_DEFAULT) {
             return this.defaultTexturePack.findResourceURL(resourcePath, false);
         }
 
@@ -140,7 +141,7 @@ public class TexturePackStacked extends TexturePackBase {
         try {
             this.initialize();
 
-            if (StackEm.DEBUG_DISABLE) {
+            if (StackEm.DEBUG_FORCE_DEFAULT) {
                 return this.defaultTexturePack.checkIfFileExists(resourcePath, false);
             }
 
@@ -160,7 +161,7 @@ public class TexturePackStacked extends TexturePackBase {
         try {
             this.initialize();
 
-            if (StackEm.DEBUG_DISABLE) {
+            if (StackEm.DEBUG_FORCE_DEFAULT) {
                 return this.defaultTexturePack.checkIfDirectoryExists(path, false);
             }
 

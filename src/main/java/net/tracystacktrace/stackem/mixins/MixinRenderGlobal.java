@@ -16,7 +16,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(RenderGlobal.class)
 public class MixinRenderGlobal {
-
     @Shadow
     private World worldObj;
 
@@ -108,5 +107,4 @@ public class MixinRenderGlobal {
         if (this.stackem$sunTrigger1) this.stackem$sunTrigger1 = false;
         if (this.stackem$moonTrigger1) this.stackem$moonTrigger1 = false;
     }
-
 }

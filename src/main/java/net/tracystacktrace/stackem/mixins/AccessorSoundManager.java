@@ -8,7 +8,6 @@ import paulscode.sound.SoundSystem;
 
 @Mixin(SoundManager.class)
 public interface AccessorSoundManager {
-
     @Accessor("sndSystem")
     SoundSystem stackem$getSoundSystem();
 
@@ -38,5 +37,4 @@ public interface AccessorSoundManager {
 
     @Accessor("soundPoolMusicNetherDungeon")
     SoundPool stackem$sp9();
-
 }

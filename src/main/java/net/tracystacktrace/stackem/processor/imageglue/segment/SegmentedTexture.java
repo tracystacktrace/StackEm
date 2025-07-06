@@ -1,15 +1,6 @@
 package net.tracystacktrace.stackem.processor.imageglue.segment;
 
-@SuppressWarnings("ClassCanBeRecord")
-public class SegmentedTexture {
-    public final String texture;
-    public final int[][] segments;
-
-    public SegmentedTexture(String texture, int[][] segments) {
-        this.texture = texture;
-        this.segments = segments;
-    }
-
+public record SegmentedTexture(String texture, int[][] segments) {
     /**
      * Provides an empty array with the length equivalent to number of segments
      */

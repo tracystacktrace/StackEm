@@ -22,7 +22,7 @@ import java.util.zip.ZipFile;
 
 public class StackEm extends Mod {
 
-    public static boolean DEBUG_DISABLE = false;
+    public static boolean DEBUG_FORCE_DEFAULT = false;
     public static final Logger LOGGER = Logger.getLogger("STACKEM");
 
     public static TexturePackStacked getContainerInstance() {
@@ -33,7 +33,7 @@ public class StackEm extends Mod {
         return getContainerInstance().getDeepMeta();
     }
 
-    public static void toggleDebug() {
+    public static void toggleDefaultTextures() {
         final Minecraft mc = Minecraft.getInstance();
 
         // handle safely
@@ -41,9 +41,9 @@ public class StackEm extends Mod {
             return;
         }
 
-        DEBUG_DISABLE = !DEBUG_DISABLE;
+        StackEm.DEBUG_FORCE_DEFAULT = !StackEm.DEBUG_FORCE_DEFAULT;
         mc.renderEngine.refreshTextures();
-        mc.thePlayer.addChatMessage(StringTranslate.getInstance().translateKey(DEBUG_DISABLE ? "stackem.debug.on" : "stackem.debug.off"));
+        mc.thePlayer.addChatMessage(StringTranslate.getInstance().translateKey(StackEm.DEBUG_FORCE_DEFAULT ? "stackem.debug.on" : "stackem.debug.off"));
     }
 
     public static String[] unpackSaveString(String input) {
@@ -75,10 +75,16 @@ public class StackEm extends Mod {
             return null;
         }
 
+        final File[] filesArray = texturepacksDir.listFiles();
+
+        if (filesArray == null || filesArray.length == 0) {
+            return null;
+        }
+
         final List<TagTexturePack> collector = new ArrayList<>();
 
-        for (File file : texturepacksDir.listFiles()) {
-            if(file.isDirectory() || !file.getName().toLowerCase().endsWith(".zip")) {
+        for (File file : filesArray) {
+            if (file.isDirectory() || !file.getName().toLowerCase().endsWith(".zip")) {
                 continue;
             }
 

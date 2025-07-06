@@ -78,10 +78,10 @@ public final class GlueImages {
             int amount = 0;
             for (int i = 0; i < modParts.length; i++) {
                 if (modParts[i]) {
-                    final int x = holder.segments[i][0] * scale;
-                    final int y = holder.segments[i][1] * scale;
-                    final int endX = (x + holder.segments[i][2]) * scale;
-                    final int endY = (y + holder.segments[i][3]) * scale;
+                    final int x = holder.segments()[i][0] * scale;
+                    final int y = holder.segments()[i][1] * scale;
+                    final int endX = (x + holder.segments()[i][2]) * scale;
+                    final int endY = (y + holder.segments()[i][3]) * scale;
 
                     for (int movY = y; movY < endY; movY++) {
                         for (int movX = x; movX < endX; movX++) {
@@ -113,14 +113,14 @@ public final class GlueImages {
         final TexturePackDefault defaultPack = (TexturePackDefault) SmartHacks.getDefaultTexturePack();
         final TexturePackStacked stacked = StackEm.getContainerInstance();
 
-        final ImageGlueContainer original = new ImageGlueContainer(ImageHelper.readImage(defaultPack, name.texture));
+        final ImageGlueContainer original = new ImageGlueContainer(ImageHelper.readImage(defaultPack, name.texture()));
         final List<BufferedImage> images = new ArrayList<>();
 
         //fetching texturepacks that can into gluing
         List<ZipFile> zipFiles = stacked.getZipFiles();
         for (int i = zipFiles.size() - 1; i >= 0; i--) {
             final ZipFile zipFile = zipFiles.get(i);
-            final BufferedImage image = ImageHelper.readImage(zipFile, name.texture);
+            final BufferedImage image = ImageHelper.readImage(zipFile, name.texture());
             if (ImageHelper.isValidTexture(image)) {
                 images.add(image);
             } else {
@@ -137,7 +137,7 @@ public final class GlueImages {
             changesNum += original.makeChanges(attack, name);
         }
 
-        StackEm.LOGGER.info("Overwrote " + changesNum + " image segments for: " + name.texture.substring(1));
+        StackEm.LOGGER.info("Overwrote " + changesNum + " image segments for: " + name.texture().substring(1));
 
         //clean-up process
         for (BufferedImage image : images) {

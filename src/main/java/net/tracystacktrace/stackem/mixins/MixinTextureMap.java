@@ -10,7 +10,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(TextureMap.class)
 public class MixinTextureMap {
-
     @Inject(method = "refreshTextures", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/renderer/block/TextureManager;createStitcher(Ljava/lang/String;)Lnet/minecraft/client/renderer/block/icon/Stitcher;", shift = At.Shift.AFTER))
     private void stackem$registerCustomIcons(CallbackInfo ci) {
         StackEmModifications.fetchIconModifications();

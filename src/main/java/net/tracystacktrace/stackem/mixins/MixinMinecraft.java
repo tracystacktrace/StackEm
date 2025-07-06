@@ -24,7 +24,7 @@ public class MixinMinecraft {
             target = "Lnet/minecraft/client/Minecraft;screenshotListener()V"))
     private void stackem$injectF10Toggle(CallbackInfo ci) {
         if (Keyboard.isKeyDown(Keyboard.KEY_F10)) {
-            StackEm.toggleDebug();
+            StackEm.toggleDefaultTextures();
         }
     }
 }

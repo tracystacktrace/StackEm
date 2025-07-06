@@ -11,27 +11,19 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.Objects;
 
-public class SingleItemSwap {
-    public final int target;
-    public final TextureByName[] textureByNames;
-    public final TextureByMetadata[] textureByMetadata;
+public record SingleItemSwap(int target, TextureByName[] textureByNames, TextureByMetadata[] textureByMetadata) {
 
-    public SingleItemSwap(int target, TextureByName[] textureByNames, TextureByMetadata[] textureByMetadata) {
-        this.target = target;
-        this.textureByNames = textureByNames;
-        this.textureByMetadata = textureByMetadata;
-    }
-
-    public boolean hasOnNames() {
+    public boolean anySwapsByName() {
         return this.textureByNames != null && this.textureByNames.length > 0;
     }
 
-    public boolean hasOnMetas() {
+    public boolean anySwapsByMeta() {
         return this.textureByMetadata != null && this.textureByMetadata.length > 0;
     }
 
     public @Nullable Icon getIcon(@NotNull ItemStack stack) {
-        if (this.hasOnMetas()) {
+        if (this.anySwapsByMeta()) {
+            //noinspection ForLoopReplaceableByForEach
             for (int i = 0; i < this.textureByMetadata.length; i++) {
                 TextureByMetadata meta = this.textureByMetadata[i];
                 if (meta.compare(stack.getItemDamage())) {
@@ -40,7 +32,7 @@ public class SingleItemSwap {
             }
         }
 
-        if (this.hasOnNames()) {
+        if (this.anySwapsByName()) {
             for (int i = 0; i < this.textureByNames.length; i++) {
                 TextureByName name = this.textureByNames[i];
                 if (name.compareString(stack.getDisplayName())) {
@@ -49,6 +41,19 @@ public class SingleItemSwap {
             }
         }
         return null;
+    }
+
+    public void registerIcon(IconRegister register) {
+        if (this.anySwapsByMeta()) {
+            for (TextureByMetadata meta : this.textureByMetadata) {
+                meta.registerIcon(register);
+            }
+        }
+        if (this.anySwapsByName()) {
+            for (TextureByName name : this.textureByNames) {
+                name.registerIcon(register);
+            }
+        }
     }
 
     @Override
@@ -70,18 +75,5 @@ public class SingleItemSwap {
                 ", textureByNames=" + Arrays.toString(textureByNames) +
                 ", textureByMetadata=" + Arrays.toString(textureByMetadata) +
                 '}';
-    }
-
-    public void registerIcon(IconRegister register) {
-        if (this.hasOnMetas()) {
-            for (TextureByMetadata meta : this.textureByMetadata) {
-                meta.registerIcon(register);
-            }
-        }
-        if (this.hasOnNames()) {
-            for (TextureByName name : this.textureByNames) {
-                name.registerIcon(register);
-            }
-        }
     }
 }

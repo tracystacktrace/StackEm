@@ -11,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(ItemStack.class)
 public abstract class MixinItemStack {
-
     @Shadow
     public abstract int getItemID();
 
@@ -25,5 +24,4 @@ public abstract class MixinItemStack {
             }
         }
     }
-
 }

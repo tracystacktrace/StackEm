@@ -27,11 +27,10 @@ import java.util.zip.ZipFile;
  */
 public final class StackEmModifications {
 
-    public static final IJam[] JAMS = new IJam[]{
+    private static final IJam JAM_ITEM_STACK_TEXTURE = new JamItemStackTexture();
+    private static final IJam[] JAMS = new IJam[]{
             new JamMoonTexture(), new JamSunTexture()
     };
-
-    private static final IJam JAM_IS_SWAP = new JamItemStackTexture();
 
     /**
      * This is the actual code you should call upon refreshing textures
@@ -50,7 +49,7 @@ public final class StackEmModifications {
      * This is the actual code you should call upon refreshing textures
      */
     public static void fetchTextureModifications(RenderEngine renderEngine) {
-        if (renderEngine == null || StackEm.DEBUG_DISABLE) {
+        if (renderEngine == null || StackEm.DEBUG_FORCE_DEFAULT) {
             return;
         }
 
@@ -66,14 +65,14 @@ public final class StackEmModifications {
             //process texture layering, get a layered texture
             BufferedImage image = GlueImages.processLayering(value);
 
-            if (SmartHacks.getTextureMap(renderEngine).containsKey(value.texture)) {
+            if (SmartHacks.getTextureMap(renderEngine).containsKey(value.texture())) {
                 //hack solution - simply overwrite the texture with the in-built code
-                final int id = SmartHacks.getTextureMap(renderEngine).getInt(value.texture);
+                final int id = SmartHacks.getTextureMap(renderEngine).getInt(value.texture());
                 renderEngine.setupTexture(image, id);
             } else {
                 //no id present - we will add it then
                 final int loc = renderEngine.allocateAndSetupTexture(image);
-                SmartHacks.getTextureMap(renderEngine).put(value.texture, loc);
+                SmartHacks.getTextureMap(renderEngine).put(value.texture(), loc);
             }
         }
 
@@ -101,7 +100,7 @@ public final class StackEmModifications {
     }
 
     public static void fetchIconModifications(RenderEngine render) {
-        if (render == null || StackEm.DEBUG_DISABLE) {
+        if (render == null || StackEm.DEBUG_FORCE_DEFAULT) {
             return;
         }
 
@@ -113,14 +112,14 @@ public final class StackEmModifications {
         }
 
         for (ZipFile file : stacked.getZipFiles()) {
-            final ZipEntry entry = ZipFileHelper.getEntryFor(file, JAM_IS_SWAP.getPath());
+            final ZipEntry entry = ZipFileHelper.getEntryFor(file, JAM_ITEM_STACK_TEXTURE.getPath());
             if (entry == null) continue;
 
             try {
                 final String data = ZipFileHelper.readTextFile(file, entry);
-                JAM_IS_SWAP.process(stacked, data);
+                JAM_ITEM_STACK_TEXTURE.process(stacked, data);
             } catch (ZipFileHelper.CustomZipOperationException e) {
-                StackEm.LOGGER.severe("Failed during custom JAM fetch: " + JAM_IS_SWAP.getPath());
+                StackEm.LOGGER.severe("Failed during custom JAM fetch: " + JAM_ITEM_STACK_TEXTURE.getPath());
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
             }
         }

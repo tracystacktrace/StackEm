@@ -13,9 +13,4 @@ public class MixinRenderEngine {
     private void stackem$injectRefreshTextures(CallbackInfo ci) {
         StackEmModifications.fetchTextureModifications(RenderEngine.class.cast(this));
     }
-
-//    @Inject(method = "refreshTextureMaps", at = @At("HEAD"))
-//    private void stackem$injectRefreshTextureMaps(CallbackInfo ci) {
-//        StackEmModifications.fetchIconModifications(RenderEngine.class.cast(this));
-//    }
 }

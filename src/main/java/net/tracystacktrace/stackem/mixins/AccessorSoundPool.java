@@ -9,8 +9,6 @@ import java.util.List;
 
 @Mixin(SoundPool.class)
 public interface AccessorSoundPool {
-
     @Accessor("allSoundPoolEntries")
     List<SoundPoolEntry> stackem$entryList();
-
 }
