@@ -8,7 +8,6 @@ import org.jetbrains.annotations.NotNull;
  * Use it if you really want to get a determined values, such as entity skin values, etc
  */
 public final class QuickRNG {
-
     /**
      * A very simple, deterministic, yet effective RNG based on input value.
      * <br>

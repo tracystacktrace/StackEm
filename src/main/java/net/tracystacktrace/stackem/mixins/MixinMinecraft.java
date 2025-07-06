@@ -16,7 +16,6 @@ public class MixinMinecraft {
             target = "Lnet/minecraft/client/gui/FontRenderer;setBidiFlag(Z)V"))
     private void stackem$injectPreloadTextures(CallbackInfo ci) {
         StackEmModifications.fetchTextureModifications();
-        //StackEmModifications.fetchIconModifications();
     }
 
     @Inject(method = "run", at = @At(

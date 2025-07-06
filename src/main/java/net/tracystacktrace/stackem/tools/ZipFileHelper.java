@@ -15,7 +15,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public final class ZipFileHelper {
-
+    /**
+     * A simple equivalent of {@link java.util.function.Function} but with support of throwing a {@link Throwable}
+     * @param <A> Input argument type
+     * @param <R> Return argument type
+     * @param <T> Throwable type
+     */
     @FunctionalInterface
     public interface FunctionWithException<A, R, T extends Throwable> {
         R apply(A a) throws T;
@@ -113,5 +118,4 @@ public final class ZipFileHelper {
             return null;
         }
     }
-
 }

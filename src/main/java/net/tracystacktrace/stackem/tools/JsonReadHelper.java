@@ -13,7 +13,7 @@ import java.util.function.Function;
 public final class JsonReadHelper {
 
     public static int[] readIntArray(@NotNull JsonArray array) {
-        int[] result = new int[array.size()];
+        final int[] result = new int[array.size()];
         for (int i = 0; i < result.length; i++) {
             result[i] = array.get(i).getAsInt();
         }

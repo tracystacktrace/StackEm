@@ -22,10 +22,10 @@ public final class ImageHelper {
             @NotNull BufferedImage original,
             int targetWidth, int targetHeight
     ) {
-        Image resultingImage = original.getScaledInstance(targetWidth, targetHeight, Image.SCALE_DEFAULT);
-        BufferedImage outputImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
+        final Image resultingImage = original.getScaledInstance(targetWidth, targetHeight, Image.SCALE_DEFAULT);
+        final BufferedImage outputImage = new BufferedImage(targetWidth, targetHeight, BufferedImage.TYPE_INT_ARGB);
 
-        Graphics2D g2d = outputImage.createGraphics();
+        final Graphics2D g2d = outputImage.createGraphics();
         g2d.drawImage(resultingImage, 0, 0, null);
         g2d.dispose();
 
@@ -38,7 +38,7 @@ public final class ImageHelper {
     ) {
         try {
             final InputStream inputStream = texturePack.getResourceAsStream(name);
-            BufferedImage image = ImageIO.read(inputStream);
+            final BufferedImage image = ImageIO.read(inputStream);
             inputStream.close();
             return image;
         } catch (IOException e) {

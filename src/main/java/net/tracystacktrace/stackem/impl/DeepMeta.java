@@ -15,8 +15,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeepMeta {
-
     protected final Int2ObjectMap<List<SingleItemSwap>> mapTexturepacksSwap = new Int2ObjectOpenHashMap<>();
+
+    //can be null-ed when flushed
     public CelestialMeta moonData;
     public CelestialMeta sunData;
 
@@ -49,6 +50,7 @@ public class DeepMeta {
     }
 
     /* icon methods */
+
     public boolean containsCodex(int itemID) {
         return mapTexturepacksSwap.containsKey(itemID);
     }

@@ -5,7 +5,6 @@ import java.util.Comparator;
 import java.util.List;
 
 public final class StringFeatures {
-
     public static String limitString(String line, final int length, final boolean endDots) {
         if (line == null || line.length() < length) {
             return line;
@@ -77,5 +76,4 @@ public final class StringFeatures {
         }
         return str.substring(0, maxLength - 3) + "...";
     }
-
 }
