@@ -13,6 +13,8 @@ public class TextureByName {
     public static final byte EQUALS_IGNORE_CASE = 1;
     public static final byte CONTAINS = 2;
     public static final byte REGEX = 3; //todo: add regex support
+    public static final byte STARTS_WITH = 4;
+    public static final byte ENDS_WITH = 5;
 
     public final byte compareCode;
     public final String targetString;
@@ -44,6 +46,12 @@ public class TextureByName {
             }
             case CONTAINS -> {
                 return itemName.contains(this.targetString);
+            }
+            case STARTS_WITH -> {
+                return itemName.startsWith(this.targetString);
+            }
+            case ENDS_WITH -> {
+                return itemName.endsWith(this.targetString);
             }
         }
 
@@ -97,6 +105,16 @@ public class TextureByName {
         if (object.has("contains")) {
             targetString = object.get("contains").getAsString();
             compareCode = TextureByName.CONTAINS;
+        }
+
+        if (object.has("startsWith")) {
+            targetString = object.get("startsWith").getAsString();
+            compareCode = TextureByName.STARTS_WITH;
+        }
+
+        if (object.has("endsWith")) {
+            targetString = object.get("endsWith").getAsString();
+            compareCode = TextureByName.ENDS_WITH;
         }
 
         if (compareCode == -1 || targetString == null) {

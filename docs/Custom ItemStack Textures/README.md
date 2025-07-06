@@ -19,6 +19,7 @@ Let's go and check an example of `stackem.items.json`:
         }
       ]
     }
+    
   ]
 }
 ```
@@ -42,7 +43,7 @@ Now let's move to the part, where we create a pattern for a **single** item!
 
 ### I. Providing `"item"`/`"id"`
 
-Let's say, we need to change the texture of an `iron sword`. For this, we need to know either the internal name or its id. You can open ReIndev, hover at the iron sword and hold `CTRL` to unveal some more data.
+Let's say, we need to change the texture of an `iron sword`. For this, we need to know either the internal name or its id. You can open ReIndev, hover at the iron sword and hold `LEFT CTRL` to unveal some more data.
 
 The tooltip shows us:
 ```
@@ -69,3 +70,46 @@ For a numerical id, you provide it inside `"id"` section:
 
 ### II. Swapping by meta
 
+Now let's assume we need to change the texture with following meta:
+
+```
+The item will have texture0.png when its meta value is only 51
+The item will have texture1.png when its meta value is below 13
+The item will have texture2.png when its meta value is between 23 and 31
+```
+
+**ATTENTION!** Due to specific way of fetching texture for items (ReIndev), you need to locate item textures in this path: `textures/items`
+
+We will put textures as `mycustompack/texture[X].png`, so we need to create a folder named `mycustompack` in `texture/items` and locate all textures here...
+
+I will provide an example code, but you can check ARGS.md for deep technical information:
+```json5
+{
+  "id": 267,
+  
+  "onMeta": [
+    {
+      "static": 51, //only 51 meta
+      "texture": "mycustompack/texture0" //full path is texturePack.zip!/textures/items/mycustompack/texture0.png
+    },
+    {
+      "below": 13, //below 13 (inclusive)
+      "texture": "mycustompack/texture1" //full path is texturePack.zip!/textures/items/mycustompack/texture1.png
+    },
+    {
+      "between": [23, 31],
+      "texture": "mycustompack/texture2" //full path is texturePack.zip!/textures/items/mycustompack/texture2.png
+    }
+  ]
+}
+```
+
+## III. Swapping by name
+
+We did add changes by metadata value, but now let's add some changes by name!
+
+```
+The item will have cool_sword0.png when its name is strictly "Iron Sword Of Magicians"
+The item will have cool_sword1.png when its name contains "Sigma Power"
+The item will have cool_sword2.png when its name 
+```

@@ -9,7 +9,7 @@ import org.jetbrains.annotations.NotNull;
 public class TextureByMetadata {
     public static final byte STATIC = 0;
     public static final byte BETWEEN = 1;
-    public static final byte BEFORE = 2;
+    public static final byte BELOW = 2;
     public static final byte AFTER = 3;
     public static final byte FOLLOWING = 4;
 
@@ -33,7 +33,7 @@ public class TextureByMetadata {
             case BETWEEN -> {
                 return this.compareInts[0] <= meta && this.compareInts[1] >= meta;
             }
-            case BEFORE -> {
+            case BELOW -> {
                 return this.compareInts[0] < meta;
             }
             case AFTER -> {
@@ -71,9 +71,9 @@ public class TextureByMetadata {
             compareInts = JsonReadHelper.readIntArray(object.getAsJsonArray("between"));
         }
 
-        if (object.has("before")) {
-            compareCode = TextureByMetadata.BEFORE;
-            compareInts = new int[]{object.get("before").getAsInt()};
+        if (object.has("below")) {
+            compareCode = TextureByMetadata.BELOW;
+            compareInts = new int[]{object.get("below").getAsInt()};
         }
 
         if (object.has("after")) {

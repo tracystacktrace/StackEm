@@ -6,6 +6,8 @@ A FoxLoader (ReIndev mod loader) modification that adds an ability to use severa
 
 No need to extract and combine several texturepacks into one big `.zip` file, just install the mod and select any of texturepacks you want to use within menu.
 
+Additionally, this mod adds expanded capabilities for texturepacks, such as custom item textures based on name/meta, additional description file, etc.
+
 This is achieved by replacing a standard `ITexturePack` instance with custom one that handles multiple zip files `I/O` operations. All injections & source code manipulations are done within Mixins.
 
 ![Texturepacks menu GUI](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_1.png)
