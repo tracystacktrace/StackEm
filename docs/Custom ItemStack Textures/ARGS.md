@@ -97,6 +97,26 @@ Example code:
 }
 ```
 
+### `"priority"`
+- Explanation: the priority of the rule, the bigger value - the more prioritised it is. `0` is default priority.
+- Type: `int`
+- Default value: `0`
+
+Example code:
+```json5
+{
+  "id": 257,
+  
+  "onMeta": [
+    {
+      "priority": 5,
+      "below": 100,
+      "texture": "break_progress/iron_pickaxe_break_0" //full path will be texturePack.zip!/textures/items/break_progress/iron_pickaxe_break_0.png
+    }
+  ]
+}
+```
+
 ### possible trigger checks
 Trigger checks have the same pattern of:
 ```json5
@@ -144,6 +164,26 @@ Example code:
     {
       "equals": "Copper Pickaxe",
       "texture": "copper_tools/copper_pickaxe" //full path will be texturePack.zip!/textures/items/copper_tools/copper_pickaxe.png
+    }
+  ]
+}
+```
+
+### `"priority"`
+- Explanation: the priority of the rule, the bigger value - the more prioritised it is. `0` is default priority.
+- Type: `int`
+- Default value: `0`
+
+Example code:
+```json5
+{
+  "id": 257,
+  
+  "onMeta": [
+    {
+      "priority": 5,
+      "below": 100,
+      "texture": "break_progress/iron_pickaxe_break_0" //full path will be texturePack.zip!/textures/items/break_progress/iron_pickaxe_break_0.png
     }
   ]
 }

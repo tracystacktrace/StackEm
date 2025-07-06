@@ -20,6 +20,7 @@ public class TextureByName {
     public final String targetString;
     public final String texturePath;
 
+    protected int priority;
     public Icon textureIcon;
 
     public TextureByName(
@@ -60,6 +61,10 @@ public class TextureByName {
 
     public void registerIcon(IconRegister register) {
         this.textureIcon = register.registerIcon(this.texturePath);
+    }
+
+    public int getPriority() {
+        return this.priority;
     }
 
     @Override
@@ -122,6 +127,13 @@ public class TextureByName {
         }
 
         final String texture = object.get("texture").getAsString();
-        return new TextureByName(compareCode, targetString, texture);
+
+        final TextureByName compiled = new TextureByName(compareCode, targetString, texture);
+
+        if(object.has("priority")) {
+            compiled.priority = object.get("priority").getAsInt();
+        }
+
+        return compiled;
     }
 }

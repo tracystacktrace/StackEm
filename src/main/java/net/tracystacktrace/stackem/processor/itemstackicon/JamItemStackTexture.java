@@ -12,6 +12,9 @@ import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
+import java.util.Comparator;
+
 public class JamItemStackTexture implements IJam {
     @Override
     public @NotNull String getPath() {
@@ -66,6 +69,10 @@ public class JamItemStackTexture implements IJam {
 
         final TextureByName[] textureByNames = JsonReadHelper.readObjectArray(object, "onName", TextureByName::fromJson, new TextureByName[0]);
         final TextureByMetadata[] textureByMetadata = JsonReadHelper.readObjectArray(object, "onMeta", TextureByMetadata::fromJson, new TextureByMetadata[0]);
+
+        //sort them by priority
+        Arrays.sort(textureByNames, Comparator.comparingInt(TextureByName::getPriority));
+        Arrays.sort(textureByMetadata, Comparator.comparingInt(TextureByMetadata::getPriority));
 
         StackEm.getContainerDeepMeta().addCodex(targetItemID, new SingleItemSwap(targetItemID, textureByNames, textureByMetadata));
     }

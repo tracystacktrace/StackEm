@@ -17,6 +17,7 @@ public class TextureByMetadata {
     public final int[] compareInts;
     public final String texturePath;
 
+    protected int priority = 0;
     public Icon textureIcon;
 
     public TextureByMetadata(byte compareCode, int @NotNull [] compareInts, @NotNull String texturePath) {
@@ -57,6 +58,10 @@ public class TextureByMetadata {
         this.textureIcon = register.registerIcon(this.texturePath);
     }
 
+    public int getPriority() {
+        return this.priority;
+    }
+
     public static @NotNull TextureByMetadata fromJson(@NotNull JsonObject object) throws IllegalArgumentException {
         byte compareCode = -1;
         int[] compareInts = null;
@@ -92,6 +97,12 @@ public class TextureByMetadata {
 
         final String texture = object.get("texture").getAsString();
 
-        return new TextureByMetadata(compareCode, compareInts, texture);
+        final TextureByMetadata compiled = new TextureByMetadata(compareCode, compareInts, texture);
+
+        if(object.has("priority")) {
+            compiled.priority = object.get("priority").getAsInt();
+        }
+
+        return compiled;
     }
 }
