@@ -5,7 +5,8 @@ So, uhh... I'm bad at writing comprehensive guides, so I'll go with different ap
 Starting with version `0.3.5`, you can change textures of items based on what their name is or what their meta is. In other words, you can set different textures for different names and/or metadata values for the item.
 
 You can check example texturepacks:
-- WIP
+- [**Example 1 - By (this) Guide**](https://github.com/tracystacktrace/StackEm/tree/main/docs/Custom%20ItemStack%20Textures/Example%201%20-%20By%20Guide)
+- [**Example 2 - Asgard Giant Swords**](https://github.com/tracystacktrace/StackEm/tree/main/docs/Custom%20ItemStack%20Textures/Example%202%20-%20Asgard%20Giant%20Swords)
 
 The file where we will put all custom textures is named `stackem.items.json` and is located in the root section of a texturepack (next to `pack.txt`).
 

@@ -12,6 +12,7 @@ This is achieved by replacing a standard `ITexturePack` instance with custom one
 
 ![Texturepacks menu GUI](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_1.png)
 ![Showcase of gluing system](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_2.png)
+![Showcase of custom texture swap](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_4.png)
 ![CharMap](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_3.png)
 
 ## Features
@@ -27,6 +28,7 @@ This is achieved by replacing a standard `ITexturePack` instance with custom one
     - `/textures/gui/stats/slot.png`
     - `/textures/environment/particles.png`
 - Additional description file: you can [create an additional description file](https://github.com/tracystacktrace/StackEm/tree/main/docs/Additional%20Description) in your texturepack to include authorship, website and categories!
+- Custom texture swap: like in `optifine`, you can [change a texture of an item by their name or meta value](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/README.md)
 
 ## Installation
 

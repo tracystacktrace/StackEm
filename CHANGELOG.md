@@ -1,14 +1,15 @@
 
-## [0.3.5] - TBA
+## [0.3.5] - 2025-07-06
 
 **[View changes between 0.3.4 with 0.3.5](https://github.com/tracystacktrace/StackEm/compare/0.3.4...0.3.5)**
 
 - Added support for custom texture swap of items based on either name or metadata value
 - Fixed a bug where modifications occur even with disabled texturepacks
 - Fixed a bug where the mod would literally crawl non .zip files and try to process them lmao
+- Fixed a bug where the mod would diabolically dictate own order of texturepacks for no reason
 - Optimized a code related to receiving info about texturepack folder zip files
 - Enforced UTF-8, so color chars could be read correctly
-- Updated toolchain to FoxLoader `2.0-alpha29` (ReIndev `2.9_03`)
+- Updated toolchain to FoxLoader `2.0-alpha30` (ReIndev `2.9_03`)
 
 ## [0.3.4] - 2025-07-03
 
