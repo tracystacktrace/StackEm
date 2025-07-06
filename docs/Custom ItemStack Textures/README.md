@@ -4,6 +4,9 @@ So, uhh... I'm bad at writing comprehensive guides, so I'll go with different ap
 
 Starting with version `0.3.5`, you can change textures of items based on what their name is or what their meta is. In other words, you can set different textures for different names and/or metadata values for the item.
 
+You can check example texturepacks:
+- WIP
+
 The file where we will put all custom textures is named `stackem.items.json` and is located in the root section of a texturepack (next to `pack.txt`).
 
 Let's go and check an example of `stackem.items.json`:
@@ -82,7 +85,7 @@ The item will have texture2.png when its meta value is between 23 and 31
 
 We will put textures as `mycustompack/texture[X].png`, so we need to create a folder named `mycustompack` in `texture/items` and locate all textures here...
 
-I will provide an example code, but you can check ARGS.md for deep technical information:
+I will provide an example code, but you can check [**ARGS.md**](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/ARGS.md) for deep technical information:
 ```json5
 {
   "id": 267,
@@ -111,5 +114,30 @@ We did add changes by metadata value, but now let's add some changes by name!
 ```
 The item will have cool_sword0.png when its name is strictly "Iron Sword Of Magicians"
 The item will have cool_sword1.png when its name contains "Sigma Power"
-The item will have cool_sword2.png when its name 
+The item will have cool_sword2.png when its name ends with "Hello Sword"
+```
+
+**ATTENTION!** Due to specific way of fetching texture for items (ReIndev), you need to locate item textures in this path: `textures/items`
+
+We will put textures as `mycustompack/texture[X].png`, so we need to create a folder named `mycustompack` in `texture/items` and locate all textures here...
+I will provide an example code, but you can check [**ARGS.md**](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/ARGS.md) for deep technical information:
+```json5
+{
+  "id": 267,
+  
+  "onMeta": [
+    {
+      "equals": "Iron Sword of Magicians", //trigger check
+      "texture": "mycustompack/cool_sword0" //full path is texturePack.zip!/textures/items/mycustompack/cool_sword0.png
+    },
+    {
+      "contains": "Sigma Power", //trigger check
+      "texture": "mycustompack/cool_sword1" //full path is texturePack.zip!/textures/items/mycustompack/cool_sword1.png
+    },
+    {
+      "endsWith": "Hello Sword", //trigget check
+      "texture": "mycustompack/cool_sword2" //full path is texturePack.zip!/textures/items/mycustompack/cool_sword2.png
+    }
+  ]
+}
 ```

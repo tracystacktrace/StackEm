@@ -5,6 +5,7 @@ import it.unimi.dsi.fastutil.ints.Int2ObjectOpenHashMap;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.minecraft.common.item.ItemStack;
+import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.processor.itemstackicon.SingleItemSwap;
 import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
 import net.tracystacktrace.stackem.processor.moon.EnumCelestialCycle;
@@ -80,6 +81,7 @@ public class DeepMeta {
             mapTexturepacksSwap.put(itemID, new ArrayList<>());
         }
         mapTexturepacksSwap.get(itemID).add(set);
+        StackEm.LOGGER.info("Added custom swap set: " + set.toString());
     }
 
     /* general methods */

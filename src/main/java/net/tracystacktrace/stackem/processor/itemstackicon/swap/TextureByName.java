@@ -85,10 +85,6 @@ public class TextureByName {
     }
 
     public static @NotNull TextureByName fromJson(@NotNull JsonObject object) throws IllegalArgumentException {
-        if (!object.has("equals") && !object.has("equalsIgnoreCase") && !object.has("contains")) {
-            throw new IllegalArgumentException("Item texture swap builder error! Cannot find correct [compareCode] for: " + object);
-        }
-
         byte compareCode = -1;
         String targetString = null;
 
@@ -118,7 +114,7 @@ public class TextureByName {
         }
 
         if (compareCode == -1 || targetString == null) {
-            throw new IllegalArgumentException("Item texture swap builder error! Failed to fetch required arguments from: " + object);
+            throw new IllegalArgumentException("Item texture swap builder error! Cannot find correct [compareCode] for: " + object);
         }
 
         if (!object.has("texture")) {

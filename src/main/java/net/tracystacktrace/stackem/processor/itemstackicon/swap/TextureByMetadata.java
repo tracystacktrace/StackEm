@@ -94,5 +94,4 @@ public class TextureByMetadata {
 
         return new TextureByMetadata(compareCode, compareInts, texture);
     }
-
 }

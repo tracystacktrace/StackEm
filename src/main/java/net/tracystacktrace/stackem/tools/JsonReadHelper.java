@@ -35,6 +35,7 @@ public final class JsonReadHelper {
                 collector.add(value);
             } catch (IllegalArgumentException e) {
                 StackEm.LOGGER.severe("Failed to process item [" + arrayName + "] swap data!");
+                e.printStackTrace();
                 StackEm.LOGGER.throwing("ItemStackCooker", "read", e);
             }
         }

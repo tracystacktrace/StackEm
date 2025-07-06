@@ -1,0 +1,53 @@
+{
+  "data": [
+    {
+      "item": "item.wooden_sword",
+      "onName": [
+        {
+          "endsWith": "Wooden Giant Sword",
+          "texture": "asgard_swords/wooden_giant_sword"
+        }
+      ]
+    },
+    {
+      "item": "item.stone_sword",
+      "onName": [
+        {
+          "endsWith": "Stone Giant Sword",
+          "texture": "asgard_swords/stone_giant_sword"
+        }
+      ]
+    },
+    {
+      "item": "item.iron_sword",
+      "onName": [
+        {
+          "endsWith": "Iron Giant Sword",
+          "texture": "asgard_swords/iron_giant_sword"
+        }
+      ]
+    },
+    {
+      "item": "item.gold_sword",
+      "onName": [
+        {
+          "endsWith": "Golden Giant Sword",
+          "texture": "asgard_swords/golden_giant_sword"
+        }
+      ]
+    },
+    {
+      "item": "item.diamond_sword",
+      "onName": [
+        {
+          "endsWith": "Diamond Giant Sword",
+          "texture": "asgard_swords/diamond_giant_sword"
+        },
+        {
+          "endsWith": "Ender Giant Sword",
+          "texture": "asgard_swords/ender_giant_sword"
+        }
+      ]
+    }
+  ]
+}

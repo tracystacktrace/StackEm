@@ -1,0 +1,40 @@
+{
+  "data": [
+    {
+      "id": 267,
+
+      "onMeta": [
+        {
+          "static": 51,
+          "texture": "mycustompack/texture0"
+        },
+        {
+          "below": 13,
+          "texture": "mycustompack/texture1"
+        },
+        {
+          "between": [23, 31],
+          "texture": "mycustompack/texture2"
+        }
+      ]
+    },
+    {
+      "id": 267,
+
+      "onMeta": [
+        {
+          "equals": "Iron Sword of Magicians",
+          "texture": "mycustompack/cool_sword0"
+        },
+        {
+          "contains": "Sigma Power",
+          "texture": "mycustompack/cool_sword1"
+        },
+        {
+          "endsWith": "Hello Sword",
+          "texture": "mycustompack/cool_sword2"
+        }
+      ]
+    }
+  ]
+}
