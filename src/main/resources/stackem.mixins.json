@@ -6,13 +6,15 @@
   "mixins": [
     "AccessorSoundManager",
     "AccessorSoundPool",
-    "MixinGuiMainMenu",
-    "MixinGuiVideoSettings",
     "MixinItemStack",
-    "MixinMinecraft",
-    "MixinRenderEngine",
     "MixinRenderGlobal",
     "MixinTextureMap",
-    "MixinTexturePackList"
+    "core.MixinMinecraft",
+    "core.MixinRenderEngine",
+    "core.MixinTexturePackList",
+    "menu.MixinGuiMainMenu",
+    "menu.MixinGuiVideoSettings",
+    "patches.MixinGuiContainerChest",
+    "patches.MixinGuiContainerForge"
   ]
 }

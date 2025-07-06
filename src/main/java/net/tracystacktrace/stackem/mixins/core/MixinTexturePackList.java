@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.mixins;
+package net.tracystacktrace.stackem.mixins.core;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.ITexturePack;

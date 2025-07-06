@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.mixins;
+package net.tracystacktrace.stackem.mixins.menu;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;

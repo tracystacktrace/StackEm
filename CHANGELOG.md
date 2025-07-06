@@ -1,4 +1,13 @@
 
+## [0.3.6] - 2025-07-06
+
+**[View changes between 0.3.5 with 0.3.6](https://github.com/tracystacktrace/StackEm/compare/0.3.5...0.3.6)**
+
+- Added patch to provide custom GUI textures for Forge and Dimensional Chest:
+  - Forge: `/textures/gui/container/forge.png`
+  - Dimensional Chest: `/textures/gui/container/dimensional_chest.png`
+- Added `"priority"` parameter to item texture swapping
+
 ## [0.3.5] - 2025-07-06
 
 **[View changes between 0.3.4 with 0.3.5](https://github.com/tracystacktrace/StackEm/compare/0.3.4...0.3.5)**

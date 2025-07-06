@@ -71,8 +71,8 @@ public class JamItemStackTexture implements IJam {
         final TextureByMetadata[] textureByMetadata = JsonReadHelper.readObjectArray(object, "onMeta", TextureByMetadata::fromJson, new TextureByMetadata[0]);
 
         //sort them by priority
-        Arrays.sort(textureByNames, Comparator.comparingInt(TextureByName::getPriority));
-        Arrays.sort(textureByMetadata, Comparator.comparingInt(TextureByMetadata::getPriority));
+        if (textureByNames != null) Arrays.sort(textureByNames, Comparator.comparingInt(TextureByName::getPriority));
+        if (textureByMetadata != null) Arrays.sort(textureByMetadata, Comparator.comparingInt(TextureByMetadata::getPriority));
 
         StackEm.getContainerDeepMeta().addCodex(targetItemID, new SingleItemSwap(targetItemID, textureByNames, textureByMetadata));
     }
