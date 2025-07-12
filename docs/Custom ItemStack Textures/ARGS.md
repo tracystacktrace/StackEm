@@ -111,6 +111,26 @@ Example code:
 }
 ```
 
+### `"armorTexture"`
+- Explanation: the armor texture that will be used if an armor piece with swap feature is present. Useful only with item armors.
+- Type: `string`
+- Default value: `null` (will be ignored)
+
+Example code:
+```json5
+{
+  "item": "item.diamond_helmet",
+  
+  "onName": [
+    {
+      "endsWith": "Black Diamond Helmet",
+      "texture": "cool_items/black_diamond_helmet", //full path will be texturePack.zip!/textures/items/cool_items/black_diamond_helmet.png
+      "armorTexture": "/textures/models/armor/black_diamond_1.png"
+    }
+  ]
+}
+```
+
 ### possible trigger checks
 Trigger checks have the same pattern of:
 ```json5
@@ -178,6 +198,26 @@ Example code:
       "priority": 5,
       "below": 100,
       "texture": "break_progress/iron_pickaxe_break_0" //full path will be texturePack.zip!/textures/items/break_progress/iron_pickaxe_break_0.png
+    }
+  ]
+}
+```
+
+### `"armorTexture"`
+- Explanation: the armor texture that will be used if an armor piece with swap feature is present. Useful only with item armors.
+- Type: `string`
+- Default value: `null` (will be ignored)
+
+Example code:
+```json5
+{
+  "item": "item.diamond_helmet",
+  
+  "onName": [
+    {
+      "endsWith": "Black Diamond Helmet",
+      "texture": "cool_items/black_diamond_helmet", //full path will be texturePack.zip!/textures/items/cool_items/black_diamond_helmet.png
+      "armorTexture": "/textures/models/armor/black_diamond_1.png"
     }
   ]
 }

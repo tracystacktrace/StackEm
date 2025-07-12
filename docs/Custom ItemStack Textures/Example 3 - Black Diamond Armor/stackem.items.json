@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "item": "item.diamond_helmet",
+      "onName": [
+        {
+          "endsWith": "Black Diamond Helmet",
+          "texture": "black_diamond_armor/black_diamond_helmet",
+		  "armorTexture": "/textures/models/armor/black_diamond_armor/black_diamond_1.png"
+        }
+      ]
+    },
+    {
+      "item": "item.diamond_chestplate",
+      "onName": [
+        {
+          "endsWith": "Black Diamond Chestplate",
+          "texture": "black_diamond_armor/black_diamond_chestplate",
+		  "armorTexture": "/textures/models/armor/black_diamond_armor/black_diamond_1.png"
+        }
+      ]
+    },
+    {
+      "item": "item.diamond_leggings",
+      "onName": [
+        {
+          "endsWith": "Black Diamond Leggings",
+          "texture": "black_diamond_armor/black_diamond_leggings",
+		  "armorTexture": "/textures/models/armor/black_diamond_armor/black_diamond_2.png"
+        }
+      ]
+    },
+    {
+      "item": "item.diamond_boots",
+      "onName": [
+        {
+          "endsWith": "Black Diamond Boots",
+          "texture": "black_diamond_armor/black_diamond_boots",
+		  "armorTexture": "/textures/models/armor/black_diamond_armor/black_diamond_1.png"
+        }
+      ]
+    }
+  ]
+}
