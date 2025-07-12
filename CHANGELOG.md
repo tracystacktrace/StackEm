@@ -6,8 +6,9 @@
 - Some internal code changes: now the JSON parsing code should be much more stable.
 - Removed `"id"` tag from `/stackem.items.json` json file: the `"item"` tag replaces its' functionality and handles both cases.
 - Added `Eternal Pride` option in configs (enabled by default), which forces some textures (at this moment reindev logo at the main menu) to use pride variants.
+- Added `Hide Tilde` option in configs (disabled by default), which allows you to hide the tilda at the beginning of custom item names.
 - Added support to change the `F10` (force default textures) key in `Controls` menu.
-- Added custom armor texture support. Check updated docs for more info!
+- Added custom armor texture support. [Check updated docs for more info!](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/README.md#iv-extra-adding-armor-texture)
 
 ## [0.3.6] - 2025-07-06
 

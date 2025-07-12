@@ -2,7 +2,7 @@
 
 [![Available on - Modrinth](https://img.shields.io/badge/Available_on-Modrinth-4bab62?logo=modrinth&logoColor=white)](https://modrinth.com/mod/stack-em) [![GitHub release](https://img.shields.io/github/release/tracystacktrace/StackEm?include_prereleases=&sort=semver&color=success)](https://github.com/tracystacktrace/StackEm/releases/)
 
-A FoxLoader (ReIndev) modification which allows to load and use several texturepacks simultaneously and much more!
+A FoxLoader (ReIndev) modification which allows to load and use several texturepacks simultaneously and adds customization features!
 
 This is achieved by replacing a standard `ITexturePack` instance with custom one that handles multiple zip files `I/O` operations. All injections & source code manipulations are done within Mixins.
 
@@ -27,8 +27,9 @@ This is achieved by replacing a standard `ITexturePack` instance with custom one
 ### Screenshots:
 
 ![Texturepacks menu GUI](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_1.png)
-![Showcase of gluing system](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_2.png)
-![Showcase of custom texture swap](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_4.png)
+![Texture gluing system](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_2.png)
+![Custom texture swap](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_4.png)
+![Custom armor texture](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_5.png)
 ![CharMap](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_3.png)
 
 ## Installation
