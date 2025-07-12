@@ -56,11 +56,31 @@ public class DeepMeta {
         return mapTexturepacksSwap.containsKey(itemID);
     }
 
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     public @Nullable Icon getCustomIcon(@NotNull ItemStack stack) {
         final List<ItemIconSwap> candidates = mapTexturepacksSwap.get(stack.getItemID());
-        //noinspection ForLoopReplaceableByForEach
+        if(candidates == null || candidates.isEmpty()) {
+            return null;
+        }
+
         for (int i = 0; i < candidates.size(); i++) {
             final Icon icon = candidates.get(i).getIcon(stack);
+            if (icon != null) {
+                return icon;
+            }
+        }
+        return null;
+    }
+
+    @SuppressWarnings("ForLoopReplaceableByForEach")
+    public @Nullable String getCustomArmor(@NotNull ItemStack stack) {
+        final List<ItemIconSwap> candidates = mapTexturepacksSwap.get(stack.getItemID());
+        if(candidates == null || candidates.isEmpty()) {
+            return null;
+        }
+
+        for (int i = 0; i < candidates.size(); i++) {
+            final String icon = candidates.get(i).getArmorTexture(stack);
             if (icon != null) {
                 return icon;
             }

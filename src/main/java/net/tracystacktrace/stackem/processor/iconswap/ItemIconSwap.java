@@ -19,7 +19,6 @@ public record ItemIconSwap(
     @SuppressWarnings("ForLoopReplaceableByForEach")
     public @Nullable Icon getIcon(@NotNull ItemStack stack) {
         if (this.anySwapsByMeta()) {
-            //noinspection ForLoopReplaceableByForEach
             for (int i = 0; i < this.textureByMetadata.length; i++) {
                 TextureByMetadata meta = this.textureByMetadata[i];
                 if (meta.compare(stack.getItemDamage())) {
@@ -36,6 +35,38 @@ public record ItemIconSwap(
                 }
             }
         }
+
+        return null;
+    }
+
+    @SuppressWarnings("ForLoopReplaceableByForEach")
+    public @Nullable String getArmorTexture(@NotNull ItemStack stack) {
+        if (this.anySwapsByMeta()) {
+            for (int i = 0; i < this.textureByMetadata.length; i++) {
+                TextureByMetadata meta = this.textureByMetadata[i];
+                if (!meta.hasArmorTexture()) {
+                    continue;
+                }
+
+                if (meta.compare(stack.getItemDamage())) {
+                    return meta.getArmorTexture();
+                }
+            }
+        }
+
+        if (this.anySwapsByName()) {
+            for (int i = 0; i < this.textureByNames.length; i++) {
+                final TextureByName name = this.textureByNames[i];
+                if (!name.hasArmorTexture()) {
+                    continue;
+                }
+
+                if (name.compareString(stack.getDisplayName())) {
+                    return name.getArmorTexture();
+                }
+            }
+        }
+
         return null;
     }
 

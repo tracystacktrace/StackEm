@@ -14,6 +14,7 @@
     "patches.MixinGuiContainerChest",
     "patches.MixinGuiContainerForge",
     "processor.iconswap.MixinItemStack",
+    "processor.iconswap.MixinRenderBiped",
     "processor.moon.MixinRenderGlobal",
     "sound.AccessorSoundManager",
     "sound.AccessorSoundPool"

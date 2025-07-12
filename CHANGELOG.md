@@ -7,6 +7,7 @@
 - Removed `"id"` tag from `/stackem.items.json` json file: the `"item"` tag replaces its' functionality and handles both cases.
 - Added `Eternal Pride` option in configs (enabled by default), which forces some textures (at this moment reindev logo at the main menu) to use pride variants.
 - Added support to change the `F10` (force default textures) key in `Controls` menu.
+- Added custom armor texture support. Check updated docs for more info!
 
 ## [0.3.6] - 2025-07-06
 

@@ -9,7 +9,7 @@ import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 
-public class TextureByMetadata {
+public class TextureByMetadata implements ISwapper {
     public static final byte STATIC = 0;
     public static final byte BETWEEN = 1;
     public static final byte BELOW = 2;
@@ -21,6 +21,8 @@ public class TextureByMetadata {
     public final String texturePath;
 
     protected int priority = 0;
+    protected String armorTexture = null;
+    protected boolean armorEnableColor = false;
     public Icon textureIcon;
 
     public TextureByMetadata(byte compareCode, int @NotNull [] compareInts, @NotNull String texturePath) {
@@ -61,8 +63,34 @@ public class TextureByMetadata {
         this.textureIcon = register.registerIcon(this.texturePath);
     }
 
+    @Override
     public int getPriority() {
         return this.priority;
+    }
+
+    @Override
+    public boolean hasArmorTexture() {
+        return this.armorTexture != null;
+    }
+
+    @Override
+    public String getArmorTexture() {
+        return this.armorTexture;
+    }
+
+    @Override
+    public void setArmorTexture(@NotNull String s) {
+        this.armorTexture = s;
+    }
+
+    @Override
+    public void setEnableColor(boolean b) {
+        this.armorEnableColor = b;
+    }
+
+    @Override
+    public boolean hasColor() {
+        return this.armorEnableColor;
     }
 
     public static @NotNull TextureByMetadata fromJson(@NotNull JsonObject object) throws IconProcessorException {
@@ -121,6 +149,8 @@ public class TextureByMetadata {
         if (priority != null) {
             compiled.priority = priority;
         }
+
+        IconSwapReader.obtainArmorIfPossible(compiled, object);
 
         return compiled;
     }

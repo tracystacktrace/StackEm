@@ -3,6 +3,8 @@ package net.tracystacktrace.stackem.processor.iconswap.swap;
 import com.google.gson.JsonObject;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
+import net.minecraft.common.item.Item;
+import net.minecraft.common.item.Items;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
 import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import org.jetbrains.annotations.NotNull;
@@ -10,7 +12,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class TextureByName {
+public class TextureByName implements ISwapper {
     public static final byte EQUALS = 0;
     public static final byte EQUALS_IGNORE_CASE = 1;
     public static final byte CONTAINS = 2;
@@ -22,7 +24,9 @@ public class TextureByName {
     public final String targetString;
     public final String texturePath;
 
-    protected int priority;
+    protected int priority = 0;
+    protected String armorTexture = null;
+    protected boolean armorEnableColor = false;
     public Icon textureIcon;
 
     public TextureByName(
@@ -65,8 +69,34 @@ public class TextureByName {
         this.textureIcon = register.registerIcon(this.texturePath);
     }
 
+    @Override
     public int getPriority() {
         return this.priority;
+    }
+
+    @Override
+    public boolean hasArmorTexture() {
+        return this.armorTexture != null;
+    }
+
+    @Override
+    public String getArmorTexture() {
+        return this.armorTexture;
+    }
+
+    @Override
+    public void setArmorTexture(@NotNull String s) {
+        this.armorTexture = s;
+    }
+
+    @Override
+    public void setEnableColor(boolean b) {
+        this.armorEnableColor = b;
+    }
+
+    @Override
+    public boolean hasColor() {
+        return this.armorEnableColor;
     }
 
     @Override
@@ -133,6 +163,8 @@ public class TextureByName {
         if(priority != null) {
             compiled.priority = priority;
         }
+
+        IconSwapReader.obtainArmorIfPossible(compiled, object);
 
         return compiled;
     }
