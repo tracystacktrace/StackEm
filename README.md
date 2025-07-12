@@ -2,32 +2,33 @@
 
 [![Available on - Modrinth](https://img.shields.io/badge/Available_on-Modrinth-4bab62?logo=modrinth&logoColor=white)](https://modrinth.com/mod/stack-em) [![GitHub release](https://img.shields.io/github/release/tracystacktrace/StackEm?include_prereleases=&sort=semver&color=success)](https://github.com/tracystacktrace/StackEm/releases/)
 
-A FoxLoader (ReIndev mod loader) modification that adds an ability to use several texturepacks at once!
-
-No need to extract and combine several texturepacks into one big `.zip` file, just install the mod and select any of texturepacks you want to use within menu.
-
-Additionally, this mod adds expanded capabilities for texturepacks, such as custom item textures based on name/meta, additional description file, etc.
+A FoxLoader (ReIndev) modification which allows to load and use several texturepacks simultaneously and much more!
 
 This is achieved by replacing a standard `ITexturePack` instance with custom one that handles multiple zip files `I/O` operations. All injections & source code manipulations are done within Mixins.
+
+### Features:
+- **Texturepack stacking and ordering:** several texturepacks can be enabled simultaneously and ordered, and the game will respect the order during resource fetching.
+- **Additional description file:** The mod adds support for own additional texturepack description file `stackem.json` that aims to add more information on top of `pack.txt`. [Check the guide page for more information!](https://github.com/tracystacktrace/StackEm/tree/main/docs/Additional%20Description)
+- **Custom item textures swap:** Like in `Optifine`, you can put a different texture into an item based either on its' display name or its' metadata value. [Check the guide page for a tutorial and more information!](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/README.md)
+- **Texture _gluing_:** the mod will try to combine textures that's been changed by texturepacks by comparing against vanilla texture (see list of textures below). This is very helpful for micro texturepacks that change HUD textures, such as `Transgender Hearts Texturepack` and `Square (Aim) Dot`, etc., as they change the same texture file!
+  - `/textures/gui/effects.png`
+  - `/textures/gui/gui.png`
+  - `/textures/gui/icons.png`
+  - `/textures/gui/web_buttons.png`
+  - `/textures/gui/hud/hud.png`
+  - `/textures/gui/stats/slot.png`
+  - `/textures/environment/particles.png`
+- **Patched some GUI textures:** `Forge` and `Dimensional Chest` now have their own dedicated GUI textures:
+  - `/textures/gui/container/forge.png`
+  - `/textures/gui/container/dimensional_chest.png`
+- **Patched sound reloading:** Now sound files withing texturepacks are fully reloaded on update, which fixes some audio related bugs.
+
+### Screenshots:
 
 ![Texturepacks menu GUI](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_1.png)
 ![Showcase of gluing system](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_2.png)
 ![Showcase of custom texture swap](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_4.png)
 ![CharMap](https://github.com/tracystacktrace/StackEm/raw/main/docs/showcase_3.png)
-
-## Features
-
-- Texturepack stacking and ordering: several texturepacks can be enabled simultaneously and ordered, and the game will respect the order during resource fetching
-- Some textures gluing system: the game will attempt to automatically glue several textures "together", making most hud texturepacks work together
-    - `/textures/gui/effects.png`
-    - `/textures/gui/gui.png`
-    - `/textures/gui/icons.png`
-    - `/textures/gui/web_buttons.png`
-    - `/textures/gui/hud/hud.png`
-    - `/textures/gui/stats/slot.png`
-    - `/textures/environment/particles.png`
-- Additional description file: you can [create an additional description file](https://github.com/tracystacktrace/StackEm/tree/main/docs/Additional%20Description) in your texturepack to include authorship, website and categories!
-- Custom texture swap: like in `optifine`, you can [change a texture of an item by their name or meta value](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/README.md)
 
 ## Installation
 

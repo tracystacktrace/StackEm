@@ -1,4 +1,12 @@
 
+## [0.3.7] - TBA
+
+**[View changes between 0.3.6 with 0.3.7](https://github.com/tracystacktrace/StackEm/compare/0.3.6...0.3.7)**
+
+- Some internal code changes: now the JSON parsing code should be much more stable.
+- Removed `"id"` tag from `/stackem.items.json` json file: the `"item"` tag replaces its' functionality and handles both cases.
+- 
+
 ## [0.3.6] - 2025-07-06
 
 **[View changes between 0.3.5 with 0.3.6](https://github.com/tracystacktrace/StackEm/compare/0.3.5...0.3.6)**

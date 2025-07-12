@@ -4,14 +4,14 @@ buildscript {
         maven { url 'https://cdn.fox2code.com/maven' }
     }
     dependencies {
-        classpath('com.fox2code.FoxLoader:dev:2.0-alpha32')
+        classpath('com.fox2code.FoxLoader:dev:2.0-alpha34')
     }
 }
 
 apply plugin: 'foxloader.dev'
 
 group = 'net.tracystacktrace'
-version = '0.3.6'
+version = '0.3.7'
 
 dependencies {
     api 'org.semver4j:semver4j:5.3.0'
@@ -35,7 +35,7 @@ foxloader {
     modAuthors = "tracystacktrace"
     modMain = "net.tracystacktrace.stackem.StackEm"
     modWebsite = "https://github.com/tracystacktrace/StackEm"
-    modDesc("§eStacked (multiple) texturepacks support!")
+    modDesc("§eStacked texturepacks, §dTexture gluing, §bItem textures swap!")
     modDesc()
     modDesc("\u00A76License: \u00A7aApache License 2.0")
     modDesc("\u00A76Sources: \u00A79https://github.com/tracystacktrace/StackEm")
