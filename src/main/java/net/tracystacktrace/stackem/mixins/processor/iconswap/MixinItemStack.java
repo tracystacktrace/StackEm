@@ -14,6 +14,9 @@ public abstract class MixinItemStack {
     @Shadow
     public abstract int getItemID();
 
+    @Shadow
+    public abstract String getDisplayName();
+
     @Inject(method = "getIconIndex", at = @At("HEAD"), cancellable = true)
     private void stackem$injectReplaceItemStackIcon(CallbackInfoReturnable<Icon> cir) {
         if (StackEm.getContainerDeepMeta().containsCustomSwapFor(this.getItemID())) {
@@ -22,6 +25,13 @@ public abstract class MixinItemStack {
                 cir.setReturnValue(icon);
                 cir.cancel();
             }
+        }
+    }
+
+    @Inject(method = "getDisplayNameTilda", at = @At("HEAD"), cancellable = true)
+    private void stackem$injectHideTilda(CallbackInfoReturnable<String> cir) {
+        if (StackEm.CONFIG.hideTilda) {
+            cir.setReturnValue(this.getDisplayName());
         }
     }
 }

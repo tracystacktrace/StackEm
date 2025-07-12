@@ -9,7 +9,7 @@ This is achieved by replacing a standard `ITexturePack` instance with custom one
 ### Features:
 - **Texturepack stacking and ordering:** several texturepacks can be enabled simultaneously and ordered, and the game will respect the order during resource fetching.
 - **Additional description file:** The mod adds support for own additional texturepack description file `stackem.json` that aims to add more information on top of `pack.txt`. [Check the guide page for more information!](https://github.com/tracystacktrace/StackEm/tree/main/docs/Additional%20Description)
-- **Custom item textures swap:** Like in `Optifine`, you can put a different texture into an item based either on its' display name or its' metadata value. [Check the guide page for a tutorial and more information!](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/README.md)
+- **Custom item textures swap:** Like in `Optifine`, you can put a different texture into an item based either on its' display name or its' metadata value. Also, you can change the armor texture with this way. [Check the guide page for a tutorial and more information!](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/README.md)
 - **Texture _gluing_:** the mod will try to combine textures that's been changed by texturepacks by comparing against vanilla texture (see list of textures below). This is very helpful for micro texturepacks that change HUD textures, such as `Transgender Hearts Texturepack` and `Square (Aim) Dot`, etc., as they change the same texture file!
   - `/textures/gui/effects.png`
   - `/textures/gui/gui.png`

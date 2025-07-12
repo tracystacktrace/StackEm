@@ -9,6 +9,7 @@ Starting with version `0.3.7`, you can provide custom armor textures for armor i
 You can check example texturepacks:
 - [**Example 1 - By (this) Guide**](https://github.com/tracystacktrace/StackEm/tree/main/docs/Custom%20ItemStack%20Textures/Example%201%20-%20By%20Guide)
 - [**Example 2 - Asgard Giant Swords**](https://github.com/tracystacktrace/StackEm/tree/main/docs/Custom%20ItemStack%20Textures/Example%202%20-%20Asgard%20Giant%20Swords)
+- [**Example 3 - Black Diamond Armor**](https://github.com/tracystacktrace/StackEm/tree/main/docs/Custom%20ItemStack%20Textures/Example%203%20-%20Black%20Diamond%20Armor)
 
 The file where we will put all custom textures is named `stackem.items.json` and is located in the root section of a texturepack (next to `pack.txt`).
 
@@ -142,3 +143,20 @@ I will provide an example code, but you can check [**ARGS.md**](https://github.c
   ]
 }
 ```
+
+## IV. Extra: Adding armor texture
+
+For some items, especially those that can be equipped as an armor, you can provide a custom armor texture:
+```json5
+{
+  "item": "item.iron_chestplate", // armor item
+  
+  "onName": {
+    "equals": "Bronze Chestplate",
+    "texture": "bronze_stuff/bronze_chestplate", //full path is texturePack.zip!/textures/items/bronze_stuff/bronze_chestplate.png
+    "armorTextures": "/textures/models/armor/bronze_armor_1.png"
+  }
+}
+```
+
+[Check the "Example 3 - Black Diamond Armor" for full armor swap example.](https://github.com/tracystacktrace/StackEm/tree/main/docs/Custom%20ItemStack%20Textures/Example%203%20-%20Black%20Diamond%20Armor)

@@ -45,3 +45,4 @@ stackem.category.qol=§e☺ QoL Changes
 # config
 stackem.keybind.fallback=Стандартные текстуры
 config.stackem.eternalPride.name=Квир тематика
+config.stackem.hideTilda.name=Прятать тильду
