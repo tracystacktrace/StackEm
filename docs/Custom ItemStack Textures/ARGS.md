@@ -22,8 +22,8 @@ Example code:
 ## Attributes "Per Item"
 
 ### `"item"`
-- Explanation: The identifying name of the item. Use either this or `"id"`.
-- Type: `string`
+- Explanation: The identifying name or an ID integer of the item.
+- Type: `string`/`int`
 
 Example code:
 ```json5
@@ -31,12 +31,6 @@ Example code:
   "item": "item.diamond_sword"
 }
 ```
-
-### `"id"`
-- Explanation: The id (int) of the item. Use either this or `"item"`.
-- Type: `int`
-
-Example code:
 ```json5
 {
   "id": 257, //id of IRON PICKAXE
@@ -50,7 +44,7 @@ Example code:
 Example code:
 ```json5
 {
-  "id": 257,
+  "item": 257,
   
   "onMeta": [
     { /* rule 1... */ },
@@ -67,7 +61,7 @@ Example code:
 Example code:
 ```json5
 {
-  "id": 257,
+  "item": 257,
   
   "onName": [
     { /* rule 1... */ },
@@ -86,7 +80,7 @@ Example code:
 Example code:
 ```json5
 {
-  "id": 257,
+  "item": 257,
   
   "onMeta": [
     {
@@ -105,7 +99,7 @@ Example code:
 Example code:
 ```json5
 {
-  "id": 257,
+  "item": 257,
   
   "onMeta": [
     {
@@ -138,7 +132,7 @@ List of trigger checks:
 Example code:
 ```json5
 {
-  "id": 257,
+  "item": 257,
 
   "onMeta": [
     {
@@ -158,7 +152,7 @@ Example code:
 Example code:
 ```json5
 {
-  "id": 257,
+  "item": 257,
   
   "onName": [
     {
@@ -177,7 +171,7 @@ Example code:
 Example code:
 ```json5
 {
-  "id": 257,
+  "item": 257,
   
   "onMeta": [
     {
@@ -207,7 +201,7 @@ List of trigger checks:
 Example code:
 ```json5
 {
-  "id": 257,
+  "item": 257,
 
   "onName": [
     {

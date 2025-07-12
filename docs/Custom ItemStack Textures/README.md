@@ -45,9 +45,9 @@ As you can see, you can provide multiple texture swaps within a single file, jus
 
 Now let's move to the part, where we create a pattern for a **single** item!
 
-### I. Providing `"item"`/`"id"`
+### I. Providing `"item"`
 
-Let's say, we need to change the texture of an `iron sword`. For this, we need to know either the internal name or its id. You can open ReIndev, hover at the iron sword and hold `LEFT CTRL` to unveal some more data.
+Let's say, we need to change the texture of `Iron Sword`. For this, we need to know either the internal name or its id. You can open ReIndev, hover at the iron sword and hold `LEFT CTRL` to unveal some more data.
 
 The tooltip shows us:
 ```
@@ -56,18 +56,16 @@ Durability: 256/256
 #item.iron_sword:267
 ```
 
-There are two different identifiers: `item.iron_sword` and `267`. You can use either of them, but if you implement them correctly. In order to put a string identifier, you need to provide it in `"item"` section, like this:
+There are two different identifiers: `item.iron_sword` and `267`. You can use either of them:
 ```json5
 {
   "item": "item.iron_sword",
   /* other code */
 }
 ```
-
-For a numerical id, you provide it inside `"id"` section:
 ```json5
 {
-  "id": 267,
+  "item": 267,
   /* other code */
 }
 ```
@@ -89,7 +87,7 @@ We will put textures as `mycustompack/texture[X].png`, so we need to create a fo
 I will provide an example code, but you can check [**ARGS.md**](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/ARGS.md) for deep technical information:
 ```json5
 {
-  "id": 267,
+  "item": 267,
   
   "onMeta": [
     {
@@ -124,7 +122,7 @@ We will put textures as `mycustompack/texture[X].png`, so we need to create a fo
 I will provide an example code, but you can check [**ARGS.md**](https://github.com/tracystacktrace/StackEm/blob/main/docs/Custom%20ItemStack%20Textures/ARGS.md) for deep technical information:
 ```json5
 {
-  "id": 267,
+  "item": 267,
   
   "onMeta": [
     {

@@ -17,8 +17,7 @@ This is achieved by replacing a standard `ITexturePack` instance with custom one
 
 ## Features
 
-- Texturepack stacking: several texturepacks can be enabled simultaneously
-- Stack order: allows you to order texturepacks and the game will respect it when loading resources
+- Texturepack stacking and ordering: several texturepacks can be enabled simultaneously and ordered, and the game will respect the order during resource fetching
 - Some textures gluing system: the game will attempt to automatically glue several textures "together", making most hud texturepacks work together
     - `/textures/gui/effects.png`
     - `/textures/gui/gui.png`

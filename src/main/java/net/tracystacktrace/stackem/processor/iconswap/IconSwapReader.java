@@ -15,7 +15,10 @@ import java.util.Objects;
 
 public final class IconSwapReader {
 
-    public static void process(@NotNull String sourceName, @NotNull String input) throws IconProcessorException {
+    public static void process(
+            @NotNull String sourceName,
+            @NotNull String input
+    ) throws IconProcessorException {
         try {
             final JsonObject root = JsonParser.parseString(input).getAsJsonObject();
 
@@ -24,7 +27,11 @@ public final class IconSwapReader {
                 if (dataElement.isJsonArray()) {
                     for (JsonElement element : dataElement.getAsJsonArray()) {
                         if (element.isJsonObject()) {
-                            processItem(element.getAsJsonObject());
+                            try {
+                                IconSwapReader.processItem(element.getAsJsonObject());
+                            } catch (IconProcessorException e) {
+                                throw new IconProcessorException(IconProcessorException.INVALID_DATA_ELEMENT, element.toString(), e);
+                            }
                         }
                     }
                 } else {

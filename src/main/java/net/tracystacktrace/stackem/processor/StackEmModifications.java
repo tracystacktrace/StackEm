@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
 import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
@@ -110,17 +111,25 @@ public final class StackEmModifications {
             return;
         }
 
-        for (ZipFile file : stacked.getZipFiles()) {
-            final ZipEntry entry = ZipFileHelper.getEntryFor(file, "/stackem.items.json");
-            if (entry == null) {
-                continue;
-            }
+        for (final ZipFile file : stacked.getZipFiles()) {
+            final ZipEntry entry = ZipFileHelper.getEntryFor(file, "stackem.items.json");
+            if (entry == null) continue;
+
             try {
-                final String data = ZipFileHelper.readTextFile(file, entry);
-                IconSwapReader.process(file.getName() + "!/stackem.items.json", data);
+                IconSwapReader.process(
+                        file.getName() + "!/stackem.items.json",
+                        ZipFileHelper.readTextFile(file, entry)
+                );
             } catch (ZipFileHelper.CustomZipOperationException e) {
-                StackEm.LOGGER.severe("Failed during custom JAM fetch: " + file.getName() + "/stackem.items.json");
+                StackEm.LOGGER.severe(String.format("Failed to read file: %s", file.getName() + "!/stackem.items.json"));
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
+            } catch (IconProcessorException e) {
+                StackEm.LOGGER.severe(String.format("Failed during compiling icon swapper of %s", file.getName() + "!/stackem.items.json"));
+                StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
+
+                //we NEED to see full stacktrace at any chance!
+                //noinspection CallToPrintStackTrace
+                e.printStackTrace();
             }
         }
     }

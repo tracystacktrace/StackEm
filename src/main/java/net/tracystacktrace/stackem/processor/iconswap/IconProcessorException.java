@@ -14,6 +14,7 @@ public class IconProcessorException extends Exception {
     public static final byte INVALID_TEXTURE = 7;
     public static final byte NOT_FOUND_TEXTURE = 8;
     public static final byte INVALID_PRIORITY = 9;
+    public static final byte INVALID_DATA_ELEMENT = 10;
 
 
     public static @NotNull String getErrorCode(byte code, @Nullable String optional) {
@@ -28,6 +29,7 @@ public class IconProcessorException extends Exception {
             case INVALID_TEXTURE -> String.format("Invalid texture path: %s", optional);
             case NOT_FOUND_TEXTURE -> "Expected a texture, but wasn't found!";
             case INVALID_PRIORITY -> String.format("Invalid \"priority\" value: %s", optional);
+            case INVALID_DATA_ELEMENT -> String.format("Invalid \"data\" element: %s", optional);
 
             default -> "Unknown error!";
         };
