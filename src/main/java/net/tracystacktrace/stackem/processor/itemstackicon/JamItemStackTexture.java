@@ -30,10 +30,12 @@ public class JamItemStackTexture implements IJam {
             final JsonObject root = JsonParser.parseString(rawJsonContent).getAsJsonObject();
 
             if (root.has("data")) {
-                JsonArray array = root.getAsJsonArray("data");
-                for (JsonElement element : array) {
-                    if (element.isJsonObject()) {
-                        processItem(element.getAsJsonObject());
+                final JsonElement dataElement = root.get("data");
+                if(dataElement.isJsonArray()) {
+                    for (JsonElement element : dataElement.getAsJsonArray()) {
+                        if (element.isJsonObject()) {
+                            processItem(element.getAsJsonObject());
+                        }
                     }
                 }
             }
@@ -47,19 +49,24 @@ public class JamItemStackTexture implements IJam {
     private void processItem(JsonObject object) {
         int targetItemID = -1;
 
-        if (!object.has("item") && !object.has("id")) {
+        if (!object.has("item")) {
             StackEm.LOGGER.severe("No item/id present in stackem.items.json in a texturepack!");
             return;
         }
 
         if (object.has("item")) {
-            targetItemID = this.getItemIDByName(object.get("item").getAsString());
-        }
-
-        if (object.has("id")) {
-            final int value = object.get("id").getAsInt();
-            if (this.isValidItemID(value)) {
-                targetItemID = value;
+            final JsonElement itemElement = object.get("item");
+            if(itemElement.isJsonPrimitive()) {
+                final JsonPrimitive itemPrimitive = itemElement.getAsJsonPrimitive();
+                if(itemPrimitive.isNumber()) {
+                    final int item_iid = itemPrimitive.getAsInt();
+                    if(this.isValidItemID(item_iid)) {
+                        targetItemID = item_iid;
+                    }
+                } else if(itemPrimitive.isString()) {
+                    final String item_iid = itemPrimitive.getAsString();
+                    targetItemID = this.getItemIDByName(item_iid);
+                }
             }
         }
 
