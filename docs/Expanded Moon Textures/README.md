@@ -2,14 +2,14 @@
 
 Since version `0.3.4`, the mod allows you to configure the moon texture to support cycles!
 
-This is created as an experiment of `Stack 'Em` capabilities and allows me to think of possible ways to expand this mod
-
 All configuration is located within `stackem.moon.json` file, which is located in the root directory of a texturepack (next to `pack.txt`)
+
+[You can check one of my moon cycle texturepacks as an example!](https://github.com/tracystacktrace/rind-broken-moon)
 
 This is a complete example content of `stackem.moon.json`:
 ```json
 {
-	"path": "textures/environment/moon_phases.png",
+	"path": "/textures/environment/moon_phases.png",
 	"cycle": "default",
 	"scale": 1.0,
 	

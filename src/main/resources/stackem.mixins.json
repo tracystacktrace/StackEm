@@ -4,17 +4,18 @@
   "package": "net.tracystacktrace.stackem.mixins",
   "compatibilityLevel": "JAVA_8",
   "mixins": [
-    "sound.AccessorSoundManager",
-    "sound.AccessorSoundPool",
-    "processor.iconswap.MixinItemStack",
-    "processor.moon.MixinRenderGlobal",
-    "core.MixinTextureMap",
     "core.MixinMinecraft",
     "core.MixinRenderEngine",
+    "core.MixinTextureMap",
     "core.MixinTexturePackList",
+    "menu.AccessorGuiMainMenu",
     "menu.MixinGuiMainMenu",
     "menu.MixinGuiVideoSettings",
     "patches.MixinGuiContainerChest",
-    "patches.MixinGuiContainerForge"
+    "patches.MixinGuiContainerForge",
+    "processor.iconswap.MixinItemStack",
+    "processor.moon.MixinRenderGlobal",
+    "sound.AccessorSoundManager",
+    "sound.AccessorSoundPool"
   ]
 }

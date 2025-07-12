@@ -41,3 +41,6 @@ stackem.category.animation=§d☄ Animations
 stackem.category.queer=§c❤ Queer!
 stackem.category.hud=§b☈ HUD
 stackem.category.qol=§e☺ QoL Changes
+
+# config
+config.stackem.eternalPride.name=Eternal Pride

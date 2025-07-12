@@ -5,7 +5,7 @@
 
 - Some internal code changes: now the JSON parsing code should be much more stable.
 - Removed `"id"` tag from `/stackem.items.json` json file: the `"item"` tag replaces its' functionality and handles both cases.
-- 
+- Added `Eternal Pride` option in configs (enabled by default), which allows you
 
 ## [0.3.6] - 2025-07-06
 

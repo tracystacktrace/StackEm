@@ -18,6 +18,7 @@ This is achieved by replacing a standard `ITexturePack` instance with custom one
   - `/textures/gui/hud/hud.png`
   - `/textures/gui/stats/slot.png`
   - `/textures/environment/particles.png`
+- **Expanded moon and sun textures:** The mod provides an expansion for moon and sun textures, allowing for custom cycles, cycle ordering and a celestial scaling. [Check the guide page for more info!](https://github.com/tracystacktrace/StackEm/blob/main/docs/Expanded%20Moon%20Textures/README.md) 
 - **Patched some GUI textures:** `Forge` and `Dimensional Chest` now have their own dedicated GUI textures:
   - `/textures/gui/container/forge.png`
   - `/textures/gui/container/dimensional_chest.png`

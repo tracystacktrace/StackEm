@@ -21,8 +21,8 @@ import java.util.logging.Logger;
 import java.util.zip.ZipFile;
 
 public class StackEm extends Mod {
-
     public static boolean DEBUG_FORCE_DEFAULT = false;
+    public static final StackEmConfig CONFIG = new StackEmConfig();
     public static final Logger LOGGER = Logger.getLogger("STACKEM");
 
     public static TexturePackStacked getContainerInstance() {
@@ -141,7 +141,12 @@ public class StackEm extends Mod {
             return null;
         }
     }
-    
+
+    @Override
+    public void onPreInit() {
+        this.setConfigObject(CONFIG);
+    }
+
     @EventHandler
     public void eventProvideMetadataInfo(GuiItemInfoEvent event) {
         if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {

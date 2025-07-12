@@ -3,7 +3,7 @@ package net.tracystacktrace.stackem.processor;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.hack.SmartHacks;
+import net.tracystacktrace.stackem.tools.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
 import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;

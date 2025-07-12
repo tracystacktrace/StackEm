@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.hack;
+package net.tracystacktrace.stackem.tools.hack;
 
 import it.unimi.dsi.fastutil.objects.Object2IntOpenHashMap;
 import net.minecraft.client.renderer.block.ITexturePack;
