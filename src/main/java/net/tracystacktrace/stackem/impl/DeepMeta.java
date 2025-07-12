@@ -6,7 +6,7 @@ import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.minecraft.common.item.ItemStack;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.processor.itemstackicon.SingleItemSwap;
+import net.tracystacktrace.stackem.processor.iconswap.ItemIconSwap;
 import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
 import net.tracystacktrace.stackem.processor.moon.EnumCelestialCycle;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DeepMeta {
-    protected final Int2ObjectMap<List<SingleItemSwap>> mapTexturepacksSwap = new Int2ObjectOpenHashMap<>();
+    protected final Int2ObjectMap<List<ItemIconSwap>> mapTexturepacksSwap = new Int2ObjectOpenHashMap<>();
 
     //can be null-ed when flushed
     public CelestialMeta moonData;
@@ -52,31 +52,31 @@ public class DeepMeta {
 
     /* icon methods */
 
-    public boolean containsCodex(int itemID) {
+    public boolean containsCustomSwapFor(int itemID) {
         return mapTexturepacksSwap.containsKey(itemID);
     }
 
     public @Nullable Icon getCustomIcon(@NotNull ItemStack stack) {
-        final List<SingleItemSwap> candidates = mapTexturepacksSwap.get(stack.getItemID());
+        final List<ItemIconSwap> candidates = mapTexturepacksSwap.get(stack.getItemID());
         //noinspection ForLoopReplaceableByForEach
         for (int i = 0; i < candidates.size(); i++) {
-            Icon value = candidates.get(i).getIcon(stack);
-            if (value != null) {
-                return value;
+            final Icon icon = candidates.get(i).getIcon(stack);
+            if (icon != null) {
+                return icon;
             }
         }
         return null;
     }
 
     public void registerAllIcons(@NotNull IconRegister register) {
-        for (List<SingleItemSwap> listSwaps : mapTexturepacksSwap.values()) {
-            for (SingleItemSwap single : listSwaps) {
+        for (List<ItemIconSwap> listSwaps : mapTexturepacksSwap.values()) {
+            for (ItemIconSwap single : listSwaps) {
                 single.registerIcon(register);
             }
         }
     }
 
-    public void addCodex(int itemID, @NotNull SingleItemSwap set) {
+    public void addIconSwapper(int itemID, @NotNull ItemIconSwap set) {
         if (!mapTexturepacksSwap.containsKey(itemID)) {
             mapTexturepacksSwap.put(itemID, new ArrayList<>());
         }

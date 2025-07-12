@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.mixins;
+package net.tracystacktrace.stackem.mixins.processor.iconswap;
 
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.item.ItemStack;
@@ -16,7 +16,7 @@ public abstract class MixinItemStack {
 
     @Inject(method = "getIconIndex", at = @At("HEAD"), cancellable = true)
     private void stackem$injectReplaceItemStackIcon(CallbackInfoReturnable<Icon> cir) {
-        if (StackEm.getContainerDeepMeta().containsCodex(this.getItemID())) {
+        if (StackEm.getContainerDeepMeta().containsCustomSwapFor(this.getItemID())) {
             Icon icon = StackEm.getContainerDeepMeta().getCustomIcon(ItemStack.class.cast(this));
             if (icon != null) {
                 cir.setReturnValue(icon);

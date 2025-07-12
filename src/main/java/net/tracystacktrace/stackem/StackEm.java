@@ -141,13 +141,9 @@ public class StackEm extends Mod {
             return null;
         }
     }
-
-    /**
-     * @deprecated Remove this before release or change the behaviour
-     */
-    @Deprecated
+    
     @EventHandler
-    public void shitTestRemoveMe(GuiItemInfoEvent event) {
+    public void eventProvideMetadataInfo(GuiItemInfoEvent event) {
         if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {
             event.addDescriptionLine("§8[meta/max]: " + event.getItemStack().getItemDamage() + "/" + event.getItemStack().getMaxDamage());
         }

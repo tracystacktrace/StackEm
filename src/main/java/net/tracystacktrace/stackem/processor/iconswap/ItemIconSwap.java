@@ -1,26 +1,22 @@
-package net.tracystacktrace.stackem.processor.itemstackicon;
+package net.tracystacktrace.stackem.processor.iconswap;
 
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.minecraft.common.item.ItemStack;
-import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByMetadata;
-import net.tracystacktrace.stackem.processor.itemstackicon.swap.TextureByName;
+import net.tracystacktrace.stackem.processor.iconswap.swap.TextureByMetadata;
+import net.tracystacktrace.stackem.processor.iconswap.swap.TextureByName;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 import java.util.Objects;
 
-public record SingleItemSwap(int target, TextureByName[] textureByNames, TextureByMetadata[] textureByMetadata) {
-
-    public boolean anySwapsByName() {
-        return this.textureByNames != null && this.textureByNames.length > 0;
-    }
-
-    public boolean anySwapsByMeta() {
-        return this.textureByMetadata != null && this.textureByMetadata.length > 0;
-    }
-
+public record ItemIconSwap(
+        int target,
+        @NotNull TextureByName @Nullable [] textureByNames,
+        @NotNull TextureByMetadata @Nullable [] textureByMetadata
+) {
+    @SuppressWarnings("ForLoopReplaceableByForEach")
     public @Nullable Icon getIcon(@NotNull ItemStack stack) {
         if (this.anySwapsByMeta()) {
             //noinspection ForLoopReplaceableByForEach
@@ -34,7 +30,7 @@ public record SingleItemSwap(int target, TextureByName[] textureByNames, Texture
 
         if (this.anySwapsByName()) {
             for (int i = 0; i < this.textureByNames.length; i++) {
-                TextureByName name = this.textureByNames[i];
+                final TextureByName name = this.textureByNames[i];
                 if (name.compareString(stack.getDisplayName())) {
                     return name.textureIcon;
                 }
@@ -43,7 +39,7 @@ public record SingleItemSwap(int target, TextureByName[] textureByNames, Texture
         return null;
     }
 
-    public void registerIcon(IconRegister register) {
+    public void registerIcon(@NotNull IconRegister register) {
         if (this.anySwapsByMeta()) {
             for (TextureByMetadata meta : this.textureByMetadata) {
                 meta.registerIcon(register);
@@ -56,10 +52,18 @@ public record SingleItemSwap(int target, TextureByName[] textureByNames, Texture
         }
     }
 
+    public boolean anySwapsByName() {
+        return this.textureByNames != null && this.textureByNames.length > 0;
+    }
+
+    public boolean anySwapsByMeta() {
+        return this.textureByMetadata != null && this.textureByMetadata.length > 0;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        SingleItemSwap desc = (SingleItemSwap) o;
+        ItemIconSwap desc = (ItemIconSwap) o;
         return target == desc.target && Objects.deepEquals(textureByNames, desc.textureByNames) && Objects.deepEquals(textureByMetadata, desc.textureByMetadata);
     }
 
@@ -69,8 +73,8 @@ public record SingleItemSwap(int target, TextureByName[] textureByNames, Texture
     }
 
     @Override
-    public String toString() {
-        return "TexturepackSwapSet{" +
+    public @NotNull String toString() {
+        return "SingleItemSwap{" +
                 "target=" + target +
                 ", textureByNames=" + Arrays.toString(textureByNames) +
                 ", textureByMetadata=" + Arrays.toString(textureByMetadata) +

@@ -2,8 +2,8 @@ package net.tracystacktrace.stackem.hack;
 
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.client.sound.SoundPool;
-import net.tracystacktrace.stackem.mixins.AccessorSoundManager;
-import net.tracystacktrace.stackem.mixins.AccessorSoundPool;
+import net.tracystacktrace.stackem.mixins.sound.AccessorSoundManager;
+import net.tracystacktrace.stackem.mixins.sound.AccessorSoundPool;
 import paulscode.sound.SoundSystem;
 
 /**

@@ -3,8 +3,8 @@ package net.tracystacktrace.stackem.tools;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.tracystacktrace.stackem.StackEm;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -20,27 +20,60 @@ public final class JsonReadHelper {
         return result;
     }
 
-    public static <T> T[] readObjectArray(JsonObject root, String arrayName, Function<JsonObject, T> generator, T[] empty) {
-        if (arrayName == null || arrayName.isEmpty() || !root.has(arrayName)) {
+    public static <T, E extends Exception> T @Nullable [] readObjectArray(
+            @NotNull JsonObject root,
+            @NotNull String arrayName,
+            @NotNull FunctionWithException<@NotNull JsonObject, @NotNull T, E> generator,
+            T @NotNull [] empty
+    ) throws E {
+        if (!root.has(arrayName)) {
             return null;
         }
-        final Set<T> collector = new HashSet<>();
 
-        for (JsonElement element : root.get(arrayName).getAsJsonArray()) {
-            if (!element.isJsonObject()) {
+        final JsonElement element = root.get(arrayName);
+        if (!element.isJsonArray()) {
+            throw new IllegalStateException(String.format("A json array named %s is either corrupt or not an array!", arrayName));
+        }
+
+        final Set<T> collector = new HashSet<>();
+        for (JsonElement candidate : element.getAsJsonArray()) {
+            if (!candidate.isJsonObject()) {
                 continue;
             }
             try {
-                final T value = generator.apply(element.getAsJsonObject());
+                final T value = generator.apply(candidate.getAsJsonObject());
                 collector.add(value);
             } catch (IllegalArgumentException e) {
-                StackEm.LOGGER.severe("Failed to process item [" + arrayName + "] swap data!");
-                e.printStackTrace();
-                StackEm.LOGGER.throwing("ItemStackCooker", "read", e);
+                throw new IllegalStateException(String.format("An error occured while processing array %s", arrayName), e);
             }
         }
 
         return collector.isEmpty() ? null : collector.toArray(empty);
+    }
+
+    public static <T, E extends Exception> T @NotNull [] transformArray(
+            @NotNull JsonArray array,
+            @NotNull FunctionWithException<@NotNull JsonObject, @NotNull T, E> transformer,
+            @NotNull Function<Integer, T @NotNull []> emptyArray
+    ) throws E {
+        final Set<T> collector = new HashSet<>();
+        for (JsonElement candidate : array) {
+            if (candidate.isJsonObject()) {
+                final T value = transformer.apply(candidate.getAsJsonObject());
+                collector.add(value);
+            }
+        }
+        return collector.toArray(emptyArray.apply(0));
+    }
+
+    public static @Nullable String extractString(@NotNull JsonObject object, @NotNull String name) {
+        if (object.has(name)) {
+            final JsonElement element = object.get(name);
+            if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isString()) {
+                return element.getAsString();
+            }
+        }
+        return null;
     }
 
 }

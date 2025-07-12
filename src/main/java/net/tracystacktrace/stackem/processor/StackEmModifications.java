@@ -5,10 +5,10 @@ import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
-import net.tracystacktrace.stackem.processor.itemstackicon.JamItemStackTexture;
 import net.tracystacktrace.stackem.processor.moon.JamMoonTexture;
 import net.tracystacktrace.stackem.processor.moon.JamSunTexture;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
@@ -27,7 +27,6 @@ import java.util.zip.ZipFile;
  */
 public final class StackEmModifications {
 
-    private static final IJam JAM_ITEM_STACK_TEXTURE = new JamItemStackTexture();
     private static final IJam[] JAMS = new IJam[]{
             new JamMoonTexture(), new JamSunTexture()
     };
@@ -112,14 +111,15 @@ public final class StackEmModifications {
         }
 
         for (ZipFile file : stacked.getZipFiles()) {
-            final ZipEntry entry = ZipFileHelper.getEntryFor(file, JAM_ITEM_STACK_TEXTURE.getPath());
-            if (entry == null) continue;
-
+            final ZipEntry entry = ZipFileHelper.getEntryFor(file, "/stackem.items.json");
+            if (entry == null) {
+                continue;
+            }
             try {
                 final String data = ZipFileHelper.readTextFile(file, entry);
-                JAM_ITEM_STACK_TEXTURE.process(stacked, data);
+                IconSwapReader.process(file.getName() + "!/stackem.items.json", data);
             } catch (ZipFileHelper.CustomZipOperationException e) {
-                StackEm.LOGGER.severe("Failed during custom JAM fetch: " + JAM_ITEM_STACK_TEXTURE.getPath());
+                StackEm.LOGGER.severe("Failed during custom JAM fetch: " + file.getName() + "/stackem.items.json");
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
             }
         }

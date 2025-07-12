@@ -1,8 +1,10 @@
-package net.tracystacktrace.stackem.processor.itemstackicon.swap;
+package net.tracystacktrace.stackem.processor.iconswap.swap;
 
 import com.google.gson.JsonObject;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
+import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
+import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -89,7 +91,7 @@ public class TextureByName {
                 '}';
     }
 
-    public static @NotNull TextureByName fromJson(@NotNull JsonObject object) throws IllegalArgumentException {
+    public static @NotNull TextureByName fromJson(@NotNull JsonObject object) throws IconProcessorException {
         byte compareCode = -1;
         String targetString = null;
 
@@ -119,19 +121,17 @@ public class TextureByName {
         }
 
         if (compareCode == -1 || targetString == null) {
-            throw new IllegalArgumentException("Item texture swap builder error! Cannot find correct [compareCode] for: " + object);
+            throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE);
         }
 
-        if (!object.has("texture")) {
-            throw new IllegalArgumentException("Item texture swap builder error! Failed to fetch [texture] for: " + object);
-        }
-
-        final String texture = object.get("texture").getAsString();
+        //obtain texture path
+        final String texture = IconSwapReader.obtainTexture(object);
+        final Integer priority = IconSwapReader.obtainPriority(object);
 
         final TextureByName compiled = new TextureByName(compareCode, targetString, texture);
 
-        if(object.has("priority")) {
-            compiled.priority = object.get("priority").getAsInt();
+        if(priority != null) {
+            compiled.priority = priority;
         }
 
         return compiled;

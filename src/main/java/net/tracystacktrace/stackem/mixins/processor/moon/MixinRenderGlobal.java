@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.mixins;
+package net.tracystacktrace.stackem.mixins.processor.moon;
 
 import com.indigo3d.util.RenderSystem;
 import net.minecraft.client.renderer.world.RenderGlobal;

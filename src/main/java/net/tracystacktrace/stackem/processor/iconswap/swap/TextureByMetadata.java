@@ -1,8 +1,11 @@
-package net.tracystacktrace.stackem.processor.itemstackicon.swap;
+package net.tracystacktrace.stackem.processor.iconswap.swap;
 
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
+import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
+import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -62,45 +65,61 @@ public class TextureByMetadata {
         return this.priority;
     }
 
-    public static @NotNull TextureByMetadata fromJson(@NotNull JsonObject object) throws IllegalArgumentException {
+    public static @NotNull TextureByMetadata fromJson(@NotNull JsonObject object) throws IconProcessorException {
         byte compareCode = -1;
         int[] compareInts = null;
 
         if (object.has("static")) {
-            compareCode = TextureByMetadata.STATIC;
-            compareInts = new int[]{object.get("static").getAsInt()};
+            final JsonElement inputElement = object.get("static");
+            if (inputElement.isJsonPrimitive() && inputElement.getAsJsonPrimitive().isNumber()) {
+                compareCode = TextureByMetadata.STATIC;
+                compareInts = new int[]{inputElement.getAsInt()};
+            }
         }
 
         if (object.has("between")) {
-            compareCode = TextureByMetadata.BETWEEN;
-            compareInts = JsonReadHelper.readIntArray(object.getAsJsonArray("between"));
+            final JsonElement inputElement = object.get("between");
+            if (inputElement.isJsonArray()) {
+                compareCode = TextureByMetadata.BETWEEN;
+                compareInts = JsonReadHelper.readIntArray(inputElement.getAsJsonArray());
+            }
         }
 
         if (object.has("below")) {
-            compareCode = TextureByMetadata.BELOW;
-            compareInts = new int[]{object.get("below").getAsInt()};
+            final JsonElement inputElement = object.get("below");
+            if (inputElement.isJsonPrimitive() && inputElement.getAsJsonPrimitive().isNumber()) {
+                compareCode = TextureByMetadata.BELOW;
+                compareInts = new int[]{inputElement.getAsInt()};
+            }
         }
 
         if (object.has("after")) {
-            compareCode = TextureByMetadata.AFTER;
-            compareInts = new int[]{object.get("after").getAsInt()};
+            final JsonElement inputElement = object.get("after");
+            if (inputElement.isJsonPrimitive() && inputElement.getAsJsonPrimitive().isNumber()) {
+                compareCode = TextureByMetadata.AFTER;
+                compareInts = new int[]{inputElement.getAsInt()};
+            }
         }
 
         if (object.has("following")) {
-            compareCode = TextureByMetadata.FOLLOWING;
-            compareInts = JsonReadHelper.readIntArray(object.getAsJsonArray("following"));
+            final JsonElement inputElement = object.get("following");
+            if (inputElement.isJsonArray()) {
+                compareCode = TextureByMetadata.FOLLOWING;
+                compareInts = JsonReadHelper.readIntArray(inputElement.getAsJsonArray());
+            }
         }
 
-        if (compareCode == -1 || compareInts == null) {
-            throw new IllegalArgumentException("Item texture swap builder error! Cannot fetch some crap!");
+        if (compareCode == -1) {
+            throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE);
         }
 
-        final String texture = object.get("texture").getAsString();
+        final String texture = IconSwapReader.obtainTexture(object);
+        final Integer priority = IconSwapReader.obtainPriority(object);
 
         final TextureByMetadata compiled = new TextureByMetadata(compareCode, compareInts, texture);
 
-        if(object.has("priority")) {
-            compiled.priority = object.get("priority").getAsInt();
+        if (priority != null) {
+            compiled.priority = priority;
         }
 
         return compiled;
