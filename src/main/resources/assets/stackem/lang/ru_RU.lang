@@ -43,4 +43,5 @@ stackem.category.hud=§b☈ HUD
 stackem.category.qol=§e☺ QoL Changes
 
 # config
+stackem.keybind.fallback=Стандартные текстуры
 config.stackem.eternalPride.name=Квир тематика

@@ -49,7 +49,7 @@ public final class StackEmModifications {
      * This is the actual code you should call upon refreshing textures
      */
     public static void fetchTextureModifications(RenderEngine renderEngine) {
-        if (renderEngine == null || StackEm.DEBUG_FORCE_DEFAULT) {
+        if (renderEngine == null || StackEm.DEBUG_FORCE_FALLBACK) {
             return;
         }
 
@@ -100,7 +100,7 @@ public final class StackEmModifications {
     }
 
     public static void fetchIconModifications(RenderEngine render) {
-        if (render == null || StackEm.DEBUG_FORCE_DEFAULT) {
+        if (render == null || StackEm.DEBUG_FORCE_FALLBACK) {
             return;
         }
 

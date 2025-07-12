@@ -43,4 +43,5 @@ stackem.category.hud=§b☈ HUD
 stackem.category.qol=§e☺ QoL Changes
 
 # config
+stackem.keybind.fallback=Texturepack Fallback
 config.stackem.eternalPride.name=Eternal Pride

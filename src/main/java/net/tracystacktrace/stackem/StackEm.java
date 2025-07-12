@@ -1,9 +1,11 @@
 package net.tracystacktrace.stackem;
 
 import com.fox2code.foxevents.EventHandler;
+import com.fox2code.foxloader.client.KeyBindingAPI;
 import com.fox2code.foxloader.event.client.GuiItemInfoEvent;
 import com.fox2code.foxloader.loader.Mod;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.util.KeyBinding;
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.impl.DeepMeta;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
@@ -21,9 +23,10 @@ import java.util.logging.Logger;
 import java.util.zip.ZipFile;
 
 public class StackEm extends Mod {
-    public static boolean DEBUG_FORCE_DEFAULT = false;
     public static final StackEmConfig CONFIG = new StackEmConfig();
     public static final Logger LOGGER = Logger.getLogger("STACKEM");
+    public static final KeyBinding DEBUG_KEYBIND_FALLBACK = new KeyBinding("stackem.keybind.fallback", Keyboard.KEY_F10);
+    public static boolean DEBUG_FORCE_FALLBACK = false;
 
     public static TexturePackStacked getContainerInstance() {
         return (TexturePackStacked) Minecraft.getInstance().texturePackList.getSelectedTexturePack();
@@ -41,9 +44,9 @@ public class StackEm extends Mod {
             return;
         }
 
-        StackEm.DEBUG_FORCE_DEFAULT = !StackEm.DEBUG_FORCE_DEFAULT;
+        StackEm.DEBUG_FORCE_FALLBACK = !StackEm.DEBUG_FORCE_FALLBACK;
         mc.renderEngine.refreshTextures();
-        mc.thePlayer.addChatMessage(StringTranslate.getInstance().translateKey(StackEm.DEBUG_FORCE_DEFAULT ? "stackem.debug.on" : "stackem.debug.off"));
+        mc.thePlayer.addChatMessage(StringTranslate.getInstance().translateKey(StackEm.DEBUG_FORCE_FALLBACK ? "stackem.debug.on" : "stackem.debug.off"));
     }
 
     public static String[] unpackSaveString(String input) {
@@ -145,6 +148,7 @@ public class StackEm extends Mod {
     @Override
     public void onPreInit() {
         this.setConfigObject(CONFIG);
+        KeyBindingAPI.registerKeyBinding(DEBUG_KEYBIND_FALLBACK);
     }
 
     @EventHandler
@@ -153,5 +157,4 @@ public class StackEm extends Mod {
             event.addDescriptionLine("§8[meta/max]: " + event.getItemStack().getItemDamage() + "/" + event.getItemStack().getMaxDamage());
         }
     }
-
 }
