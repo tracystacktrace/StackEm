@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.mixins.processor.iconswap;
+package net.tracystacktrace.stackem.mixins.processor;
 
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.RenderBiped;

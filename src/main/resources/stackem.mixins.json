@@ -13,9 +13,9 @@
     "menu.MixinGuiVideoSettings",
     "patches.MixinGuiContainerChest",
     "patches.MixinGuiContainerForge",
-    "processor.iconswap.MixinItemStack",
-    "processor.iconswap.MixinRenderBiped",
-    "processor.moon.MixinRenderGlobal",
+    "processor.MixinItemStack",
+    "processor.MixinRenderBiped",
+    "processor.MixinRenderGlobal",
     "sound.AccessorSoundManager",
     "sound.AccessorSoundPool"
   ]

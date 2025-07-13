@@ -6,6 +6,7 @@ import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
 import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
+import net.tracystacktrace.stackem.processor.iconswap.ItemIconSwap;
 import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
@@ -19,6 +20,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -116,10 +118,16 @@ public final class StackEmModifications {
             if (entry == null) continue;
 
             try {
-                IconSwapReader.process(
+                List<ItemIconSwap> possible = IconSwapReader.fromJson(
                         file.getName() + "!/stackem.items.json",
                         ZipFileHelper.readTextFile(file, entry)
                 );
+
+                if(!possible.isEmpty()) {
+                    for(ItemIconSwap item : possible) {
+                        StackEm.getContainerDeepMeta().addIconSwapper(item);
+                    }
+                }
             } catch (ZipFileHelper.ZipIOException e) {
                 StackEm.LOGGER.severe(String.format("Failed to read file: %s", file.getName() + "!/stackem.items.json"));
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);

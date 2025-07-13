@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.mixins.processor.moon;
+package net.tracystacktrace.stackem.mixins.processor;
 
 import com.indigo3d.util.RenderSystem;
 import net.minecraft.client.renderer.world.RenderGlobal;
@@ -29,11 +29,11 @@ public class MixinRenderGlobal {
             value = "INVOKE",
             target = "Lcom/indigo3d/util/RenderSystem;bindTexture2D(Ljava/lang/String;)V"))
     private void stackem$putCustomMoonTexture(String textureLocation) {
-        if (StackEm.getContainerInstance().isCustomMoon()) {
+        if (StackEm.getContainerInstance().hasCustomMoon()) {
             if (textureLocation.equals("/textures/environment/moon.png"))
                 textureLocation = StackEm.getContainerInstance().getDeepMeta().moonData.path;
         }
-        if (StackEm.getContainerInstance().isCustomSun()) {
+        if (StackEm.getContainerInstance().hasCustomSun()) {
             if (textureLocation.equals("/textures/environment/sun.png"))
                 textureLocation = StackEm.getContainerInstance().getDeepMeta().sunData.path;
         }
@@ -44,7 +44,7 @@ public class MixinRenderGlobal {
             value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/world/Tessellator;addVertexWithUV(DDDDD)V"))
     private void stackem$redirectRenderNonStaticMoon(Tessellator instance, double x, double y, double z, double u, double v) {
-        if (StackEm.getContainerInstance().isCustomSun() && (y == 100)) {
+        if (StackEm.getContainerInstance().hasCustomSun() && (y == 100)) {
             if (this.stackem$sunTrigger1) return;
             this.stackem$sunTrigger1 = true;
 
@@ -71,7 +71,7 @@ public class MixinRenderGlobal {
         }
 
 
-        if (StackEm.getContainerInstance().isCustomMoon() && (y == -100)) {
+        if (StackEm.getContainerInstance().hasCustomMoon() && (y == -100)) {
             if (this.stackem$moonTrigger1) return;
             this.stackem$moonTrigger1 = true;
 

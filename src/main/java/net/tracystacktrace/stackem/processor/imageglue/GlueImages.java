@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.zip.ZipFile;
 
 public final class GlueImages {
-
     public static class ImageGlueContainer {
         public BufferedImage original;
         public BufferedImage canvas;
@@ -103,7 +102,6 @@ public final class GlueImages {
             }
         }
     }
-
 
     public static @NotNull BufferedImage processLayering(@NotNull SegmentedTexture name) {
         final TexturePackDefault defaultPack = (TexturePackDefault) SmartHacks.getDefaultTexturePack();

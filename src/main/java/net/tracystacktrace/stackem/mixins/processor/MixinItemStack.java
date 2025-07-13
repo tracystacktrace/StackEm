@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.mixins.processor.iconswap;
+package net.tracystacktrace.stackem.mixins.processor;
 
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.item.ItemStack;

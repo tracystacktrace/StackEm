@@ -2,7 +2,6 @@ package net.tracystacktrace.stackem.processor.iconswap;
 
 import com.google.gson.*;
 import net.minecraft.common.item.Items;
-import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.processor.iconswap.swap.ISwapper;
 import net.tracystacktrace.stackem.processor.iconswap.swap.TextureByMetadata;
 import net.tracystacktrace.stackem.processor.iconswap.swap.TextureByName;
@@ -10,17 +9,16 @@ import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.Objects;
+import java.util.*;
 
 public final class IconSwapReader {
-    public static void process(
+    public static List<ItemIconSwap> fromJson(
             @NotNull String sourceName,
             @NotNull String input
     ) throws IconProcessorException {
         try {
             final JsonObject root = JsonParser.parseString(input).getAsJsonObject();
+            final List<ItemIconSwap> collector = new ArrayList<>();
 
             if (root.has("data")) {
                 final JsonElement dataElement = root.get("data");
@@ -28,7 +26,8 @@ public final class IconSwapReader {
                     for (JsonElement element : dataElement.getAsJsonArray()) {
                         if (element.isJsonObject()) {
                             try {
-                                IconSwapReader.processItem(element.getAsJsonObject());
+                                final ItemIconSwap candidate = IconSwapReader.processItem(element.getAsJsonObject());
+                                collector.add(candidate);
                             } catch (IconProcessorException e) {
                                 throw new IconProcessorException(IconProcessorException.INVALID_DATA_ELEMENT, element.toString(), e);
                             }
@@ -39,12 +38,13 @@ public final class IconSwapReader {
                 }
             }
 
+            return collector;
         } catch (JsonParseException e) {
             throw new IconProcessorException(IconProcessorException.FAILED_JSON_PARSE, sourceName, e);
         }
     }
 
-    private static void processItem(@NotNull JsonObject object) throws IconProcessorException {
+    private static @NotNull ItemIconSwap processItem(@NotNull JsonObject object) throws IconProcessorException {
         int targetItemID = -1;
 
         if (!object.has("item")) {
@@ -112,7 +112,7 @@ public final class IconSwapReader {
             Arrays.sort(textureByMetadata, Comparator.comparingInt(TextureByMetadata::getPriority));
         }
 
-        StackEm.getContainerDeepMeta().addIconSwapper(targetItemID, new ItemIconSwap(targetItemID, textureByNames, textureByMetadata));
+        return new ItemIconSwap(targetItemID, textureByNames, textureByMetadata);
     }
 
     public static @NotNull String obtainTexture(@NotNull JsonObject object) throws IconProcessorException {

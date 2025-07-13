@@ -96,11 +96,11 @@ public class DeepMeta {
         }
     }
 
-    public void addIconSwapper(int itemID, @NotNull ItemIconSwap set) {
-        if (!mapTexturepacksSwap.containsKey(itemID)) {
-            mapTexturepacksSwap.put(itemID, new ArrayList<>());
+    public void addIconSwapper(@NotNull ItemIconSwap set) {
+        if (!mapTexturepacksSwap.containsKey(set.target())) {
+            mapTexturepacksSwap.put(set.target(), new ArrayList<>());
         }
-        mapTexturepacksSwap.get(itemID).add(set);
+        mapTexturepacksSwap.get(set.target()).add(set);
         StackEm.LOGGER.info(String.format(
                 "Added custom swap for target [%s] of \"onName\" number %s, \"onMeta\" number %s",
                 set.target(),
