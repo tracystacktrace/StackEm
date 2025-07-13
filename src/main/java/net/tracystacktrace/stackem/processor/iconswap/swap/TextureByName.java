@@ -3,8 +3,6 @@ package net.tracystacktrace.stackem.processor.iconswap.swap;
 import com.google.gson.JsonObject;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
-import net.minecraft.common.item.Item;
-import net.minecraft.common.item.Items;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
 import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import org.jetbrains.annotations.NotNull;
@@ -160,7 +158,7 @@ public class TextureByName implements ISwapper {
 
         final TextureByName compiled = new TextureByName(compareCode, targetString, texture);
 
-        if(priority != null) {
+        if (priority != null) {
             compiled.priority = priority;
         }
 

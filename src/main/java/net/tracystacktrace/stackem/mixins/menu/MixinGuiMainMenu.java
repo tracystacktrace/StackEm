@@ -28,6 +28,6 @@ public class MixinGuiMainMenu extends GuiScreen {
             opcode = Opcodes.PUTFIELD
     ))
     private void stackem$checkForPride(GuiMainMenu instance, boolean value) {
-        ((AccessorGuiMainMenu)instance).stackem$setPrideful(value | StackEm.CONFIG.eternalPride);
+        ((AccessorGuiMainMenu) instance).stackem$setPrideful(value | StackEm.CONFIG.eternalPride);
     }
 }

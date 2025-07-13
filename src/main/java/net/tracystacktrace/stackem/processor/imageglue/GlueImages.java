@@ -3,10 +3,11 @@ package net.tracystacktrace.stackem.processor.imageglue;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.TexturePackDefault;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.tools.hack.SmartHacks;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.tools.ImageHelper;
+import net.tracystacktrace.stackem.tools.hack.SmartHacks;
+import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -25,15 +26,10 @@ public final class GlueImages {
 
         private final int original_width;
 
-        public ImageGlueContainer(BufferedImage image) {
+        public ImageGlueContainer(@NotNull BufferedImage image) {
             this.original = image;
-
             //basically copy the image into an independent object
-            this.canvas = new BufferedImage(image.getWidth(), image.getHeight(), BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = this.canvas.createGraphics();
-            g2d.setComposite(AlphaComposite.Src);
-            g2d.drawImage(image, 0, 0, null);
-            g2d.dispose();
+            this.canvas = ImageHelper.fullCopy(image);
 
             this.original_width = original.getWidth();
         }
@@ -48,7 +44,7 @@ public final class GlueImages {
             return false; //signal to scale not the original, but modified version
         }
 
-        public int makeChanges(BufferedImage attempt, SegmentedTexture holder) {
+        public int makeChanges(@NotNull BufferedImage attempt, @NotNull SegmentedTexture holder) {
             if (attempt.getWidth() != this.original.getWidth()) {
                 if (!rescaleContainer(attempt.getWidth(), attempt.getHeight())) {
                     attempt = ImageHelper.scaleImage(attempt, original.getWidth(), original.getHeight());
@@ -99,7 +95,7 @@ public final class GlueImages {
             this.original.flush();
         }
 
-        public void debugSave(String name) {
+        public void debugSave(@NotNull String name) {
             try {
                 ImageIO.write(canvas, "png", new File(Minecraft.getInstance().getMinecraftDir(), name + ".png"));
             } catch (IOException e) {
@@ -109,7 +105,7 @@ public final class GlueImages {
     }
 
 
-    public static BufferedImage processLayering(SegmentedTexture name) {
+    public static @NotNull BufferedImage processLayering(@NotNull SegmentedTexture name) {
         final TexturePackDefault defaultPack = (TexturePackDefault) SmartHacks.getDefaultTexturePack();
         final TexturePackStacked stacked = StackEm.getContainerInstance();
 
@@ -137,7 +133,7 @@ public final class GlueImages {
             changesNum += original.makeChanges(attack, name);
         }
 
-        StackEm.LOGGER.info("Overwrote " + changesNum + " image segments for: " + name.texture().substring(1));
+        StackEm.LOGGER.info(String.format("Overwrote %s image segments for: %s", changesNum, name.texture().substring(1)));
 
         //clean-up process
         for (BufferedImage image : images) {

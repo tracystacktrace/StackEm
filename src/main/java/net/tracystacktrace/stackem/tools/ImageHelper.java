@@ -14,6 +14,18 @@ import java.util.zip.ZipFile;
 
 public final class ImageHelper {
 
+    private ImageHelper() {
+    }
+
+    public static @NotNull BufferedImage fullCopy(@NotNull BufferedImage original) {
+        final BufferedImage copy = new BufferedImage(original.getWidth(), original.getHeight(), BufferedImage.TYPE_INT_ARGB);
+        final Graphics2D g2d = copy.createGraphics();
+        g2d.setComposite(AlphaComposite.Src);
+        g2d.drawImage(original, 0, 0, null);
+        g2d.dispose();
+        return copy;
+    }
+
     public static boolean isValidTexture(@Nullable BufferedImage check) {
         return check != null && check.getWidth() == check.getHeight();
     }

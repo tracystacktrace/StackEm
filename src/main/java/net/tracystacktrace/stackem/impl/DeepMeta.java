@@ -59,7 +59,7 @@ public class DeepMeta {
     @SuppressWarnings("ForLoopReplaceableByForEach")
     public @Nullable Icon getCustomIcon(@NotNull ItemStack stack) {
         final List<ItemIconSwap> candidates = mapTexturepacksSwap.get(stack.getItemID());
-        if(candidates == null || candidates.isEmpty()) {
+        if (candidates == null || candidates.isEmpty()) {
             return null;
         }
 
@@ -75,7 +75,7 @@ public class DeepMeta {
     @SuppressWarnings("ForLoopReplaceableByForEach")
     public @Nullable String getCustomArmor(@NotNull ItemStack stack) {
         final List<ItemIconSwap> candidates = mapTexturepacksSwap.get(stack.getItemID());
-        if(candidates == null || candidates.isEmpty()) {
+        if (candidates == null || candidates.isEmpty()) {
             return null;
         }
 

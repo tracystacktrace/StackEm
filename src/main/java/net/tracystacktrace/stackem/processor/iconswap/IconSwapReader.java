@@ -155,9 +155,9 @@ public final class IconSwapReader {
                 throw new IconProcessorException(IconProcessorException.INVALID_ARMOR_TEXTURE, element.toString());
             }
         }
-        if(object.has("armorEnableColor")) {
+        if (object.has("armorEnableColor")) {
             final JsonElement element = object.get("armorEnableCoor");
-            if(element.isJsonPrimitive() && element.getAsJsonPrimitive().isBoolean()) {
+            if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isBoolean()) {
                 swapper.setEnableColor(element.getAsBoolean());
             } else {
                 throw new IconProcessorException(IconProcessorException.INVALID_ENABLE_COLOR, element.toString());

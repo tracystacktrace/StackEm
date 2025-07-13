@@ -148,4 +148,6 @@ public final class SegmentsProvider {
             ),
     };
 
+    private SegmentsProvider() {
+    }
 }

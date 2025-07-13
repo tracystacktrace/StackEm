@@ -1,6 +1,8 @@
 package net.tracystacktrace.stackem.processor.imageglue.segment;
 
-public record SegmentedTexture(String texture, int[][] segments) {
+import org.jetbrains.annotations.NotNull;
+
+public record SegmentedTexture(@NotNull String texture, int @NotNull [] @NotNull [] segments) {
     /**
      * Provides an empty array with the length equivalent to number of segments
      */
@@ -18,7 +20,7 @@ public record SegmentedTexture(String texture, int[][] segments) {
      */
     public int isInWhatSegment(int pixelX, int pixelY, int scale) {
         for (int i = 0; i < this.segments.length; i++) {
-            int[] segment = this.segments[i];
+            final int[] segment = this.segments[i];
             if (pixelX > (segment[0] * scale) && pixelX < ((segment[0] + segment[2]) * scale) &&
                     pixelY > (segment[1] * scale) && pixelY < ((segment[1] + segment[3]) * scale)) {
                 return i;

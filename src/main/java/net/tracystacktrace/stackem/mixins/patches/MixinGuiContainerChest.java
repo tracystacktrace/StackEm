@@ -12,14 +12,16 @@ import org.spongepowered.asm.mixin.injection.Redirect;
 
 @Mixin(GuiContainerChest.class)
 public class MixinGuiContainerChest {
-    @Shadow @Final private IInventory lowerChestInventory;
+    @Shadow
+    @Final
+    private IInventory lowerChestInventory;
 
     @Redirect(method = "drawGuiContainerBackgroundLayer", at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/client/renderer/world/RenderEngine;getTexture(Ljava/lang/String;)I"
     ))
     private int stackem$patchDimensionChestTextureGUI(RenderEngine instance, String arg1) {
-        if(this.lowerChestInventory instanceof InventoryDimensionalChest) {
+        if (this.lowerChestInventory instanceof InventoryDimensionalChest) {
             arg1 = "/textures/gui/container/dimensional_chest.png";
         }
 
