@@ -73,4 +73,27 @@ public class SwapDescriptor {
         }
         return 0;
     }
+
+    public static void obtainArmorAdditionally(@NotNull SwapDescriptor swapper, @NotNull JsonObject object) throws IconProcessorException {
+        if (object.has("armorTexture")) {
+            final JsonElement element = object.get("armorTexture");
+            final String content = JsonReadHelper.readString(element);
+
+            if (content != null) {
+                swapper.setArmorTexture(content);
+            } else {
+                throw new IconProcessorException(IconProcessorException.INVALID_ARMOR_TEXTURE, element.toString());
+            }
+        }
+        if (object.has("armorEnableColor")) {
+            final JsonElement element = object.get("armorEnableColor");
+            final Boolean content = JsonReadHelper.readBoolean(element);
+
+            if (content != null) {
+                swapper.setArmorColor(content);
+            } else {
+                throw new IconProcessorException(IconProcessorException.INVALID_ENABLE_COLOR, element.toString());
+            }
+        }
+    }
 }

@@ -20,7 +20,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -118,15 +117,13 @@ public final class StackEmModifications {
             if (entry == null) continue;
 
             try {
-                final List<ItemIconSwap> possible = IconSwapReader.fromJson(
+                final ItemIconSwap[] possible = IconSwapReader.fromJson(
                         file.getName() + "!/stackem.items.json",
                         ZipFileHelper.readTextFile(file, entry)
                 );
 
-                if (!possible.isEmpty()) {
-                    for (ItemIconSwap item : possible) {
-                        StackEm.getContainerDeepMeta().addIconSwapper(item);
-                    }
+                for (ItemIconSwap item : possible) {
+                    StackEm.getContainerDeepMeta().addIconSwapper(item);
                 }
 
             } catch (ZipFileHelper.ZipIOException e) {

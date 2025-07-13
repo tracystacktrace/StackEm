@@ -52,4 +52,11 @@ public final class JsonReadHelper {
         }
         return null;
     }
+
+    public static @Nullable Boolean readBoolean(@NotNull JsonElement element) {
+        if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isBoolean()) {
+            return element.getAsBoolean();
+        }
+        return null;
+    }
 }

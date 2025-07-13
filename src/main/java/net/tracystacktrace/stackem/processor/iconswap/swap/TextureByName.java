@@ -2,7 +2,6 @@ package net.tracystacktrace.stackem.processor.iconswap.swap;
 
 import com.google.gson.JsonObject;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
-import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -93,7 +92,7 @@ public class TextureByName extends SwapDescriptor {
 
         final TextureByName compiled = new TextureByName(compareCode, targetString, texture, priority);
 
-        IconSwapReader.obtainArmorIfPossible(compiled, object);
+        SwapDescriptor.obtainArmorAdditionally(compiled, object);
 
         return compiled;
     }

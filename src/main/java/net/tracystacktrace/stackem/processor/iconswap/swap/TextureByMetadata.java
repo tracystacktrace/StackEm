@@ -3,7 +3,6 @@ package net.tracystacktrace.stackem.processor.iconswap.swap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
-import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -117,7 +116,7 @@ public class TextureByMetadata extends SwapDescriptor {
 
         final TextureByMetadata compiled = new TextureByMetadata(compareCode, compareInts, texture, priority);
 
-        IconSwapReader.obtainArmorIfPossible(compiled, object);
+        SwapDescriptor.obtainArmorAdditionally(compiled, object);
 
         return compiled;
     }
