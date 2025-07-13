@@ -133,7 +133,11 @@ public final class GlueImages {
             changesNum += original.makeChanges(attack, name);
         }
 
-        StackEm.LOGGER.info(String.format("Overwrote %s image segments for: %s", changesNum, name.texture().substring(1)));
+        if(changesNum != 0) {
+            StackEm.LOGGER.info(String.format("Overwrote %s image segments for: %s", changesNum, name.texture()));
+        } else {
+            StackEm.LOGGER.info(String.format("No image segments gluing candidates were found: %s", name.texture()));
+        }
 
         //clean-up process
         for (BufferedImage image : images) {

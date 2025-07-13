@@ -120,7 +120,7 @@ public final class StackEmModifications {
                         file.getName() + "!/stackem.items.json",
                         ZipFileHelper.readTextFile(file, entry)
                 );
-            } catch (ZipFileHelper.CustomZipOperationException e) {
+            } catch (ZipFileHelper.ZipIOException e) {
                 StackEm.LOGGER.severe(String.format("Failed to read file: %s", file.getName() + "!/stackem.items.json"));
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
             } catch (IconProcessorException e) {

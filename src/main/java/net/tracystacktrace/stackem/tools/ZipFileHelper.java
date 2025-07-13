@@ -15,9 +15,8 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public final class ZipFileHelper {
-
-    public static class CustomZipOperationException extends Exception {
-        public CustomZipOperationException(@NotNull String info, @NotNull IOException e) {
+    public static class ZipIOException extends Exception {
+        public ZipIOException(@NotNull String info, @NotNull IOException e) {
             super(info, e);
         }
     }
@@ -39,12 +38,12 @@ public final class ZipFileHelper {
     public static @NotNull String readTextFile(
             @NotNull ZipFile file,
             @NotNull ZipEntry entry
-    ) throws CustomZipOperationException {
+    ) throws ZipIOException {
         try (InputStream inputStream = file.getInputStream(entry);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             return reader.lines().collect(Collectors.joining());
         } catch (IOException e) {
-            throw new CustomZipOperationException("Couldn't read file: " + entry.getName(), e);
+            throw new ZipIOException("Couldn't read file: " + entry.getName(), e);
         }
     }
 
@@ -62,7 +61,7 @@ public final class ZipFileHelper {
         }
         try {
             return readTextFile(file, entry);
-        } catch (CustomZipOperationException e) {
+        } catch (ZipIOException e) {
             return null;
         }
     }

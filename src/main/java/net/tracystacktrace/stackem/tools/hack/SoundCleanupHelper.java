@@ -10,7 +10,6 @@ import paulscode.sound.SoundSystem;
  * A small hijack stuff
  */
 public final class SoundCleanupHelper {
-
     public static void cleanupSoundSources(SoundManager manager) {
         final SoundSystem soundSystem = ((AccessorSoundManager) manager).stackem$getSoundSystem();
         final AccessorSoundManager accessor = (AccessorSoundManager) manager;
@@ -28,7 +27,7 @@ public final class SoundCleanupHelper {
         cleanSound(soundSystem, accessor.stackem$sp9());
     }
 
-    static void cleanSound(
+    private static void cleanSound(
             final SoundSystem soundSystem,
             final SoundPool pool
     ) {
@@ -37,5 +36,4 @@ public final class SoundCleanupHelper {
             soundSystem.removeSource(entry.soundName);
         });
     }
-
 }

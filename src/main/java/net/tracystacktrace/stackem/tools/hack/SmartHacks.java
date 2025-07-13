@@ -8,7 +8,6 @@ import net.minecraft.client.renderer.world.RenderEngine;
 import java.lang.reflect.Field;
 
 public final class SmartHacks {
-
     public static ITexturePack getDefaultTexturePack() {
         try {
             Field field = TexturePackList.class.getDeclaredField("defaultTexturePack");
@@ -29,5 +28,4 @@ public final class SmartHacks {
             throw new RuntimeException(e);
         }
     }
-
 }

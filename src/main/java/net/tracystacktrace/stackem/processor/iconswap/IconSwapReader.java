@@ -15,7 +15,6 @@ import java.util.Comparator;
 import java.util.Objects;
 
 public final class IconSwapReader {
-
     public static void process(
             @NotNull String sourceName,
             @NotNull String input

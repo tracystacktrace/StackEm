@@ -101,7 +101,12 @@ public class DeepMeta {
             mapTexturepacksSwap.put(itemID, new ArrayList<>());
         }
         mapTexturepacksSwap.get(itemID).add(set);
-        StackEm.LOGGER.info("Added custom swap set: " + set.toString());
+        StackEm.LOGGER.info(String.format(
+                "Added custom swap for target [%s] of \"onName\" number %s, \"onMeta\" number %s",
+                set.target(),
+                set.textureByNames() != null ? set.textureByNames().length : "null",
+                set.textureByMetadata() != null ? set.textureByMetadata().length : "null"
+        ));
     }
 
     /* general methods */
