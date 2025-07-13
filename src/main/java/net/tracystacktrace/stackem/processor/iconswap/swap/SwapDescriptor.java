@@ -1,7 +1,11 @@
 package net.tracystacktrace.stackem.processor.iconswap.swap;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
+import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
+import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,5 +48,29 @@ public class SwapDescriptor {
 
     public void setArmorTexture(@NotNull String s) {
         this.armorTexture = s;
+    }
+
+    public static @NotNull String obtainTexture(@NotNull JsonObject object) throws IconProcessorException {
+        if (object.has("texture")) {
+            final JsonElement element = object.get("texture");
+            final String content = JsonReadHelper.readString(element);
+            if (content != null) {
+                return content;
+            }
+            throw new IconProcessorException(IconProcessorException.INVALID_TEXTURE, element.toString());
+        }
+        throw new IconProcessorException(IconProcessorException.NOT_FOUND_TEXTURE);
+    }
+
+    public static int obtainPriority(@NotNull JsonObject object) throws IconProcessorException {
+        if (object.has("priority")) {
+            final JsonElement element = object.get("priority");
+            final Integer content = JsonReadHelper.readInteger(element);
+            if (content != null) {
+                return content;
+            }
+            throw new IconProcessorException(IconProcessorException.INVALID_PRIORITY, element.toString());
+        }
+        return 0;
     }
 }

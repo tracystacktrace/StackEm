@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -36,5 +37,19 @@ public final class JsonReadHelper {
             }
         }
         return collector.toArray(emptyArray.apply(0));
+    }
+
+    public static @Nullable String readString(@NotNull JsonElement element) {
+        if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isString()) {
+            return element.getAsString();
+        }
+        return null;
+    }
+
+    public static @Nullable Integer readInteger(@NotNull JsonElement element) {
+        if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
+            return element.getAsInt();
+        }
+        return null;
     }
 }

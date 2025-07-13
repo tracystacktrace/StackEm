@@ -1,13 +1,10 @@
 package net.tracystacktrace.stackem.processor.iconswap.swap;
 
 import com.google.gson.JsonObject;
-import net.minecraft.common.block.icon.IconRegister;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
 import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Objects;
 
 public class TextureByName extends SwapDescriptor {
     public static final byte EQUALS = 0;
@@ -57,28 +54,6 @@ public class TextureByName extends SwapDescriptor {
         return false;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) return false;
-        TextureByName textureByName = (TextureByName) o;
-        return compareCode == textureByName.compareCode && Objects.equals(targetString, textureByName.targetString) && Objects.equals(texturePath, textureByName.texturePath);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(compareCode, targetString, texturePath);
-    }
-
-    @Override
-    public String toString() {
-        return "TextureOnName{" +
-                "compareCode=" + compareCode +
-                ", targetString='" + targetString + '\'' +
-                ", texturePath='" + texturePath + '\'' +
-                ", textureIcon=" + textureIcon +
-                '}';
-    }
-
     public static @NotNull TextureByName fromJson(@NotNull JsonObject object) throws IconProcessorException {
         byte compareCode = -1;
         String targetString = null;
@@ -113,10 +88,10 @@ public class TextureByName extends SwapDescriptor {
         }
 
         //obtain texture path
-        final String texture = IconSwapReader.obtainTexture(object);
-        final Integer priority = IconSwapReader.obtainPriority(object);
+        final String texture = SwapDescriptor.obtainTexture(object);
+        final int priority = SwapDescriptor.obtainPriority(object);
 
-        final TextureByName compiled = new TextureByName(compareCode, targetString, texture, priority != null ? priority : 0);
+        final TextureByName compiled = new TextureByName(compareCode, targetString, texture, priority);
 
         IconSwapReader.obtainArmorIfPossible(compiled, object);
 

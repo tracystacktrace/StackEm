@@ -2,7 +2,6 @@ package net.tracystacktrace.stackem.processor.iconswap.swap;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.common.block.icon.IconRegister;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
 import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
@@ -113,10 +112,10 @@ public class TextureByMetadata extends SwapDescriptor {
             throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE);
         }
 
-        final String texture = IconSwapReader.obtainTexture(object);
-        final Integer priority = IconSwapReader.obtainPriority(object);
+        final String texture = SwapDescriptor.obtainTexture(object);
+        final int priority = SwapDescriptor.obtainPriority(object);
 
-        final TextureByMetadata compiled = new TextureByMetadata(compareCode, compareInts, texture, priority != null ? priority : 0);
+        final TextureByMetadata compiled = new TextureByMetadata(compareCode, compareInts, texture, priority);
 
         IconSwapReader.obtainArmorIfPossible(compiled, object);
 
