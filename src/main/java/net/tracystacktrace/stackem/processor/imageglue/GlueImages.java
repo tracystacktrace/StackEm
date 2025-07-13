@@ -10,7 +10,6 @@ import net.tracystacktrace.stackem.tools.hack.SmartHacks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -131,7 +130,7 @@ public final class GlueImages {
             changesNum += original.makeChanges(attack, name);
         }
 
-        if(changesNum != 0) {
+        if (changesNum != 0) {
             StackEm.LOGGER.info(String.format("Overwrote %s image segments for: %s", changesNum, name.texture()));
         } else {
             StackEm.LOGGER.info(String.format("No image segments gluing candidates were found: %s", name.texture()));

@@ -1,7 +1,6 @@
 package net.tracystacktrace.stackem.processor.iconswap.swap;
 
 import com.google.gson.JsonObject;
-import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
 import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
@@ -10,7 +9,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Objects;
 
-public class TextureByName implements ISwapper {
+public class TextureByName extends SwapDescriptor {
     public static final byte EQUALS = 0;
     public static final byte EQUALS_IGNORE_CASE = 1;
     public static final byte CONTAINS = 2;
@@ -20,21 +19,16 @@ public class TextureByName implements ISwapper {
 
     public final byte compareCode;
     public final String targetString;
-    public final String texturePath;
-
-    protected int priority = 0;
-    protected String armorTexture = null;
-    protected boolean armorEnableColor = false;
-    public Icon textureIcon;
 
     public TextureByName(
             byte compareCode,
             @NotNull String targetString,
-            @NotNull String texturePath
+            @NotNull String texturePath,
+            int priority
     ) {
+        super(texturePath, priority);
         this.compareCode = compareCode;
         this.targetString = targetString;
-        this.texturePath = texturePath;
     }
 
     public boolean compareString(@Nullable String itemName) {
@@ -61,40 +55,6 @@ public class TextureByName implements ISwapper {
         }
 
         return false;
-    }
-
-    public void registerIcon(IconRegister register) {
-        this.textureIcon = register.registerIcon(this.texturePath);
-    }
-
-    @Override
-    public int getPriority() {
-        return this.priority;
-    }
-
-    @Override
-    public boolean hasArmorTexture() {
-        return this.armorTexture != null;
-    }
-
-    @Override
-    public String getArmorTexture() {
-        return this.armorTexture;
-    }
-
-    @Override
-    public void setArmorTexture(@NotNull String s) {
-        this.armorTexture = s;
-    }
-
-    @Override
-    public void setEnableColor(boolean b) {
-        this.armorEnableColor = b;
-    }
-
-    @Override
-    public boolean hasColor() {
-        return this.armorEnableColor;
     }
 
     @Override
@@ -156,11 +116,7 @@ public class TextureByName implements ISwapper {
         final String texture = IconSwapReader.obtainTexture(object);
         final Integer priority = IconSwapReader.obtainPriority(object);
 
-        final TextureByName compiled = new TextureByName(compareCode, targetString, texture);
-
-        if (priority != null) {
-            compiled.priority = priority;
-        }
+        final TextureByName compiled = new TextureByName(compareCode, targetString, texture, priority != null ? priority : 0);
 
         IconSwapReader.obtainArmorIfPossible(compiled, object);
 

@@ -118,16 +118,17 @@ public final class StackEmModifications {
             if (entry == null) continue;
 
             try {
-                List<ItemIconSwap> possible = IconSwapReader.fromJson(
+                final List<ItemIconSwap> possible = IconSwapReader.fromJson(
                         file.getName() + "!/stackem.items.json",
                         ZipFileHelper.readTextFile(file, entry)
                 );
 
-                if(!possible.isEmpty()) {
-                    for(ItemIconSwap item : possible) {
+                if (!possible.isEmpty()) {
+                    for (ItemIconSwap item : possible) {
                         StackEm.getContainerDeepMeta().addIconSwapper(item);
                     }
                 }
+
             } catch (ZipFileHelper.ZipIOException e) {
                 StackEm.LOGGER.severe(String.format("Failed to read file: %s", file.getName() + "!/stackem.items.json"));
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);

@@ -25,7 +25,8 @@ public class IconProcessorException extends Exception {
             case FAILED_JSON_PARSE -> String.format("Failed to process JSON raw data: %s", optional);
             case NOT_FOUND_ITEM_ID -> "Expected an item identifier, but wasn't found!";
             case INVALID_ITEM_ID -> String.format("Invalid \"item\" value: %s", optional);
-            case INVALID_COMPARABLE_CODE -> optional != null ? String.format("Invalid comparable code: %s", optional) : "Invalid comparable code!";
+            case INVALID_COMPARABLE_CODE ->
+                    optional != null ? String.format("Invalid comparable code: %s", optional) : "Invalid comparable code!";
             case ON_NAME_PROCESS_FAILED -> String.format("Failed to process \"onName\" array: %s", optional);
             case ON_META_PROCESS_FAILED -> String.format("Failed to process \"onMeta\" array: %s", optional);
             case INVALID_TEXTURE -> String.format("Invalid texture path: %s", optional);

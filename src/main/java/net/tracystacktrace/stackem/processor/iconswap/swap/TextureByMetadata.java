@@ -2,14 +2,13 @@ package net.tracystacktrace.stackem.processor.iconswap.swap;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
 import net.tracystacktrace.stackem.processor.iconswap.IconSwapReader;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 
-public class TextureByMetadata implements ISwapper {
+public class TextureByMetadata extends SwapDescriptor {
     public static final byte STATIC = 0;
     public static final byte BETWEEN = 1;
     public static final byte BELOW = 2;
@@ -18,17 +17,16 @@ public class TextureByMetadata implements ISwapper {
 
     public final byte compareCode;
     public final int[] compareInts;
-    public final String texturePath;
 
-    protected int priority = 0;
-    protected String armorTexture = null;
-    protected boolean armorEnableColor = false;
-    public Icon textureIcon;
-
-    public TextureByMetadata(byte compareCode, int @NotNull [] compareInts, @NotNull String texturePath) {
+    public TextureByMetadata(
+            byte compareCode,
+            int @NotNull [] compareInts,
+            @NotNull String texturePath,
+            int priority
+    ) {
+        super(texturePath, priority);
         this.compareCode = compareCode;
         this.compareInts = compareInts;
-        this.texturePath = texturePath;
     }
 
     public boolean compare(int meta) {
@@ -57,40 +55,6 @@ public class TextureByMetadata implements ISwapper {
         }
 
         return false;
-    }
-
-    public void registerIcon(IconRegister register) {
-        this.textureIcon = register.registerIcon(this.texturePath);
-    }
-
-    @Override
-    public int getPriority() {
-        return this.priority;
-    }
-
-    @Override
-    public boolean hasArmorTexture() {
-        return this.armorTexture != null;
-    }
-
-    @Override
-    public String getArmorTexture() {
-        return this.armorTexture;
-    }
-
-    @Override
-    public void setArmorTexture(@NotNull String s) {
-        this.armorTexture = s;
-    }
-
-    @Override
-    public void setEnableColor(boolean b) {
-        this.armorEnableColor = b;
-    }
-
-    @Override
-    public boolean hasColor() {
-        return this.armorEnableColor;
     }
 
     public static @NotNull TextureByMetadata fromJson(@NotNull JsonObject object) throws IconProcessorException {
@@ -152,11 +116,7 @@ public class TextureByMetadata implements ISwapper {
         final String texture = IconSwapReader.obtainTexture(object);
         final Integer priority = IconSwapReader.obtainPriority(object);
 
-        final TextureByMetadata compiled = new TextureByMetadata(compareCode, compareInts, texture);
-
-        if (priority != null) {
-            compiled.priority = priority;
-        }
+        final TextureByMetadata compiled = new TextureByMetadata(compareCode, compareInts, texture, priority != null ? priority : 0);
 
         IconSwapReader.obtainArmorIfPossible(compiled, object);
 

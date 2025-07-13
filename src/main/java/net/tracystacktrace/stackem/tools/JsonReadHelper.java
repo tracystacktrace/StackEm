@@ -14,7 +14,7 @@ public final class JsonReadHelper {
         final int[] result = new int[array.size()];
         for (int i = 0; i < result.length; i++) {
             final JsonElement element = array.get(i);
-            if(element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
+            if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
                 result[i] = element.getAsInt();
             } else {
                 throw new IllegalStateException(String.format("A presumably pure int[] json array is not pure! Failed at index: %s", i));
