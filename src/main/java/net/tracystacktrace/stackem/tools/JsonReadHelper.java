@@ -4,51 +4,23 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.function.Function;
 
 public final class JsonReadHelper {
-
-    public static int[] readIntArray(@NotNull JsonArray array) {
+    public static int @NotNull [] readIntArray(@NotNull JsonArray array) throws IllegalStateException {
         final int[] result = new int[array.size()];
         for (int i = 0; i < result.length; i++) {
-            result[i] = array.get(i).getAsInt();
+            final JsonElement element = array.get(i);
+            if(element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
+                result[i] = element.getAsInt();
+            } else {
+                throw new IllegalStateException(String.format("A presumably pure int[] json array is not pure! Failed at index: %s", i));
+            }
         }
         return result;
-    }
-
-    public static <T, E extends Exception> T @Nullable [] readObjectArray(
-            @NotNull JsonObject root,
-            @NotNull String arrayName,
-            @NotNull FunctionWithException<@NotNull JsonObject, @NotNull T, E> generator,
-            T @NotNull [] empty
-    ) throws E {
-        if (!root.has(arrayName)) {
-            return null;
-        }
-
-        final JsonElement element = root.get(arrayName);
-        if (!element.isJsonArray()) {
-            throw new IllegalStateException(String.format("A json array named %s is either corrupt or not an array!", arrayName));
-        }
-
-        final Set<T> collector = new HashSet<>();
-        for (JsonElement candidate : element.getAsJsonArray()) {
-            if (!candidate.isJsonObject()) {
-                continue;
-            }
-            try {
-                final T value = generator.apply(candidate.getAsJsonObject());
-                collector.add(value);
-            } catch (IllegalArgumentException e) {
-                throw new IllegalStateException(String.format("An error occured while processing array %s", arrayName), e);
-            }
-        }
-
-        return collector.isEmpty() ? null : collector.toArray(empty);
     }
 
     public static <T, E extends Exception> T @NotNull [] transformArray(
@@ -65,15 +37,4 @@ public final class JsonReadHelper {
         }
         return collector.toArray(emptyArray.apply(0));
     }
-
-    public static @Nullable String extractString(@NotNull JsonObject object, @NotNull String name) {
-        if (object.has(name)) {
-            final JsonElement element = object.get(name);
-            if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isString()) {
-                return element.getAsString();
-            }
-        }
-        return null;
-    }
-
 }

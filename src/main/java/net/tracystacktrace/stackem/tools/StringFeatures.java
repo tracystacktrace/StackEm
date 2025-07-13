@@ -1,5 +1,7 @@
 package net.tracystacktrace.stackem.tools;
 
+import org.jetbrains.annotations.NotNull;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -67,7 +69,7 @@ public final class StringFeatures {
         return result.toArray(new String[0]);
     }
 
-    private static String truncateString(String str, int maxLength) {
+    private static @NotNull String truncateString(@NotNull String str, int maxLength) {
         if (str.length() <= maxLength) {
             return str;
         }

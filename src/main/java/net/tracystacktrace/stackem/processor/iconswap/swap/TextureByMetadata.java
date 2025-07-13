@@ -109,7 +109,11 @@ public class TextureByMetadata implements ISwapper {
             final JsonElement inputElement = object.get("between");
             if (inputElement.isJsonArray()) {
                 compareCode = TextureByMetadata.BETWEEN;
-                compareInts = JsonReadHelper.readIntArray(inputElement.getAsJsonArray());
+                try {
+                    compareInts = JsonReadHelper.readIntArray(inputElement.getAsJsonArray());
+                } catch (IllegalStateException e) {
+                    throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE, inputElement.toString(), e);
+                }
             }
         }
 
@@ -133,7 +137,11 @@ public class TextureByMetadata implements ISwapper {
             final JsonElement inputElement = object.get("following");
             if (inputElement.isJsonArray()) {
                 compareCode = TextureByMetadata.FOLLOWING;
-                compareInts = JsonReadHelper.readIntArray(inputElement.getAsJsonArray());
+                try {
+                    compareInts = JsonReadHelper.readIntArray(inputElement.getAsJsonArray());
+                } catch (IllegalStateException e) {
+                    throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE, inputElement.toString(), e);
+                }
             }
         }
 
