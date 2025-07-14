@@ -1,5 +1,6 @@
 package net.tracystacktrace.stackem.processor;
 
+import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
@@ -10,17 +11,13 @@ import net.tracystacktrace.stackem.processor.iconswap.ItemIconSwap;
 import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
-import net.tracystacktrace.stackem.processor.moon.JamMoonTexture;
-import net.tracystacktrace.stackem.processor.moon.JamSunTexture;
+import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
+import net.tracystacktrace.stackem.processor.moon.MoonReader;
+import net.tracystacktrace.stackem.tools.IOReadHelper;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
 import net.tracystacktrace.stackem.tools.hack.SmartHacks;
 
 import java.awt.image.BufferedImage;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -28,11 +25,6 @@ import java.util.zip.ZipFile;
  * A main entrypoint for most texture/sound modifications handled by this mod
  */
 public final class StackEmModifications {
-
-    private static final IJam[] JAMS = new IJam[]{
-            new JamMoonTexture(), new JamSunTexture()
-    };
-
     /**
      * This is the actual code you should call upon refreshing textures
      * <br>
@@ -77,25 +69,30 @@ public final class StackEmModifications {
             }
         }
 
-        //read through different ONLY-TOP jams
-        for (IJam jam : JAMS) {
-            if (!stacked.checkIfFileExists(jam.getPath())) {
-                continue;
-            }
-
-            String collectedJsonString;
-            try (InputStream inputStream = stacked.getResourceAsStream(jam.getPath());
-                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
-                collectedJsonString = reader.lines().collect(Collectors.joining());
-            } catch (IOException e) {
-                StackEm.LOGGER.severe("Couldn't read file: " + jam.getPath());
+        //moon and sun
+        if (stacked.checkIfFileExists("/stackem.moon.json")) {
+            try {
+                final String content = IOReadHelper.readTextFile("/stackem.moon.json", stacked::getResourceAsStream);
+                final JsonObject object = IOReadHelper.processJson(content);
+                final CelestialMeta compiled = MoonReader.fromJson(object);
+                stacked.getDeepMeta().setMoonData(compiled);
+            } catch (IOReadHelper.CustomIOException e) {
+                StackEm.LOGGER.severe("Failed fetching and compiling contents of stackem.moon.json");
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
-                continue;
+                e.printStackTrace();
             }
+        }
 
-            if (!collectedJsonString.isEmpty()) {
-                jam.process(stacked, collectedJsonString);
-                StackEm.LOGGER.info("Loaded JAM: " + jam.getPath());
+        if (stacked.checkIfFileExists("/stackem.sun.json")) {
+            try {
+                final String content = IOReadHelper.readTextFile("/stackem.sun.json", stacked::getResourceAsStream);
+                final JsonObject object = IOReadHelper.processJson(content);
+                final CelestialMeta compiled = MoonReader.fromJson(object);
+                stacked.getDeepMeta().setMoonData(compiled);
+            } catch (IOReadHelper.CustomIOException e) {
+                StackEm.LOGGER.severe("Failed fetching and compiling contents of stackem.sun.json");
+                StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
+                e.printStackTrace();
             }
         }
     }

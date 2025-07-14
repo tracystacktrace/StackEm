@@ -4,13 +4,15 @@ import com.fox2code.foxevents.EventHandler;
 import com.fox2code.foxloader.client.KeyBindingAPI;
 import com.fox2code.foxloader.event.client.GuiItemInfoEvent;
 import com.fox2code.foxloader.loader.Mod;
+import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.KeyBinding;
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.impl.DeepMeta;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
-import net.tracystacktrace.stackem.processor.category.DescriptionFileCooker;
+import net.tracystacktrace.stackem.processor.category.StackemJsonReader;
+import net.tracystacktrace.stackem.tools.IOReadHelper;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
 import org.lwjgl.input.Keyboard;
 
@@ -135,7 +137,14 @@ public class StackEm extends Mod {
             //3 - stackem.json
             final String stackemJsonContent = ZipFileHelper.readTextFile(zipFile, "stackem.json");
             if (stackemJsonContent != null) {
-                DescriptionFileCooker.read(tagTexturePack, stackemJsonContent);
+                try {
+                    final JsonObject object_1 = IOReadHelper.processJson(stackemJsonContent);
+                    StackemJsonReader.pushJson(object_1, tagTexturePack);
+                } catch (IOReadHelper.CustomIOException e) {
+                    StackEm.LOGGER.severe("Failed to process texturepack descriptor file (stackem.json)!");
+                    StackEm.LOGGER.throwing("StackEm", "fetchTexturepackFromZip", e);
+                    e.printStackTrace();
+                }
             }
 
             zipFile.close();

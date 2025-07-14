@@ -68,6 +68,13 @@ public final class JsonReadHelper {
         return null;
     }
 
+    public static @Nullable Float readFloat(@NotNull JsonElement element) {
+        if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
+            return element.getAsFloat();
+        }
+        return null;
+    }
+
     public static @Nullable Boolean readBoolean(@NotNull JsonElement element) {
         if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isBoolean()) {
             return element.getAsBoolean();
