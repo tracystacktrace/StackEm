@@ -13,6 +13,43 @@ apply plugin: 'foxloader.dev'
 group = 'net.tracystacktrace'
 version = '0.3.8'
 
+
+sourceSets {
+    tools {
+        java {
+            srcDirs = ['src/tools/java']
+        }
+        resources {
+            srcDirs = ['src/tools/resources']
+        }
+    }
+
+    sagittarius {
+        java {
+            srcDirs = ['src/sagittarius/java']
+        }
+        resources {
+            srcDirs = ['src/sagittarius/resources']
+        }
+        compileClasspath += sourceSets.tools.output
+        runtimeClasspath += sourceSets.tools.output
+    }
+
+    main {
+        compileClasspath += sourceSets.tools.output
+        runtimeClasspath += sourceSets.tools.output
+        compileClasspath += sourceSets.sagittarius.output
+        runtimeClasspath += sourceSets.sagittarius.output
+    }
+}
+
+configurations {
+    toolsImplementation.extendsFrom implementation
+    toolsRuntimeOnly.extendsFrom runtimeOnly
+    sagittariusImplementation.extendsFrom implementation
+    sagittariusRuntimeOnly.extendsFrom runtimeOnly
+}
+
 dependencies {
     api 'org.semver4j:semver4j:5.3.0'
     testImplementation platform('org.junit:junit-bom:5.10.0')
@@ -39,4 +76,11 @@ foxloader {
     modDesc()
     modDesc("\u00A76License: \u00A7aApache License 2.0")
     modDesc("\u00A76Sources: \u00A79https://github.com/tracystacktrace/StackEm")
+}
+
+tasks.withType(Javadoc) {
+    source += sourceSets.tools.allJava
+    classpath += sourceSets.tools.output + sourceSets.tools.compileClasspath
+    source += sourceSets.sagittarius.allJava
+    classpath += sourceSets.sagittarius.output + sourceSets.sagittarius.compileClasspath
 }

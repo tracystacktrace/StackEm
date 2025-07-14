@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.iconswap;
+package net.tracystacktrace.stackem.sagittarius;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

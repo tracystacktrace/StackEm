@@ -1,8 +1,8 @@
-package net.tracystacktrace.stackem.processor.iconswap.swap;
+package net.tracystacktrace.stackem.sagittarius.swap;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import net.tracystacktrace.stackem.processor.iconswap.IconProcessorException;
+import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 

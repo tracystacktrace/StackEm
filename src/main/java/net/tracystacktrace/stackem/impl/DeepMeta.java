@@ -6,7 +6,7 @@ import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.minecraft.common.item.ItemStack;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.processor.iconswap.ItemIconSwap;
+import net.tracystacktrace.stackem.sagittarius.ItemIconSwap;
 import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
 import net.tracystacktrace.stackem.processor.moon.EnumCelestialCycle;
 import org.jetbrains.annotations.NotNull;

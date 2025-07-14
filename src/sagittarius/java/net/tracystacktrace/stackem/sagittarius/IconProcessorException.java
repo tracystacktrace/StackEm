@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.iconswap;
+package net.tracystacktrace.stackem.sagittarius;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.iconswap;
+package net.tracystacktrace.stackem.sagittarius;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -7,8 +7,8 @@ import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.minecraft.common.item.ItemStack;
 import net.minecraft.common.item.Items;
-import net.tracystacktrace.stackem.processor.iconswap.swap.TextureByMetadata;
-import net.tracystacktrace.stackem.processor.iconswap.swap.TextureByName;
+import net.tracystacktrace.stackem.sagittarius.swap.TextureByMetadata;
+import net.tracystacktrace.stackem.sagittarius.swap.TextureByName;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
