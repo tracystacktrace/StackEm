@@ -2,7 +2,7 @@ package net.tracystacktrace.stackem.mixins.core;
 
 import net.minecraft.client.renderer.block.TextureMap;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.processor.StackEmModifications;
+import net.tracystacktrace.stackem.modifications.StackEmModifications;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

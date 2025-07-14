@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.moon;
+package net.tracystacktrace.stackem.modifications.moon;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;

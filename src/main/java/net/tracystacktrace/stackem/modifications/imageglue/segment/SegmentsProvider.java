@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.imageglue.segment;
+package net.tracystacktrace.stackem.modifications.imageglue.segment;
 
 /**
  * A class which contains in-built list of vanilla (reindev) segmented textures

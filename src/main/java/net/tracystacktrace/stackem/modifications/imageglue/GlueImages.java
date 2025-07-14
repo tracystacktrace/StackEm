@@ -1,10 +1,10 @@
-package net.tracystacktrace.stackem.processor.imageglue;
+package net.tracystacktrace.stackem.modifications.imageglue;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.TexturePackDefault;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
-import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
+import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.tools.ImageHelper;
 import net.tracystacktrace.stackem.tools.hack.SmartHacks;
 import org.jetbrains.annotations.NotNull;

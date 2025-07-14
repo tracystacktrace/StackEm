@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.imageglue.segment;
+package net.tracystacktrace.stackem.modifications.imageglue.segment;
 
 import org.jetbrains.annotations.NotNull;
 

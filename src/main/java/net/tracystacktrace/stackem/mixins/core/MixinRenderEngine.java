@@ -1,7 +1,7 @@
 package net.tracystacktrace.stackem.mixins.core;
 
 import net.minecraft.client.renderer.world.RenderEngine;
-import net.tracystacktrace.stackem.processor.StackEmModifications;
+import net.tracystacktrace.stackem.modifications.StackEmModifications;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

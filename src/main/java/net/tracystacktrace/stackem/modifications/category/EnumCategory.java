@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.category;
+package net.tracystacktrace.stackem.modifications.category;
 
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.tools.StringFeatures;

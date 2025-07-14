@@ -11,7 +11,7 @@ import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.impl.DeepMeta;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
-import net.tracystacktrace.stackem.processor.category.StackemJsonReader;
+import net.tracystacktrace.stackem.modifications.category.StackemJsonReader;
 import net.tracystacktrace.stackem.tools.IOReadHelper;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
 import org.lwjgl.input.Keyboard;

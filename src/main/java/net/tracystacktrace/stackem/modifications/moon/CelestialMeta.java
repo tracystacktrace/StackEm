@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.moon;
+package net.tracystacktrace.stackem.modifications.moon;
 
 public class CelestialMeta {
     public final String path;

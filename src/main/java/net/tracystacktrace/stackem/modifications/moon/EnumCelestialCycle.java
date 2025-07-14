@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor.moon;
+package net.tracystacktrace.stackem.modifications.moon;
 
 import net.tracystacktrace.stackem.tools.QuickRNG;
 import org.jetbrains.annotations.Nullable;

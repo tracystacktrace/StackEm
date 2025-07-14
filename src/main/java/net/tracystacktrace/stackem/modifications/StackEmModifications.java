@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.processor;
+package net.tracystacktrace.stackem.modifications;
 
 import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
@@ -8,11 +8,11 @@ import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
 import net.tracystacktrace.stackem.sagittarius.IconSwapReader;
 import net.tracystacktrace.stackem.sagittarius.ItemIconSwap;
-import net.tracystacktrace.stackem.processor.imageglue.GlueImages;
-import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentedTexture;
-import net.tracystacktrace.stackem.processor.imageglue.segment.SegmentsProvider;
-import net.tracystacktrace.stackem.processor.moon.CelestialMeta;
-import net.tracystacktrace.stackem.processor.moon.MoonReader;
+import net.tracystacktrace.stackem.modifications.imageglue.GlueImages;
+import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentedTexture;
+import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentsProvider;
+import net.tracystacktrace.stackem.modifications.moon.CelestialMeta;
+import net.tracystacktrace.stackem.modifications.moon.MoonReader;
 import net.tracystacktrace.stackem.tools.IOReadHelper;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
 import net.tracystacktrace.stackem.tools.hack.SmartHacks;

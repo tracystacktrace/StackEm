@@ -2,7 +2,7 @@ package net.tracystacktrace.stackem.impl;
 
 import com.indigo3d.util.RenderSystem;
 import net.minecraft.client.renderer.world.RenderEngine;
-import net.tracystacktrace.stackem.processor.category.EnumCategory;
+import net.tracystacktrace.stackem.modifications.category.EnumCategory;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
