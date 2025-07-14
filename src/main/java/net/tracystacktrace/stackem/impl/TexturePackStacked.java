@@ -4,6 +4,7 @@ import net.minecraft.client.renderer.block.ITexturePack;
 import net.minecraft.client.renderer.block.TexturePackBase;
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
+import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -78,6 +79,7 @@ public class TexturePackStacked extends TexturePackBase {
         }
         this.stackedTextures.clear();
         this.deepMeta.flush();
+        SagittariusBridge.clearAll();
     }
 
     @Override

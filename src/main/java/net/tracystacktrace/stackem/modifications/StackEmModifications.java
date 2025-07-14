@@ -13,6 +13,7 @@ import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentedText
 import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentsProvider;
 import net.tracystacktrace.stackem.modifications.moon.CelestialMeta;
 import net.tracystacktrace.stackem.modifications.moon.MoonReader;
+import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
 import net.tracystacktrace.stackem.tools.IOReadHelper;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
 import net.tracystacktrace.stackem.hacks.SmartHacks;
@@ -120,7 +121,7 @@ public final class StackEmModifications {
                 );
 
                 for (ItemIconSwap item : possible) {
-                    StackEm.getContainerDeepMeta().addIconSwapper(item);
+                    SagittariusBridge.addIconSwapper(item);
                 }
 
             } catch (ZipFileHelper.ZipIOException e) {

@@ -5,6 +5,7 @@ import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.common.entity.EntityLiving;
 import net.minecraft.common.item.ItemStack;
 import net.tracystacktrace.stackem.StackEm;
+import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -19,7 +20,7 @@ public abstract class MixinRenderBiped extends EntityRenderer {
             shift = At.Shift.AFTER
     ))
     private void stackem$injectReplaceArmorTexture(EntityLiving entity, int pass, float deltaTicks, CallbackInfo ci) {
-        final String replacement = StackEm.getContainerDeepMeta().getCustomArmor(entity.getCurrentArmor(3 - pass));
+        final String replacement = SagittariusBridge.getCustomArmor(entity.getCurrentArmor(3 - pass));
         if (replacement != null) {
             loadTexture(replacement);
         }
@@ -33,7 +34,7 @@ public abstract class MixinRenderBiped extends EntityRenderer {
     private void stackem$injectReplaceAT2(EntityLiving entity, int pass, float deltaTicks, CallbackInfoReturnable<Integer> cir) {
         final ItemStack armor = entity.getCurrentArmor(3 - pass);
         if (armor != null) {
-            final String replacement = StackEm.getContainerDeepMeta().getCustomArmor(armor);
+            final String replacement = SagittariusBridge.getCustomArmor(armor);
             if (replacement != null) {
                 loadTexture(replacement);
             }
