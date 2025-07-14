@@ -1,4 +1,11 @@
 
+## [0.3.8] - 2025-07-14
+
+**[View changes between 0.3.7 with 0.3.8](https://github.com/tracystacktrace/StackEm/compare/0.3.7...0.3.8)**
+
+- Major internal code changes: the JSON processors are more robust to unexpected json code of texturepacks, can print more-or-less comprehensive error description with a stacktrace.
+- Fixed some typos and internal identifier strings (sorry if someone had to face crashes).
+
 ## [0.3.7] - 2025-07-12
 
 **[View changes between 0.3.6 with 0.3.7](https://github.com/tracystacktrace/StackEm/compare/0.3.6...0.3.7)**
