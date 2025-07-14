@@ -2,6 +2,7 @@ package net.tracystacktrace.stackem.processor.category;
 
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.tools.StringFeatures;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +31,7 @@ public enum EnumCategory {
         return "stackem.category." + this.id;
     }
 
-    public static EnumCategory define(String id) {
+    public static @Nullable EnumCategory define(@Nullable String id) {
         if (id == null || id.isEmpty()) {
             return null;
         }
