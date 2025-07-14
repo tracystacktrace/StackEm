@@ -6,7 +6,7 @@ import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.tools.ImageHelper;
-import net.tracystacktrace.stackem.tools.hack.SmartHacks;
+import net.tracystacktrace.stackem.hacks.SmartHacks;
 import org.jetbrains.annotations.NotNull;
 
 import javax.imageio.ImageIO;

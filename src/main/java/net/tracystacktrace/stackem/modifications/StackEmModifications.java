@@ -15,7 +15,7 @@ import net.tracystacktrace.stackem.modifications.moon.CelestialMeta;
 import net.tracystacktrace.stackem.modifications.moon.MoonReader;
 import net.tracystacktrace.stackem.tools.IOReadHelper;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
-import net.tracystacktrace.stackem.tools.hack.SmartHacks;
+import net.tracystacktrace.stackem.hacks.SmartHacks;
 
 import java.awt.image.BufferedImage;
 import java.util.zip.ZipEntry;

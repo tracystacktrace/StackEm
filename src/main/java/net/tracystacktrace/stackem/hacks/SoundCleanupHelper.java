@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.tools.hack;
+package net.tracystacktrace.stackem.hacks;
 
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.client.sound.SoundPool;

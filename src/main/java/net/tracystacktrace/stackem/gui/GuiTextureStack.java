@@ -9,8 +9,8 @@ import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.tools.QuickRNG;
-import net.tracystacktrace.stackem.tools.hack.SmartHacks;
-import net.tracystacktrace.stackem.tools.hack.SoundCleanupHelper;
+import net.tracystacktrace.stackem.hacks.SmartHacks;
+import net.tracystacktrace.stackem.hacks.SoundCleanupHelper;
 import org.lwjgl.opengl.Display;
 
 import java.awt.*;
