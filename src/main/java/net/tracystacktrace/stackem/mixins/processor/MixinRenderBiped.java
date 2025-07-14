@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.common.entity.EntityLiving;
 import net.minecraft.common.item.ItemStack;
-import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
