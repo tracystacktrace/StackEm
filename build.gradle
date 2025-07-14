@@ -60,6 +60,11 @@ test {
 }
 
 jar {
+    from sourceSets.tools.output
+    from sourceSets.sagittarius.output
+    from sourceSets.tools.resources
+    from sourceSets.sagittarius.resources
+
     from "LICENSE"
 }
 
