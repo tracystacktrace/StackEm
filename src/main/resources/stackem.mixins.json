@@ -8,15 +8,15 @@
     "core.MixinRenderEngine",
     "core.MixinTextureMap",
     "core.MixinTexturePackList",
-    "menu.AccessorGuiMainMenu",
-    "menu.MixinGuiMainMenu",
-    "menu.MixinGuiVideoSettings",
+    "core.menu.AccessorGuiMainMenu",
+    "core.menu.MixinGuiMainMenu",
+    "core.menu.MixinGuiVideoSettings",
     "patches.MixinGuiContainerChest",
     "patches.MixinGuiContainerForge",
     "processor.MixinItemStack",
     "processor.MixinRenderBiped",
     "processor.MixinRenderGlobal",
-    "sound.AccessorSoundManager",
-    "sound.AccessorSoundPool"
+    "patches.AccessorSoundManager",
+    "patches.AccessorSoundPool"
   ]
 }

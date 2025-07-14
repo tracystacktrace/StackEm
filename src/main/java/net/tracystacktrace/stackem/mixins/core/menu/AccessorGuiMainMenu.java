@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.mixins.menu;
+package net.tracystacktrace.stackem.mixins.core.menu;
 
 import net.minecraft.client.gui.GuiMainMenu;
 import org.spongepowered.asm.mixin.Mixin;

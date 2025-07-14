@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.mixins.sound;
+package net.tracystacktrace.stackem.mixins.patches;
 
 import net.minecraft.client.sound.SoundManager;
 import net.minecraft.client.sound.SoundPool;
