@@ -12,6 +12,7 @@ import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.tools.QuickRNG;
 import org.lwjgl.opengl.Display;
+import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.io.File;
@@ -169,7 +170,6 @@ public class GuiTextureStack extends GuiScreen {
     @Override
     public void updateScreen() {
         super.updateScreen();
-        this.slotManager.tickAnimation();
     }
 
     public void updateMoveButtonsState(int index) {
@@ -335,5 +335,26 @@ public class GuiTextureStack extends GuiScreen {
         sequoiaCache.get(index).order = index + 1;
         this.pushSequoiaCacheSort();
         slotManager.elementClicked(index + 1, false);
+    }
+
+    protected void renderCategoriesTooltip(float x, float y, TagTexturePack tag) {
+        GL11.glPushMatrix();
+        GL11.glTranslated(0.0, 0.0, 90.0);
+
+        final String[] data = tag.getBakedCSS();
+        final int sizeY = 12 * data.length;
+        int sizeX = 0;
+
+        for(int i = 0; i < data.length; i++) {
+            sizeX = Math.max(sizeX, fontRenderer.getStringWidth(data[i]));
+        }
+
+        this.drawGradientRect(x + 5.0F, y + 5.0F, x + 8.0F + sizeX + 3.0F, y + 8.0F + sizeY, -1073741824, -1073741824);
+
+        for(int i = 0; i < data.length; i++) {
+            fontRenderer.drawString(data[i], x + 8.0F, y + 8.0F + (i * 12), 16777120);
+        }
+
+        GL11.glPopMatrix();
     }
 }

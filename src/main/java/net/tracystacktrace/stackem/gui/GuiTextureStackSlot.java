@@ -69,6 +69,31 @@ public class GuiTextureStackSlot extends GuiSlot {
     }
 
     @Override
+    protected void renderDecorations(float width, float height) {
+        final int startX = (this.left + this.right) / 2 - this.slotWidth / 2 + 2 + this.slotOffset;
+        final float initialY = this.top + 4 - (int)this.amountScrolled + this.headerPadding;
+
+        for (int i = 0; i < this.getSize(); i++) {
+            final TagTexturePack tag = parentScreen.getSequoiaCacheElement(i);
+
+            if(!tag.hasCategories()) continue;
+
+            if(this.isSlotHovered(mouseX, mouseY, startX, initialY + this.slotHeight * i)) {
+                parentScreen.renderCategoriesTooltip(mouseX, mouseY, tag);
+            }
+        }
+    }
+
+    private boolean isSlotHovered(
+            final float mouseX,
+            final float mouseY,
+            final int x,
+            final float y
+    ) {
+        return mouseX > x && mouseX < (x + 320) && mouseY > y && mouseY < (y + 36);
+    }
+
+    @Override
     public boolean allowTransparency() {
         return true;
     }
