@@ -29,18 +29,18 @@ stackem.charmap.detail.2=Escape-последовательность: %s
 stackem.charmap.detail.3=Ширина символа: %s
 
 # categories
-stackem.category.audio=§e♫ Audio
-stackem.category.blocks=§1⛏ Blocks
-stackem.category.entities=§3⛨ Entities
-stackem.category.environment=§b❄ Environment
-stackem.category.fonts=§5Ⓐ Fonts
-stackem.category.gui=§a☈ GUI
-stackem.category.items=§b⚔ Items
-stackem.category.paintings=§e░ Paintings
-stackem.category.animation=§d☄ Animations
+stackem.category.audio=§e♫ Аудио
+stackem.category.blocks=§1⛏ Блоки
+stackem.category.entities=§3⛨ Существа
+stackem.category.environment=§b❄ Окружение
+stackem.category.fonts=§5Ⓐ Шрифты
+stackem.category.gui=§a☈ Интерфейс
+stackem.category.items=§b⚔ Предметы
+stackem.category.paintings=§e░ Картины
+stackem.category.animation=§d☄ Анимаций
 stackem.category.queer=§c❤ Queer!
 stackem.category.hud=§b☈ HUD
-stackem.category.qol=§e☺ QoL Changes
+stackem.category.qol=§e☺ QoL изменения
 
 # config
 stackem.keybind.fallback=Стандартные текстуры
