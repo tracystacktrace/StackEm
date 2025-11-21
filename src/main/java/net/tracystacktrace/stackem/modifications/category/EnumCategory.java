@@ -67,6 +67,6 @@ public enum EnumCategory {
             return null;
         }
 
-        return StringFeatures.provideCategoryCombinations(names, 56);
+        return names.toArray(new String[0]);
     }
 }
