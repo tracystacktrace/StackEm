@@ -8,9 +8,9 @@ import net.minecraft.common.item.ItemStack;
 import net.minecraft.common.item.Items;
 import net.tracystacktrace.stackem.sagittarius.swap.TextureByMetadata;
 import net.tracystacktrace.stackem.sagittarius.swap.TextureByName;
-import net.tracystacktrace.stackem.tools.JsonExtractionException;
-import net.tracystacktrace.stackem.tools.JsonMapper;
-import net.tracystacktrace.stackem.tools.ThrowingJson;
+import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
+import net.tracystacktrace.stackem.tools.json.JsonMapper;
+import net.tracystacktrace.stackem.tools.json.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

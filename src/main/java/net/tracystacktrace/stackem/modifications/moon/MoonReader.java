@@ -1,8 +1,8 @@
 package net.tracystacktrace.stackem.modifications.moon;
 
 import com.google.gson.JsonObject;
-import net.tracystacktrace.stackem.tools.JsonExtractionException;
-import net.tracystacktrace.stackem.tools.ThrowingJson;
+import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
+import net.tracystacktrace.stackem.tools.json.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 
 public final class MoonReader {

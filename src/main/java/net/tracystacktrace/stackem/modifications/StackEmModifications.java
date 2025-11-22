@@ -16,7 +16,7 @@ import net.tracystacktrace.stackem.sagittarius.IconSwapReader;
 import net.tracystacktrace.stackem.sagittarius.ItemIconSwap;
 import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
 import net.tracystacktrace.stackem.tools.IOReadHelper;
-import net.tracystacktrace.stackem.tools.JsonExtractionException;
+import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
 
 import java.awt.image.BufferedImage;

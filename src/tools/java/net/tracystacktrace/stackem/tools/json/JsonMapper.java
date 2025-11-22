@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.tools;
+package net.tracystacktrace.stackem.tools.json;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;

@@ -4,9 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
-import net.tracystacktrace.stackem.tools.JsonExtractionException;
-import net.tracystacktrace.stackem.tools.JsonMapper;
-import net.tracystacktrace.stackem.tools.ThrowingJson;
+import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
+import net.tracystacktrace.stackem.tools.json.JsonMapper;
+import net.tracystacktrace.stackem.tools.json.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -18,7 +18,7 @@ public final class StackemJsonReader {
         if (object.has("author")) {
             try {
                 texturePack.setAuthor(ThrowingJson.cautiouslyGetString(object, "author", texturePack.name));
-            }catch (JsonExtractionException e) {
+            } catch (JsonExtractionException e) {
                 e.printStackTrace();
             }
         }
@@ -26,7 +26,7 @@ public final class StackemJsonReader {
         if (object.has("website")) {
             try {
                 texturePack.setWebsite(ThrowingJson.cautiouslyGetString(object, "website", texturePack.name));
-            }catch (JsonExtractionException e) {
+            } catch (JsonExtractionException e) {
                 e.printStackTrace();
             }
         }

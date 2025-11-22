@@ -1,7 +1,6 @@
 package net.tracystacktrace.stackem.modifications.category;
 
 import net.minecraft.common.util.i18n.StringTranslate;
-import net.tracystacktrace.stackem.tools.StringFeatures;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;

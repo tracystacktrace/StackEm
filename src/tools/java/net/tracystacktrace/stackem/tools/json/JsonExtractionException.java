@@ -1,4 +1,4 @@
-package net.tracystacktrace.stackem.tools;
+package net.tracystacktrace.stackem.tools.json;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -18,16 +18,20 @@ public class JsonExtractionException extends Exception {
     public static @NotNull String factoryMessage(byte reason, @Nullable String optional, @NotNull String source) {
         return switch (reason) {
             //evaluation/assertion error messages
-            case ELEMENT_DOESNT_EXIST -> String.format("Fatal! Source %s, element \"%s\" is not found, but required!", source, optional);
-            case NOT_A_JSON_ARRAY -> String.format("Fatal! Source %s, element \"%s\" is not a JSON array!", source, optional);
+            case ELEMENT_DOESNT_EXIST ->
+                    String.format("Fatal! Source %s, element \"%s\" is not found, but required!", source, optional);
+            case NOT_A_JSON_ARRAY ->
+                    String.format("Fatal! Source %s, element \"%s\" is not a JSON array!", source, optional);
 
             //parsing error messages
-            case INVALID_INPUT_DATA -> String.format("Source %s, invalid JSON Object at: %s", source, optional == null ? "input empty or null" : optional);
+            case INVALID_INPUT_DATA ->
+                    String.format("Source %s, invalid JSON Object at: %s", source, optional == null ? "input empty or null" : optional);
             case INVALID_INT -> String.format("Source %s, invalid INT value at: %s", source, optional);
             case INVALID_STRING -> String.format("Source %s, invalid STRING value at: %s", source, optional);
             case INVALID_BOOLEAN -> String.format("Source %s, invalid BOOLEAN value at: %s", source, optional);
             case INVALID_FLOAT -> String.format("Source %s, invalid FLOAT value at: %s", source, optional);
-            case INVALID_INT_ELEMENT_ARRAY -> String.format("Source %s, invalid INTEGER in array at: %s", source, optional);
+            case INVALID_INT_ELEMENT_ARRAY ->
+                    String.format("Source %s, invalid INTEGER in array at: %s", source, optional);
             case INVALID_OBJECT -> String.format("Source %s, invalid JSON Object value at: %s", source, optional);
 
             default -> String.format("Unknown error code: %d", reason);

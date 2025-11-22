@@ -3,8 +3,8 @@ package net.tracystacktrace.stackem.sagittarius.swap;
 import com.google.gson.JsonObject;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
-import net.tracystacktrace.stackem.tools.JsonExtractionException;
-import net.tracystacktrace.stackem.tools.ThrowingJson;
+import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
+import net.tracystacktrace.stackem.tools.json.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
