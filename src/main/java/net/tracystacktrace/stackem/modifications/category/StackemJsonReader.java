@@ -37,7 +37,7 @@ public final class StackemJsonReader {
 
                 //in-built
                 if (category.has("id")) {
-                    final JsonArray idArray = ThrowingJson.cautiouslyGetArray(object, "id", texturePack.name);
+                    final JsonArray idArray = ThrowingJson.cautiouslyGetArray(category, "id", texturePack.name);
                     final EnumCategory[] collected = JsonMapper.mapJsonArray(
                             idArray, element -> EnumCategory.define(readString(element)),
                             EnumCategory[]::new
@@ -49,7 +49,7 @@ public final class StackemJsonReader {
 
                 //custom
                 if (category.has("custom")) {
-                    final JsonArray arrayCustom = ThrowingJson.cautiouslyGetArray(object, "custom", texturePack.name);
+                    final JsonArray arrayCustom = ThrowingJson.cautiouslyGetArray(category, "custom", texturePack.name);
                     final String[] collected = JsonMapper.mapJsonArray(
                             arrayCustom, element -> {
                                 final String collected1 = readString(element);

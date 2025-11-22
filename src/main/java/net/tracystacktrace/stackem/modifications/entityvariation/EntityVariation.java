@@ -74,7 +74,7 @@ public final class EntityVariation {
                 } catch (JsonExtractionException ignored) {
                 }
 
-                final String[] variants = ThrowingJson.cautiouslyGetStringArray(object, "variants", sourceName);
+                final String[] variants = ThrowingJson.cautiouslyGetStringArray(entity_data, "variants", sourceName);
 
                 cooked_descriptions.add(new EntityVariation.Description(entity_data_raw, forceOnly, variants));
             } else {
