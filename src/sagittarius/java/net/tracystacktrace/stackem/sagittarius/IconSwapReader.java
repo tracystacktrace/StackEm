@@ -9,16 +9,16 @@ import org.jetbrains.annotations.NotNull;
 
 public final class IconSwapReader {
     public static @NotNull ItemIconSwap @NotNull [] fromJson(
-            @NotNull String sourceName,
-            @NotNull String input
+            @NotNull final String sourceName,
+            @NotNull final String input
     ) throws IconProcessorException, JsonExtractionException {
         final JsonObject object = ThrowingJson.stringToJsonObject(input, sourceName);
-        final JsonArray data_array = ThrowingJson.cautiouslyGetArray(object, "data", sourceName);
+        final JsonArray arrayData = ThrowingJson.cautiouslyGetArray(object, "data", sourceName);
 
-        return JsonReadHelper.transformArray(data_array, a -> {
+        return JsonReadHelper.transformArray(arrayData, a -> {
             try {
-                return ItemIconSwap.fromJson(a);
-            } catch (IconProcessorException e) {
+                return ItemIconSwap.fromJson(a, sourceName);
+            } catch (IconProcessorException | JsonExtractionException e) {
                 throw new IconProcessorException(IconProcessorException.INVALID_DATA_ELEMENT, a.toString(), e);
             }
         }, ItemIconSwap[]::new);

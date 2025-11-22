@@ -1,15 +1,16 @@
 package net.tracystacktrace.stackem.sagittarius;
 
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
 import net.minecraft.common.item.ItemStack;
 import net.minecraft.common.item.Items;
 import net.tracystacktrace.stackem.sagittarius.swap.TextureByMetadata;
 import net.tracystacktrace.stackem.sagittarius.swap.TextureByName;
+import net.tracystacktrace.stackem.tools.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
+import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -111,63 +112,51 @@ public record ItemIconSwap(
         return Objects.hash(target, Arrays.hashCode(textureByNames), Arrays.hashCode(textureByMetadata));
     }
 
-    public static @NotNull ItemIconSwap fromJson(@NotNull JsonObject object) throws IconProcessorException {
+    public static @NotNull ItemIconSwap fromJson(
+            @NotNull JsonObject object,
+            @NotNull String sourceName
+    ) throws IconProcessorException, JsonExtractionException {
         int targetItemID = -1;
 
-        if (!object.has("item")) {
+        if (!object.has("item"))
             throw new IconProcessorException(IconProcessorException.NOT_FOUND_ITEM_ID);
-        }
+
 
         //item processor
-        final JsonElement itemElement = object.get("item");
-        if (itemElement.isJsonPrimitive()) {
-            final JsonPrimitive itemPrimitive = itemElement.getAsJsonPrimitive();
-            if (itemPrimitive.isNumber()) {
-                final int item_iid = itemPrimitive.getAsInt();
-                if (isValidItemID(item_iid)) {
-                    targetItemID = item_iid;
-                }
-            } else if (itemPrimitive.isString()) {
-                final String item_iid = itemPrimitive.getAsString();
-                targetItemID = getItemIDByName(item_iid);
+        if (ThrowingJson.isInteger(object, "item")) {
+            final int item_iid = object.get("item").getAsInt();
+            if (isValidItemID(item_iid)) {
+                targetItemID = item_iid;
             }
+        } else if (ThrowingJson.isString(object, "item")) {
+            targetItemID = getItemIDByName(object.get("item").getAsString());
         }
 
-        if (targetItemID == -1) {
+        if (targetItemID == -1)
             throw new IconProcessorException(IconProcessorException.INVALID_ITEM_ID, String.valueOf(targetItemID));
-        }
+
 
         //swapper processors
         TextureByName[] textureByNames = null;
         TextureByMetadata[] textureByMetadata = null;
 
         if (object.has("onName")) {
-            final JsonElement onNameElement = object.get("onName");
-            if (onNameElement.isJsonArray()) {
-                try {
-                    textureByNames = JsonReadHelper.transformArray(
-                            onNameElement.getAsJsonArray(),
-                            TextureByName::fromJson,
-                            TextureByName[]::new
-                    );
-                } catch (IconProcessorException e) {
-                    throw new IconProcessorException(IconProcessorException.ON_NAME_PROCESS_FAILED, onNameElement.toString(), e);
-                }
+            final JsonArray onNameArray = ThrowingJson.cautiouslyGetArray(object, "onName", sourceName);
+
+            try {
+                textureByNames = JsonReadHelper.transformArray(onNameArray, TextureByName::fromJson, TextureByName[]::new);
+            } catch (IconProcessorException e) {
+                throw new IconProcessorException(IconProcessorException.ON_NAME_PROCESS_FAILED, onNameArray.toString(), e);
             }
         }
 
         if (object.has("onMeta")) {
-            final JsonElement onMetaElement = object.get("onMeta");
-            if (onMetaElement.isJsonArray()) {
-                try {
-                    textureByMetadata = JsonReadHelper.transformArray(
-                            onMetaElement.getAsJsonArray(),
-                            TextureByMetadata::fromJson,
-                            TextureByMetadata[]::new
-                    );
-                } catch (IconProcessorException e) {
-                    throw new IconProcessorException(IconProcessorException.ON_META_PROCESS_FAILED, onMetaElement.toString(), e);
-                }
+            final JsonArray onMetaArray = ThrowingJson.cautiouslyGetArray(object, "onMeta", sourceName);
+
+            try {
+                textureByMetadata = JsonReadHelper.transformArray(onMetaArray, TextureByMetadata::fromJson, TextureByMetadata[]::new);
+            } catch (IconProcessorException e) {
+                throw new IconProcessorException(IconProcessorException.ON_META_PROCESS_FAILED, onMetaArray.toString(), e);
             }
         }
 

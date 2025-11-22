@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.KeyBinding;
 import net.minecraft.common.util.i18n.StringTranslate;
-import net.tracystacktrace.stackem.impl.DeepMeta;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.modifications.category.StackemJsonReader;
@@ -32,10 +31,6 @@ public class StackEm extends Mod {
 
     public static TexturePackStacked getContainerInstance() {
         return (TexturePackStacked) Minecraft.getInstance().texturePackList.getSelectedTexturePack();
-    }
-
-    public static DeepMeta getContainerDeepMeta() {
-        return getContainerInstance().getDeepMeta();
     }
 
     public static void toggleDefaultTextures() {
@@ -160,6 +155,7 @@ public class StackEm extends Mod {
         KeyBindingAPI.registerKeyBinding(DEBUG_KEYBIND_FALLBACK);
     }
 
+    @SuppressWarnings("unused")
     @EventHandler
     public void eventProvideMetadataInfo(GuiItemInfoEvent event) {
         if (Keyboard.isKeyDown(Keyboard.KEY_LCONTROL)) {

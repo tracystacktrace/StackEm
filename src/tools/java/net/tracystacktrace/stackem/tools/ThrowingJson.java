@@ -21,6 +21,40 @@ public final class ThrowingJson {
         }
     }
 
+    /* Checking methods */
+
+    public static boolean isInteger(
+            @NotNull JsonObject object,
+            @NotNull String target
+    ) {
+        if (!object.has(target))
+            return false;
+
+        final JsonElement element = object.get(target);
+        if (!element.isJsonPrimitive())
+            return false;
+
+        final JsonPrimitive primitive = element.getAsJsonPrimitive();
+        return primitive.isNumber();
+    }
+
+    public static boolean isString(
+            @NotNull JsonObject object,
+            @NotNull String target
+    ) {
+        if (!object.has(target))
+            return false;
+
+        final JsonElement element = object.get(target);
+        if (!element.isJsonPrimitive())
+            return false;
+
+        final JsonPrimitive primitive = element.getAsJsonPrimitive();
+        return primitive.isString();
+    }
+
+    /* Extraction methods */
+
     public static @NotNull JsonArray cautiouslyGetArray(
             @NotNull JsonObject object,
             @NotNull String target,
