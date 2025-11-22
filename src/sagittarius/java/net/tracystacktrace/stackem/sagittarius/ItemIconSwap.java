@@ -10,7 +10,6 @@ import net.tracystacktrace.stackem.sagittarius.swap.TextureByMetadata;
 import net.tracystacktrace.stackem.sagittarius.swap.TextureByName;
 import net.tracystacktrace.stackem.tools.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.JsonMapper;
-import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -145,7 +144,7 @@ public record ItemIconSwap(
             final JsonArray onNameArray = ThrowingJson.cautiouslyGetArray(object, "onName", sourceName);
 
             try {
-                textureByNames = JsonMapper.mapJsonArray(onNameArray, o -> TextureByName.fromJson(o, sourceName), TextureByName[]::new);
+                textureByNames = JsonMapper.mapJsonArrayWithException(onNameArray, o -> TextureByName.fromJson(o, sourceName), TextureByName[]::new);
             } catch (IconProcessorException | JsonExtractionException e) {
                 throw new IconProcessorException(IconProcessorException.ON_NAME_PROCESS_FAILED, onNameArray.toString(), e);
             }
@@ -155,7 +154,7 @@ public record ItemIconSwap(
             final JsonArray onMetaArray = ThrowingJson.cautiouslyGetArray(object, "onMeta", sourceName);
 
             try {
-                textureByMetadata = JsonMapper.mapJsonArray(onMetaArray, o -> TextureByMetadata.fromJson(o, sourceName), TextureByMetadata[]::new);
+                textureByMetadata = JsonMapper.mapJsonArrayWithException(onMetaArray, o -> TextureByMetadata.fromJson(o, sourceName), TextureByMetadata[]::new);
             } catch (IconProcessorException | JsonExtractionException e) {
                 throw new IconProcessorException(IconProcessorException.ON_META_PROCESS_FAILED, onMetaArray.toString(), e);
             }

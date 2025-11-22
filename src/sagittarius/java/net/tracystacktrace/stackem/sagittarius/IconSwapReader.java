@@ -14,6 +14,6 @@ public final class IconSwapReader {
     ) throws IconProcessorException, JsonExtractionException {
         final JsonObject object = ThrowingJson.stringToJsonObject(input, sourceName);
         final JsonArray arrayData = ThrowingJson.cautiouslyGetArray(object, "data", sourceName);
-        return JsonMapper.mapJsonArray(arrayData, a -> ItemIconSwap.fromJson(a, sourceName), ItemIconSwap[]::new);
+        return JsonMapper.mapJsonArrayWithException(arrayData, a -> ItemIconSwap.fromJson(a, sourceName), ItemIconSwap[]::new);
     }
 }

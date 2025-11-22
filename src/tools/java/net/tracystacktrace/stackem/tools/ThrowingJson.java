@@ -139,6 +139,21 @@ public final class ThrowingJson {
         }
     }
 
+    public static @NotNull JsonObject cautiouslyGetObject(
+            @NotNull JsonObject object,
+            @NotNull String target,
+            @NotNull String sourceName
+    ) throws JsonExtractionException {
+        if (!object.has(target))
+            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
+
+        final JsonElement element = object.get(target);
+        if (!element.isJsonObject())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_OBJECT, sourceName, element.toString());
+
+        return element.getAsJsonObject();
+    }
+
     public static @NotNull JsonArray cautiouslyGetArray(
             @NotNull JsonObject object,
             @NotNull String target,

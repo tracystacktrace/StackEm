@@ -1,14 +1,15 @@
 package net.tracystacktrace.stackem.modifications.moon;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.tracystacktrace.stackem.tools.JsonExtractionException;
-import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 
 public final class MoonReader {
-    public static @NotNull CelestialMeta fromJson(@NotNull JsonObject object) throws JsonExtractionException {
+    public static @NotNull CelestialMeta fromJson(
+            @NotNull final JsonObject object,
+            @NotNull final String sourceName
+    ) throws JsonExtractionException {
         String texture_path = "/textures/environment/moon_phases.png";
         EnumCelestialCycle cycle = EnumCelestialCycle.DEFAULT;
         float scale = 1.0f;
@@ -16,10 +17,8 @@ public final class MoonReader {
         int number_y = 2;
 
         if (object.has("path")) {
-            final JsonElement elementPath = object.get("path");
-            String contentPath = JsonReadHelper.readString(elementPath);
-
-            if (contentPath != null && !contentPath.isEmpty()) {
+            String contentPath = ThrowingJson.cautiouslyGetString(object, "path", sourceName);
+            if (!contentPath.isEmpty()) {
                 if (!contentPath.startsWith("/")) {
                     contentPath = "/" + contentPath;
                 }
@@ -28,10 +27,8 @@ public final class MoonReader {
         }
 
         if (object.has("cycle")) {
-            final JsonElement elementCycle = object.get("cycle");
-            final String contentCycle = JsonReadHelper.readString(elementCycle);
-
-            if (contentCycle != null && !contentCycle.isEmpty()) {
+            final String contentCycle = ThrowingJson.cautiouslyGetString(object, "cycle", sourceName);
+            if (!contentCycle.isEmpty()) {
                 final EnumCelestialCycle cycleType = EnumCelestialCycle.getType(contentCycle);
                 if (cycleType != null) {
                     cycle = cycleType;

@@ -76,7 +76,7 @@ public final class StackEmModifications {
             try {
                 final String content = IOReadHelper.readTextFile("/stackem.moon.json", stacked::getResourceAsStream);
                 final JsonObject object = IOReadHelper.processJson(content);
-                final CelestialMeta compiled = MoonReader.fromJson(object);
+                final CelestialMeta compiled = MoonReader.fromJson(object, content);
                 stacked.getDeepMeta().setMoonData(compiled);
             } catch (IOReadHelper.CustomIOException | JsonExtractionException e) {
                 StackEm.LOGGER.severe("Failed fetching and compiling contents of stackem.moon.json");
@@ -89,7 +89,7 @@ public final class StackEmModifications {
             try {
                 final String content = IOReadHelper.readTextFile("/stackem.sun.json", stacked::getResourceAsStream);
                 final JsonObject object = IOReadHelper.processJson(content);
-                final CelestialMeta compiled = MoonReader.fromJson(object);
+                final CelestialMeta compiled = MoonReader.fromJson(object, content);
                 stacked.getDeepMeta().setMoonData(compiled);
             } catch (IOReadHelper.CustomIOException | JsonExtractionException e) {
                 StackEm.LOGGER.severe("Failed fetching and compiling contents of stackem.sun.json");

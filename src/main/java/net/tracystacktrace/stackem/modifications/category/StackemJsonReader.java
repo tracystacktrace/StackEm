@@ -4,9 +4,11 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
+import net.tracystacktrace.stackem.tools.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.JsonMapper;
-import net.tracystacktrace.stackem.tools.JsonReadHelper;
+import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public final class StackemJsonReader {
     public static void pushJson(
@@ -14,53 +16,61 @@ public final class StackemJsonReader {
             @NotNull TagTexturePack texturePack
     ) {
         if (object.has("author")) {
-            texturePack.setAuthor(JsonReadHelper.readString(object.get("author")));
+            try {
+                texturePack.setAuthor(ThrowingJson.cautiouslyGetString(object, "author", texturePack.name));
+            }catch (JsonExtractionException e) {
+                e.printStackTrace();
+            }
         }
 
         if (object.has("website")) {
-            texturePack.setWebsite(JsonReadHelper.readString(object.get("website")));
+            try {
+                texturePack.setWebsite(ThrowingJson.cautiouslyGetString(object, "website", texturePack.name));
+            }catch (JsonExtractionException e) {
+                e.printStackTrace();
+            }
         }
 
         if (object.has("category")) {
-            final JsonElement elementCategory = object.get("category");
-
-            if (elementCategory.isJsonObject()) {
-                final JsonObject category = elementCategory.getAsJsonObject();
+            try {
+                final JsonObject category = ThrowingJson.cautiouslyGetObject(object, "category", texturePack.name);
 
                 //in-built
                 if (category.has("id")) {
-                    final JsonElement elementId = category.get("id");
-                    if (elementId.isJsonArray()) {
-                        final JsonArray idArray = elementId.getAsJsonArray();
-                        final EnumCategory[] collected = JsonMapper.mapJsonArraySafe(
-                                idArray, element -> EnumCategory.define(JsonReadHelper.readString(element)),
-                                EnumCategory[]::new
-                        );
-                        if (collected.length > 0) {
-                            texturePack.setCategories(collected);
-                        }
+                    final JsonArray idArray = ThrowingJson.cautiouslyGetArray(object, "id", texturePack.name);
+                    final EnumCategory[] collected = JsonMapper.mapJsonArray(
+                            idArray, element -> EnumCategory.define(readString(element)),
+                            EnumCategory[]::new
+                    );
+                    if (collected.length > 0) {
+                        texturePack.setCategories(collected);
                     }
                 }
 
                 //custom
                 if (category.has("custom")) {
-                    final JsonElement elementCustom = category.get("custom");
-
-                    if (elementCustom.isJsonArray()) {
-                        final JsonArray arrayCustom = elementCustom.getAsJsonArray();
-                        final String[] collected = JsonMapper.mapJsonArraySafe(
-                                arrayCustom, element -> {
-                                    final String collected1 = JsonReadHelper.readString(element);
-                                    return (collected1 != null && collected1.isEmpty()) ? null : collected1;
-                                },
-                                String[]::new
-                        );
-                        if (collected.length > 0) {
-                            texturePack.setCustomCategories(collected);
-                        }
+                    final JsonArray arrayCustom = ThrowingJson.cautiouslyGetArray(object, "custom", texturePack.name);
+                    final String[] collected = JsonMapper.mapJsonArray(
+                            arrayCustom, element -> {
+                                final String collected1 = readString(element);
+                                return (collected1 != null && collected1.isEmpty()) ? null : collected1;
+                            },
+                            String[]::new
+                    );
+                    if (collected.length > 0) {
+                        texturePack.setCustomCategories(collected);
                     }
                 }
+            } catch (JsonExtractionException e) {
+                e.printStackTrace();
             }
         }
+    }
+
+    private static @Nullable String readString(@NotNull JsonElement element) {
+        if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isString()) {
+            return element.getAsString();
+        }
+        return null;
     }
 }
