@@ -6,6 +6,7 @@ import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hacks.SmartHacks;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.modifications.entityvariation.EntityVariation;
 import net.tracystacktrace.stackem.modifications.imageglue.GlueImages;
 import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentsProvider;
@@ -18,8 +19,10 @@ import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
 import net.tracystacktrace.stackem.tools.IOReadHelper;
 import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
+import net.tracystacktrace.stackem.tools.json.ThrowingJson;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -90,10 +93,40 @@ public final class StackEmModifications {
                 final String content = IOReadHelper.readTextFile("/stackem.sun.json", stacked::getResourceAsStream);
                 final JsonObject object = IOReadHelper.processJson(content);
                 final CelestialMeta compiled = MoonReader.fromJson(object, content);
-                stacked.getDeepMeta().setMoonData(compiled);
+                stacked.getDeepMeta().setSunData(compiled);
             } catch (IOReadHelper.CustomIOException | JsonExtractionException e) {
                 StackEm.LOGGER.severe("Failed fetching and compiling contents of stackem.sun.json");
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
+                e.printStackTrace();
+            }
+        }
+
+        //parse entity textures
+        final List<ZipFile> zipFiles = stacked.getZipFiles();
+        for (int i = zipFiles.size() - 1; i >= 0; i--) {
+            final ZipFile file = zipFiles.get(i);
+            final ZipEntry entry = ZipFileHelper.getEntryFor(file, "stackem.entity.json");
+            if (entry == null) continue;
+
+            try {
+                final EntityVariation.Description[] possible = EntityVariation.fromJson(
+                        ZipFileHelper.readTextFile(file, entry),
+                        file.getName() + "!/stackem.entity.json"
+                );
+
+                for (EntityVariation.Description item : possible) {
+                    StackEm.getContainerInstance().getDeepMeta().addEntityVariation(item);
+                }
+
+            } catch (ZipFileHelper.ZipIOException e) {
+                StackEm.LOGGER.severe(String.format("Failed to read file: %s", file.getName() + "!/stackem.items.json"));
+                StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
+            } catch (JsonExtractionException e) {
+                StackEm.LOGGER.severe(String.format("Failed during compiling icon swapper of %s", file.getName() + "!/stackem.items.json"));
+                StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
+
+                //we NEED to see full stacktrace at any chance!
+                //noinspection CallToPrintStackTrace
                 e.printStackTrace();
             }
         }

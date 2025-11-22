@@ -37,21 +37,21 @@ public final class MoonReader {
         }
 
         if (object.has("scale")) {
-            final float contentScale = ThrowingJson.cautiouslyGetFloat(object, "scale", "null"); //TODO: remove null
+            final float contentScale = ThrowingJson.cautiouslyGetFloat(object, "scale", sourceName);
             if (contentScale > 0.0F && contentScale <= 128.0F) {
                 scale = contentScale;
             }
         }
 
         if (object.has("number_x")) {
-            final int contentX = ThrowingJson.cautiouslyGetInt(object, "number_x", "null"); //TODO: remove null
+            final int contentX = ThrowingJson.cautiouslyGetInt(object, "number_x", sourceName);
             if (contentX > 0) {
                 number_x = contentX;
             }
         }
 
         if (object.has("number_y")) {
-            final int contentY = ThrowingJson.cautiouslyGetInt(object, "number_y", "null"); //TODO: remove null
+            final int contentY = ThrowingJson.cautiouslyGetInt(object, "number_y", sourceName);
             if (contentY > 0) {
                 number_y = contentY;
             }

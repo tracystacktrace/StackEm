@@ -5,6 +5,8 @@
 
 - Category list of a texturepack is now rendered as a hovered tooltip.
 - Refactored the whole JSON parsing code to be unitary and strict for input data.
+- Fixed a bug where stackem.sun.json is applied to the Moon but not the Sun.
+- Entity textures variations implementation, made via `/stackem.entity.json`.
 
 ## [0.3.8] - 2025-07-14
 

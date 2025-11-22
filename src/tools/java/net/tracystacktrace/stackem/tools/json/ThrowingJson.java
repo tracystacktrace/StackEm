@@ -191,7 +191,7 @@ public final class ThrowingJson {
         final int[] processedArray = new int[array.size()];
 
         for (int i = 0; i < processedArray.length; i++) {
-            //cautiously get int in list
+            //cautiously get int in array
             final JsonElement candidateElement = array.get(i);
             if (!candidateElement.isJsonPrimitive())
                 throw new JsonExtractionException(JsonExtractionException.INVALID_INT_ELEMENT_ARRAY, sourceName, array.toString());
@@ -205,6 +205,43 @@ public final class ThrowingJson {
             } catch (NumberFormatException e) {
                 throw new JsonExtractionException(JsonExtractionException.INVALID_INT_ELEMENT_ARRAY, sourceName, array.toString());
             }
+        }
+
+        return processedArray;
+    }
+
+    public static @NotNull String @NotNull [] cautiouslyGetStringArray(
+            @NotNull JsonObject object,
+            @NotNull String target,
+            @NotNull String sourceName
+    ) throws JsonExtractionException {
+        if (!object.has(target))
+            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
+
+        final JsonElement element = object.get(target);
+        if (!element.isJsonArray())
+            throw new JsonExtractionException(JsonExtractionException.NOT_A_JSON_ARRAY, sourceName, target);
+
+        final JsonArray array = element.getAsJsonArray();
+
+        //no need to parse if its empty
+        if (array.isEmpty()) {
+            return new String[0];
+        }
+
+        final String[] processedArray = new String[array.size()];
+
+        for (int i = 0; i < processedArray.length; i++) {
+            //cautiously get String in array
+            final JsonElement candidateElement = array.get(i);
+            if (!candidateElement.isJsonPrimitive())
+                throw new JsonExtractionException(JsonExtractionException.INVALID_STRING_ELEMENT_ARRAY, sourceName, array.toString());
+
+            final JsonPrimitive candidatePrimitive = candidateElement.getAsJsonPrimitive();
+            if (!candidatePrimitive.isString())
+                throw new JsonExtractionException(JsonExtractionException.INVALID_STRING_ELEMENT_ARRAY, sourceName, array.toString());
+
+            processedArray[i] = candidatePrimitive.getAsString();
         }
 
         return processedArray;

@@ -14,6 +14,7 @@ public class JsonExtractionException extends Exception {
     public static final byte INVALID_FLOAT = -122;
     public static final byte INVALID_INT_ELEMENT_ARRAY = -121;
     public static final byte INVALID_OBJECT = -120;
+    public static final byte INVALID_STRING_ELEMENT_ARRAY = -119;
 
     public static @NotNull String factoryMessage(byte reason, @Nullable String optional, @NotNull String source) {
         return switch (reason) {
@@ -31,8 +32,10 @@ public class JsonExtractionException extends Exception {
             case INVALID_BOOLEAN -> String.format("Source %s, invalid BOOLEAN value at: %s", source, optional);
             case INVALID_FLOAT -> String.format("Source %s, invalid FLOAT value at: %s", source, optional);
             case INVALID_INT_ELEMENT_ARRAY ->
-                    String.format("Source %s, invalid INTEGER in array at: %s", source, optional);
+                    String.format("Source %s, invalid INTEGER element in array at: %s", source, optional);
             case INVALID_OBJECT -> String.format("Source %s, invalid JSON Object value at: %s", source, optional);
+            case INVALID_STRING_ELEMENT_ARRAY ->
+                    String.format("Source %s, invalid STRING element in array at: %s", source, optional);
 
             default -> String.format("Unknown error code: %d", reason);
         };

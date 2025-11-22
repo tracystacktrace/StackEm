@@ -11,12 +11,13 @@
     "core.menu.AccessorGuiMainMenu",
     "core.menu.MixinGuiMainMenu",
     "core.menu.MixinGuiVideoSettings",
+    "patches.AccessorSoundManager",
+    "patches.AccessorSoundPool",
     "patches.MixinGuiContainerChest",
     "patches.MixinGuiContainerForge",
     "processor.MixinItemStack",
     "processor.MixinRenderBiped",
     "processor.MixinRenderGlobal",
-    "patches.AccessorSoundManager",
-    "patches.AccessorSoundPool"
+    "processor.entity.MixinEntityZombie"
   ]
 }
