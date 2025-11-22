@@ -11,6 +11,7 @@ import java.util.Set;
 import java.util.function.Function;
 
 public final class JsonReadHelper {
+    @Deprecated
     public static int @NotNull [] readIntArray(@NotNull JsonArray array) throws IllegalStateException {
         final int[] result = new int[array.size()];
         for (int i = 0; i < result.length; i++) {

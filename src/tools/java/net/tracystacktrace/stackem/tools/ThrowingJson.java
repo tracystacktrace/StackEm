@@ -55,21 +55,6 @@ public final class ThrowingJson {
 
     /* Extraction methods */
 
-    public static @NotNull JsonArray cautiouslyGetArray(
-            @NotNull JsonObject object,
-            @NotNull String target,
-            @NotNull String sourceName
-    ) throws JsonExtractionException {
-        if (!object.has(target))
-            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
-
-        final JsonElement element = object.get(target);
-        if (!element.isJsonArray())
-            throw new JsonExtractionException(JsonExtractionException.NOT_A_JSON_ARRAY, sourceName, target);
-
-        return element.getAsJsonArray();
-    }
-
     public static int cautiouslyGetInt(
             @NotNull JsonObject object,
             @NotNull String target,
@@ -129,6 +114,62 @@ public final class ThrowingJson {
             throw new JsonExtractionException(JsonExtractionException.INVALID_BOOLEAN, sourceName, element.toString());
 
         return primitive.getAsBoolean();
+    }
+
+    public static @NotNull JsonArray cautiouslyGetArray(
+            @NotNull JsonObject object,
+            @NotNull String target,
+            @NotNull String sourceName
+    ) throws JsonExtractionException {
+        if (!object.has(target))
+            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
+
+        final JsonElement element = object.get(target);
+        if (!element.isJsonArray())
+            throw new JsonExtractionException(JsonExtractionException.NOT_A_JSON_ARRAY, sourceName, target);
+
+        return element.getAsJsonArray();
+    }
+
+    public static int @NotNull [] cautiouslyGetIntArray(
+            @NotNull JsonObject object,
+            @NotNull String target,
+            @NotNull String sourceName
+    ) throws JsonExtractionException {
+        if (!object.has(target))
+            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
+
+        final JsonElement element = object.get(target);
+        if (!element.isJsonArray())
+            throw new JsonExtractionException(JsonExtractionException.NOT_A_JSON_ARRAY, sourceName, target);
+
+        final JsonArray array = element.getAsJsonArray();
+
+        //no need to parse if its empty
+        if (array.isEmpty()) {
+            return new int[0];
+        }
+
+        final int[] processedArray = new int[array.size()];
+
+        for (int i = 0; i < processedArray.length; i++) {
+            //cautiously get int in list
+            final JsonElement candidateElement = array.get(i);
+            if (!candidateElement.isJsonPrimitive())
+                throw new JsonExtractionException(JsonExtractionException.INVALID_INT_ELEMENT_ARRAY, sourceName, array.toString());
+
+            final JsonPrimitive candidatePrimitive = candidateElement.getAsJsonPrimitive();
+            if (!candidatePrimitive.isNumber())
+                throw new JsonExtractionException(JsonExtractionException.INVALID_INT_ELEMENT_ARRAY, sourceName, array.toString());
+
+            try {
+                processedArray[i] = candidatePrimitive.getAsInt();
+            } catch (NumberFormatException e) {
+                throw new JsonExtractionException(JsonExtractionException.INVALID_INT_ELEMENT_ARRAY, sourceName, array.toString());
+            }
+        }
+
+        return processedArray;
     }
 
 }

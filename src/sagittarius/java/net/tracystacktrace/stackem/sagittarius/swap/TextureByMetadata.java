@@ -3,7 +3,9 @@ package net.tracystacktrace.stackem.sagittarius.swap;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
+import net.tracystacktrace.stackem.tools.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
+import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 
 public class TextureByMetadata extends SwapDescriptor {
@@ -55,61 +57,41 @@ public class TextureByMetadata extends SwapDescriptor {
         return false;
     }
 
-    public static @NotNull TextureByMetadata fromJson(@NotNull JsonObject object) throws IconProcessorException {
+    public static @NotNull TextureByMetadata fromJson(
+            @NotNull final JsonObject object,
+            @NotNull final String sourceName
+    ) throws IconProcessorException, JsonExtractionException {
         byte compareCode = -1;
         int[] compareInts = null;
 
         if (object.has("static")) {
-            final JsonElement inputElement = object.get("static");
-            if (inputElement.isJsonPrimitive() && inputElement.getAsJsonPrimitive().isNumber()) {
-                compareCode = TextureByMetadata.STATIC;
-                compareInts = new int[]{inputElement.getAsInt()};
-            }
+            compareInts = new int[]{ThrowingJson.cautiouslyGetInt(object, "static", sourceName)};
+            compareCode = TextureByMetadata.STATIC;
         }
 
         if (object.has("between")) {
-            final JsonElement inputElement = object.get("between");
-            if (inputElement.isJsonArray()) {
-                compareCode = TextureByMetadata.BETWEEN;
-                try {
-                    compareInts = JsonReadHelper.readIntArray(inputElement.getAsJsonArray());
-                } catch (IllegalStateException e) {
-                    throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE, inputElement.toString(), e);
-                }
-            }
+            compareInts = ThrowingJson.cautiouslyGetIntArray(object, "between", sourceName);
+            compareCode = TextureByMetadata.BETWEEN;
         }
 
         if (object.has("below")) {
-            final JsonElement inputElement = object.get("below");
-            if (inputElement.isJsonPrimitive() && inputElement.getAsJsonPrimitive().isNumber()) {
-                compareCode = TextureByMetadata.BELOW;
-                compareInts = new int[]{inputElement.getAsInt()};
-            }
+            compareInts = new int[]{ThrowingJson.cautiouslyGetInt(object, "below", sourceName)};
+            compareCode = TextureByMetadata.BELOW;
         }
 
         if (object.has("after")) {
-            final JsonElement inputElement = object.get("after");
-            if (inputElement.isJsonPrimitive() && inputElement.getAsJsonPrimitive().isNumber()) {
-                compareCode = TextureByMetadata.AFTER;
-                compareInts = new int[]{inputElement.getAsInt()};
-            }
+            compareInts = new int[]{ThrowingJson.cautiouslyGetInt(object, "after", sourceName)};
+            compareCode = TextureByMetadata.AFTER;
         }
 
         if (object.has("following")) {
-            final JsonElement inputElement = object.get("following");
-            if (inputElement.isJsonArray()) {
-                compareCode = TextureByMetadata.FOLLOWING;
-                try {
-                    compareInts = JsonReadHelper.readIntArray(inputElement.getAsJsonArray());
-                } catch (IllegalStateException e) {
-                    throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE, inputElement.toString(), e);
-                }
-            }
+            compareInts = ThrowingJson.cautiouslyGetIntArray(object, "following", sourceName);
+            compareCode = TextureByMetadata.FOLLOWING;
         }
 
-        if (compareCode == -1) {
+        if (compareCode == -1)
             throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE);
-        }
+
 
         final String texture = SwapDescriptor.obtainTexture(object);
         final int priority = SwapDescriptor.obtainPriority(object);

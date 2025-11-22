@@ -113,8 +113,8 @@ public record ItemIconSwap(
     }
 
     public static @NotNull ItemIconSwap fromJson(
-            @NotNull JsonObject object,
-            @NotNull String sourceName
+            @NotNull final JsonObject object,
+            @NotNull final String sourceName
     ) throws IconProcessorException, JsonExtractionException {
         int targetItemID = -1;
 
@@ -144,8 +144,8 @@ public record ItemIconSwap(
             final JsonArray onNameArray = ThrowingJson.cautiouslyGetArray(object, "onName", sourceName);
 
             try {
-                textureByNames = JsonReadHelper.transformArray(onNameArray, TextureByName::fromJson, TextureByName[]::new);
-            } catch (IconProcessorException e) {
+                textureByNames = JsonReadHelper.transformArray(onNameArray, o -> TextureByName.fromJson(o, sourceName), TextureByName[]::new);
+            } catch (IconProcessorException | JsonExtractionException e) {
                 throw new IconProcessorException(IconProcessorException.ON_NAME_PROCESS_FAILED, onNameArray.toString(), e);
             }
         }
@@ -154,8 +154,8 @@ public record ItemIconSwap(
             final JsonArray onMetaArray = ThrowingJson.cautiouslyGetArray(object, "onMeta", sourceName);
 
             try {
-                textureByMetadata = JsonReadHelper.transformArray(onMetaArray, TextureByMetadata::fromJson, TextureByMetadata[]::new);
-            } catch (IconProcessorException e) {
+                textureByMetadata = JsonReadHelper.transformArray(onMetaArray, o -> TextureByMetadata.fromJson(o, sourceName), TextureByMetadata[]::new);
+            } catch (IconProcessorException | JsonExtractionException e) {
                 throw new IconProcessorException(IconProcessorException.ON_META_PROCESS_FAILED, onMetaArray.toString(), e);
             }
         }

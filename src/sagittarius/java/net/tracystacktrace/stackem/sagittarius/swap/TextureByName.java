@@ -2,6 +2,8 @@ package net.tracystacktrace.stackem.sagittarius.swap;
 
 import com.google.gson.JsonObject;
 import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
+import net.tracystacktrace.stackem.tools.JsonExtractionException;
+import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -53,38 +55,41 @@ public class TextureByName extends SwapDescriptor {
         return false;
     }
 
-    public static @NotNull TextureByName fromJson(@NotNull JsonObject object) throws IconProcessorException {
+    public static @NotNull TextureByName fromJson(
+            @NotNull final JsonObject object,
+            @NotNull final String sourceName
+    ) throws IconProcessorException, JsonExtractionException {
         byte compareCode = -1;
         String targetString = null;
 
         if (object.has("equals")) {
-            targetString = object.get("equals").getAsString();
+            targetString = ThrowingJson.cautiouslyGetString(object, "equals", sourceName);
             compareCode = TextureByName.EQUALS;
         }
 
         if (object.has("equalsIgnoreCase")) {
-            targetString = object.get("equalsIgnoreCase").getAsString();
+            targetString = ThrowingJson.cautiouslyGetString(object, "equalsIgnoreCase", sourceName);
             compareCode = TextureByName.EQUALS_IGNORE_CASE;
         }
 
         if (object.has("contains")) {
-            targetString = object.get("contains").getAsString();
+            targetString = ThrowingJson.cautiouslyGetString(object, "contains", sourceName);
             compareCode = TextureByName.CONTAINS;
         }
 
         if (object.has("startsWith")) {
-            targetString = object.get("startsWith").getAsString();
+            targetString = ThrowingJson.cautiouslyGetString(object, "startsWith", sourceName);
             compareCode = TextureByName.STARTS_WITH;
         }
 
         if (object.has("endsWith")) {
-            targetString = object.get("endsWith").getAsString();
+            targetString = ThrowingJson.cautiouslyGetString(object, "endsWith", sourceName);
             compareCode = TextureByName.ENDS_WITH;
         }
 
-        if (compareCode == -1 || targetString == null) {
+        if (compareCode == -1)
             throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE);
-        }
+
 
         //obtain texture path
         final String texture = SwapDescriptor.obtainTexture(object);

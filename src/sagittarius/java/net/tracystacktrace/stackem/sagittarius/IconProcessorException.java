@@ -4,8 +4,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public class IconProcessorException extends Exception {
-    public static final byte INVALID_DATA_OBJECT = 0;
-    public static final byte FAILED_JSON_PARSE = 1;
     public static final byte NOT_FOUND_ITEM_ID = 2;
     public static final byte INVALID_ITEM_ID = 3;
     public static final byte INVALID_COMPARABLE_CODE = 4;
@@ -21,8 +19,6 @@ public class IconProcessorException extends Exception {
 
     public static @NotNull String getErrorCode(byte code, @Nullable String optional) {
         return switch (code) {
-            case INVALID_DATA_OBJECT -> String.format("Invalid \"data\" field in \"stackem.items.json\": %s", optional);
-            case FAILED_JSON_PARSE -> String.format("Failed to process JSON raw data: %s", optional);
             case NOT_FOUND_ITEM_ID -> "Expected an item identifier, but wasn't found!";
             case INVALID_ITEM_ID -> String.format("Invalid \"item\" value: %s", optional);
             case INVALID_COMPARABLE_CODE ->
@@ -46,10 +42,6 @@ public class IconProcessorException extends Exception {
 
     public IconProcessorException(byte code, @Nullable String optional) {
         this(code, optional, null);
-    }
-
-    public IconProcessorException(byte code, @Nullable Exception e) {
-        this(code, null, e);
     }
 
     public IconProcessorException(byte code) {
