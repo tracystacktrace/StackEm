@@ -2,11 +2,13 @@ package net.tracystacktrace.stackem.modifications.moon;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import net.tracystacktrace.stackem.tools.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
+import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 
 public final class MoonReader {
-    public static @NotNull CelestialMeta fromJson(@NotNull JsonObject object) {
+    public static @NotNull CelestialMeta fromJson(@NotNull JsonObject object) throws JsonExtractionException {
         String texture_path = "/textures/environment/moon_phases.png";
         EnumCelestialCycle cycle = EnumCelestialCycle.DEFAULT;
         float scale = 1.0f;
@@ -38,28 +40,22 @@ public final class MoonReader {
         }
 
         if (object.has("scale")) {
-            final JsonElement elementScale = object.get("scale");
-            final Float contentScale = JsonReadHelper.readFloat(elementScale);
-
-            if (contentScale != null && contentScale > 0.0F && contentScale <= 128.0F) {
+            final float contentScale = ThrowingJson.cautiouslyGetFloat(object, "scale", "null"); //TODO: remove null
+            if (contentScale > 0.0F && contentScale <= 128.0F) {
                 scale = contentScale;
             }
         }
 
         if (object.has("number_x")) {
-            final JsonElement elementX = object.get("number_x");
-            final Integer contentX = JsonReadHelper.readInteger(elementX);
-
-            if (contentX != null && contentX > 0) {
+            final int contentX = ThrowingJson.cautiouslyGetInt(object, "number_x", "null"); //TODO: remove null
+            if (contentX > 0) {
                 number_x = contentX;
             }
         }
 
         if (object.has("number_y")) {
-            final JsonElement elementY = object.get("number_y");
-            final Integer contentY = JsonReadHelper.readInteger(elementY);
-
-            if (contentY != null && contentY > 0) {
+            final int contentY = ThrowingJson.cautiouslyGetInt(object, "number_y", "null"); //TODO: remove null
+            if (contentY > 0) {
                 number_y = contentY;
             }
         }

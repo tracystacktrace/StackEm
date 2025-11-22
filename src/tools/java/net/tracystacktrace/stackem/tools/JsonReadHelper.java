@@ -11,20 +11,6 @@ import java.util.Set;
 import java.util.function.Function;
 
 public final class JsonReadHelper {
-    @Deprecated
-    public static int @NotNull [] readIntArray(@NotNull JsonArray array) throws IllegalStateException {
-        final int[] result = new int[array.size()];
-        for (int i = 0; i < result.length; i++) {
-            final JsonElement element = array.get(i);
-            if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
-                result[i] = element.getAsInt();
-            } else {
-                throw new IllegalStateException(String.format("A presumably pure int[] json array is not pure! Failed at index: %s", i));
-            }
-        }
-        return result;
-    }
-
     public static <T, E extends Exception> T @NotNull [] transformArray(
             @NotNull JsonArray array,
             @NotNull FunctionWithException<@NotNull JsonObject, @NotNull T, E> transformer,
@@ -58,27 +44,6 @@ public final class JsonReadHelper {
     public static @Nullable String readString(@NotNull JsonElement element) {
         if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isString()) {
             return element.getAsString();
-        }
-        return null;
-    }
-
-    public static @Nullable Integer readInteger(@NotNull JsonElement element) {
-        if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
-            return element.getAsInt();
-        }
-        return null;
-    }
-
-    public static @Nullable Float readFloat(@NotNull JsonElement element) {
-        if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isNumber()) {
-            return element.getAsFloat();
-        }
-        return null;
-    }
-
-    public static @Nullable Boolean readBoolean(@NotNull JsonElement element) {
-        if (element.isJsonPrimitive() && element.getAsJsonPrimitive().isBoolean()) {
-            return element.getAsBoolean();
         }
         return null;
     }

@@ -1,10 +1,8 @@
 package net.tracystacktrace.stackem.sagittarius.swap;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
 import net.tracystacktrace.stackem.tools.JsonExtractionException;
-import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 
@@ -93,12 +91,16 @@ public class TextureByMetadata extends SwapDescriptor {
             throw new IconProcessorException(IconProcessorException.INVALID_COMPARABLE_CODE);
 
 
-        final String texture = SwapDescriptor.obtainTexture(object);
-        final int priority = SwapDescriptor.obtainPriority(object);
+        final String texture = ThrowingJson.cautiouslyGetString(object, "texture", sourceName);
+
+        int priority = 0;
+        if (object.has("priority")) {
+            priority = ThrowingJson.cautiouslyGetInt(object, "priority", sourceName);
+        }
 
         final TextureByMetadata compiled = new TextureByMetadata(compareCode, compareInts, texture, priority);
 
-        SwapDescriptor.obtainArmorAdditionally(compiled, object);
+        SwapDescriptor.obtainArmorAdditionally(compiled, object, sourceName);
 
         return compiled;
     }

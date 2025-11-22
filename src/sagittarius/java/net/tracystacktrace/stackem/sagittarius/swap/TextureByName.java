@@ -92,12 +92,16 @@ public class TextureByName extends SwapDescriptor {
 
 
         //obtain texture path
-        final String texture = SwapDescriptor.obtainTexture(object);
-        final int priority = SwapDescriptor.obtainPriority(object);
+        final String texture = ThrowingJson.cautiouslyGetString(object, "texture", sourceName);
+
+        int priority = 0;
+        if (object.has("priority")) {
+            priority = ThrowingJson.cautiouslyGetInt(object, "priority", sourceName);
+        }
 
         final TextureByName compiled = new TextureByName(compareCode, targetString, texture, priority);
 
-        SwapDescriptor.obtainArmorAdditionally(compiled, object);
+        SwapDescriptor.obtainArmorAdditionally(compiled, object, sourceName);
 
         return compiled;
     }

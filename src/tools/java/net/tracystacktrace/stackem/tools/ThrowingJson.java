@@ -116,6 +116,29 @@ public final class ThrowingJson {
         return primitive.getAsBoolean();
     }
 
+    public static float cautiouslyGetFloat(
+            @NotNull JsonObject object,
+            @NotNull String target,
+            @NotNull String sourceName
+    ) throws JsonExtractionException {
+        if (!object.has(target))
+            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
+
+        final JsonElement element = object.get(target);
+        if (!element.isJsonPrimitive())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_FLOAT, sourceName, element.toString());
+
+        final JsonPrimitive primitive = element.getAsJsonPrimitive();
+        if (!primitive.isNumber())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_FLOAT, sourceName, element.toString());
+
+        try {
+            return primitive.getAsFloat();
+        }catch (NumberFormatException e) {
+            throw new JsonExtractionException(JsonExtractionException.INVALID_FLOAT, sourceName, element.toString());
+        }
+    }
+
     public static @NotNull JsonArray cautiouslyGetArray(
             @NotNull JsonObject object,
             @NotNull String target,

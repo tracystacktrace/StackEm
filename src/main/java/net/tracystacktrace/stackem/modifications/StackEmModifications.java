@@ -78,7 +78,7 @@ public final class StackEmModifications {
                 final JsonObject object = IOReadHelper.processJson(content);
                 final CelestialMeta compiled = MoonReader.fromJson(object);
                 stacked.getDeepMeta().setMoonData(compiled);
-            } catch (IOReadHelper.CustomIOException e) {
+            } catch (IOReadHelper.CustomIOException | JsonExtractionException e) {
                 StackEm.LOGGER.severe("Failed fetching and compiling contents of stackem.moon.json");
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
                 e.printStackTrace();
@@ -91,7 +91,7 @@ public final class StackEmModifications {
                 final JsonObject object = IOReadHelper.processJson(content);
                 final CelestialMeta compiled = MoonReader.fromJson(object);
                 stacked.getDeepMeta().setMoonData(compiled);
-            } catch (IOReadHelper.CustomIOException e) {
+            } catch (IOReadHelper.CustomIOException | JsonExtractionException e) {
                 StackEm.LOGGER.severe("Failed fetching and compiling contents of stackem.sun.json");
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
                 e.printStackTrace();

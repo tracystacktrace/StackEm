@@ -1,11 +1,10 @@
 package net.tracystacktrace.stackem.sagittarius.swap;
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.minecraft.common.block.icon.Icon;
 import net.minecraft.common.block.icon.IconRegister;
-import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
-import net.tracystacktrace.stackem.tools.JsonReadHelper;
+import net.tracystacktrace.stackem.tools.JsonExtractionException;
+import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -50,50 +49,18 @@ public class SwapDescriptor {
         this.armorTexture = s;
     }
 
-    public static @NotNull String obtainTexture(@NotNull JsonObject object) throws IconProcessorException {
-        if (object.has("texture")) {
-            final JsonElement element = object.get("texture");
-            final String content = JsonReadHelper.readString(element);
-            if (content != null) {
-                return content;
-            }
-            throw new IconProcessorException(IconProcessorException.INVALID_TEXTURE, element.toString());
-        }
-        throw new IconProcessorException(IconProcessorException.NOT_FOUND_TEXTURE);
-    }
-
-    public static int obtainPriority(@NotNull JsonObject object) throws IconProcessorException {
-        if (object.has("priority")) {
-            final JsonElement element = object.get("priority");
-            final Integer content = JsonReadHelper.readInteger(element);
-            if (content != null) {
-                return content;
-            }
-            throw new IconProcessorException(IconProcessorException.INVALID_PRIORITY, element.toString());
-        }
-        return 0;
-    }
-
-    public static void obtainArmorAdditionally(@NotNull SwapDescriptor swapper, @NotNull JsonObject object) throws IconProcessorException {
+    public static void obtainArmorAdditionally(
+            @NotNull SwapDescriptor swapper,
+            @NotNull JsonObject object,
+            @NotNull final String sourceName
+    ) throws JsonExtractionException {
         if (object.has("armorTexture")) {
-            final JsonElement element = object.get("armorTexture");
-            final String content = JsonReadHelper.readString(element);
-
-            if (content != null) {
-                swapper.setArmorTexture(content);
-            } else {
-                throw new IconProcessorException(IconProcessorException.INVALID_ARMOR_TEXTURE, element.toString());
-            }
+            final String content = ThrowingJson.cautiouslyGetString(object, "armorTexture", sourceName);
+            swapper.setArmorTexture(content);
         }
         if (object.has("armorEnableColor")) {
-            final JsonElement element = object.get("armorEnableColor");
-            final Boolean content = JsonReadHelper.readBoolean(element);
-
-            if (content != null) {
-                swapper.setArmorColor(content);
-            } else {
-                throw new IconProcessorException(IconProcessorException.INVALID_ENABLE_COLOR, element.toString());
-            }
+            final Boolean content = ThrowingJson.cautiouslyGetBoolean(object, "armorEnableColor", sourceName);
+            swapper.setArmorColor(content);
         }
     }
 }
