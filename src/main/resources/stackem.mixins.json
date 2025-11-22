@@ -18,6 +18,8 @@
     "processor.MixinItemStack",
     "processor.MixinRenderBiped",
     "processor.MixinRenderGlobal",
-    "processor.entity.MixinEntityZombie"
+    "processor.entity.MixinEntityMinecart",
+    "processor.entity.MixinEntityZombie",
+    "processor.entity.MixinRenderMinecart"
   ]
 }

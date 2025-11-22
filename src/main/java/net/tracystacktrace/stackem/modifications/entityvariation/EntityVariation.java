@@ -3,7 +3,6 @@ package net.tracystacktrace.stackem.modifications.entityvariation;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonParseException;
 import net.minecraft.common.entity.Entity;
 import net.minecraft.common.entity.EntityList;
 import net.tracystacktrace.stackem.StackEm;
