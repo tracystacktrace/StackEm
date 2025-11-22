@@ -1,37 +1,26 @@
 package net.tracystacktrace.stackem.sagittarius;
 
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import net.tracystacktrace.stackem.tools.IOReadHelper;
+import net.tracystacktrace.stackem.tools.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
+import net.tracystacktrace.stackem.tools.ThrowingJson;
 import org.jetbrains.annotations.NotNull;
 
 public final class IconSwapReader {
     public static @NotNull ItemIconSwap @NotNull [] fromJson(
             @NotNull String sourceName,
             @NotNull String input
-    ) throws IconProcessorException {
-        JsonObject object;
+    ) throws IconProcessorException, JsonExtractionException {
+        final JsonObject object = ThrowingJson.stringToJsonObject(input, sourceName);
+        final JsonArray data_array = ThrowingJson.cautiouslyGetArray(object, "data", sourceName);
 
-        try {
-            object = IOReadHelper.processJson(input);
-        } catch (IOReadHelper.CustomIOException e) {
-            throw new IconProcessorException(IconProcessorException.FAILED_JSON_PARSE, sourceName, e);
-        }
-
-        if (object.has("data")) {
-            final JsonElement dataElement = object.get("data");
-            if (dataElement.isJsonArray()) {
-                return JsonReadHelper.transformArray(dataElement.getAsJsonArray(), a -> {
-                    try {
-                        return ItemIconSwap.fromJson(a);
-                    } catch (IconProcessorException e) {
-                        throw new IconProcessorException(IconProcessorException.INVALID_DATA_ELEMENT, a.toString(), e);
-                    }
-                }, ItemIconSwap[]::new);
+        return JsonReadHelper.transformArray(data_array, a -> {
+            try {
+                return ItemIconSwap.fromJson(a);
+            } catch (IconProcessorException e) {
+                throw new IconProcessorException(IconProcessorException.INVALID_DATA_ELEMENT, a.toString(), e);
             }
-        }
-
-        throw new IconProcessorException(IconProcessorException.INVALID_DATA_OBJECT, object.toString());
+        }, ItemIconSwap[]::new);
     }
 }

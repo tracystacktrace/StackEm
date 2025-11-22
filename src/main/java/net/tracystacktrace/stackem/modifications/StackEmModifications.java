@@ -16,6 +16,7 @@ import net.tracystacktrace.stackem.sagittarius.IconSwapReader;
 import net.tracystacktrace.stackem.sagittarius.ItemIconSwap;
 import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
 import net.tracystacktrace.stackem.tools.IOReadHelper;
+import net.tracystacktrace.stackem.tools.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
 
 import java.awt.image.BufferedImage;
@@ -127,7 +128,7 @@ public final class StackEmModifications {
             } catch (ZipFileHelper.ZipIOException e) {
                 StackEm.LOGGER.severe(String.format("Failed to read file: %s", file.getName() + "!/stackem.items.json"));
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
-            } catch (IconProcessorException e) {
+            } catch (IconProcessorException | JsonExtractionException e) {
                 StackEm.LOGGER.severe(String.format("Failed during compiling icon swapper of %s", file.getName() + "!/stackem.items.json"));
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
 

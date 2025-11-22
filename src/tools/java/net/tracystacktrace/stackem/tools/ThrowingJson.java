@@ -1,20 +1,39 @@
 package net.tracystacktrace.stackem.tools;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
+import com.google.gson.*;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 //yeah, they accidentally threw out or something, maybe better to not drink that much
 public final class ThrowingJson {
 
-    public static void assertElementAsArray(
+    public static @NotNull JsonObject stringToJsonObject(
+            @Nullable String data,
+            @NotNull String sourceName
+    ) throws JsonExtractionException {
+        if (data == null || data.isEmpty())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_INPUT_DATA, sourceName);
+
+        try {
+            return JsonParser.parseString(data).getAsJsonObject();
+        } catch (JsonParseException e) {
+            throw new JsonExtractionException(JsonExtractionException.INVALID_INPUT_DATA, sourceName, data);
+        }
+    }
+
+    public static @NotNull JsonArray cautiouslyGetArray(
             @NotNull JsonObject object,
             @NotNull String target,
             @NotNull String sourceName
     ) throws JsonExtractionException {
-        if(!object.has(target)) throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
-        if(!object.get(target).isJsonArray()) throw new JsonExtractionException(JsonExtractionException.NOT_A_JSON_ARRAY, sourceName, target);
+        if (!object.has(target))
+            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
+
+        final JsonElement element = object.get(target);
+        if (!element.isJsonArray())
+            throw new JsonExtractionException(JsonExtractionException.NOT_A_JSON_ARRAY, sourceName, target);
+
+        return element.getAsJsonArray();
     }
 
     public static int cautiouslyGetInt(
@@ -22,14 +41,17 @@ public final class ThrowingJson {
             @NotNull String target,
             @NotNull String sourceName
     ) throws JsonExtractionException {
-        if(!object.has(target)) throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
-        
+        if (!object.has(target))
+            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
+
         final JsonElement element = object.get(target);
-        if(!element.isJsonPrimitive()) throw new JsonExtractionException(JsonExtractionException.INVALID_INT, sourceName, element.toString());
-        
+        if (!element.isJsonPrimitive())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_INT, sourceName, element.toString());
+
         final JsonPrimitive primitive = element.getAsJsonPrimitive();
-        if(!primitive.isNumber()) throw new JsonExtractionException(JsonExtractionException.INVALID_INT, sourceName, element.toString());
-        
+        if (!primitive.isNumber())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_INT, sourceName, element.toString());
+
         try {
             return primitive.getAsInt();
         } catch (NumberFormatException e) {
@@ -42,13 +64,16 @@ public final class ThrowingJson {
             @NotNull String target,
             @NotNull String sourceName
     ) throws JsonExtractionException {
-        if(!object.has(target)) throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
+        if (!object.has(target))
+            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
 
         final JsonElement element = object.get(target);
-        if(!element.isJsonPrimitive()) throw new JsonExtractionException(JsonExtractionException.INVALID_STRING, sourceName, element.toString());
+        if (!element.isJsonPrimitive())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_STRING, sourceName, element.toString());
 
         final JsonPrimitive primitive = element.getAsJsonPrimitive();
-        if(!primitive.isString()) throw new JsonExtractionException(JsonExtractionException.INVALID_STRING, sourceName, element.toString());
+        if (!primitive.isString())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_STRING, sourceName, element.toString());
 
         return primitive.getAsString();
     }
@@ -58,13 +83,16 @@ public final class ThrowingJson {
             @NotNull String target,
             @NotNull String sourceName
     ) throws JsonExtractionException {
-        if(!object.has(target)) throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
+        if (!object.has(target))
+            throw new JsonExtractionException(JsonExtractionException.ELEMENT_DOESNT_EXIST, sourceName, target);
 
         final JsonElement element = object.get(target);
-        if(!element.isJsonPrimitive()) throw new JsonExtractionException(JsonExtractionException.INVALID_BOOLEAN, sourceName, element.toString());
+        if (!element.isJsonPrimitive())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_BOOLEAN, sourceName, element.toString());
 
         final JsonPrimitive primitive = element.getAsJsonPrimitive();
-        if(!primitive.isBoolean()) throw new JsonExtractionException(JsonExtractionException.INVALID_BOOLEAN, sourceName, element.toString());
+        if (!primitive.isBoolean())
+            throw new JsonExtractionException(JsonExtractionException.INVALID_BOOLEAN, sourceName, element.toString());
 
         return primitive.getAsBoolean();
     }
