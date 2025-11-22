@@ -1,4 +1,10 @@
 
+## [0.3.9] - 2025-11-21
+
+**[View changes between 0.3.7 with 0.3.8](https://github.com/tracystacktrace/StackEm/compare/0.3.8...0.3.9)**
+
+- Category list of a texturepack is now rendered as a hovered tooltip.
+
 ## [0.3.8] - 2025-07-14
 
 **[View changes between 0.3.7 with 0.3.8](https://github.com/tracystacktrace/StackEm/compare/0.3.7...0.3.8)**
