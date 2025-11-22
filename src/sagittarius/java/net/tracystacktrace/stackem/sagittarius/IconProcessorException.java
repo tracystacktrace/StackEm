@@ -9,7 +9,6 @@ public class IconProcessorException extends Exception {
     public static final byte INVALID_COMPARABLE_CODE = 4;
     public static final byte ON_NAME_PROCESS_FAILED = 5;
     public static final byte ON_META_PROCESS_FAILED = 6;
-    public static final byte INVALID_DATA_ELEMENT = 10;
 
     public static @NotNull String getErrorCode(byte code, @Nullable String optional) {
         return switch (code) {
@@ -19,7 +18,6 @@ public class IconProcessorException extends Exception {
                     optional != null ? String.format("Invalid comparable code: %s", optional) : "Invalid comparable code!";
             case ON_NAME_PROCESS_FAILED -> String.format("Failed to process \"onName\" array: %s", optional);
             case ON_META_PROCESS_FAILED -> String.format("Failed to process \"onMeta\" array: %s", optional);
-            case INVALID_DATA_ELEMENT -> String.format("Invalid \"data\" element: %s", optional);
 
             default -> "Unknown error!";
         };

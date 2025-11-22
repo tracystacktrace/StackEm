@@ -134,7 +134,7 @@ public final class ThrowingJson {
 
         try {
             return primitive.getAsFloat();
-        }catch (NumberFormatException e) {
+        } catch (NumberFormatException e) {
             throw new JsonExtractionException(JsonExtractionException.INVALID_FLOAT, sourceName, element.toString());
         }
     }
@@ -194,5 +194,4 @@ public final class ThrowingJson {
 
         return processedArray;
     }
-
 }

@@ -4,6 +4,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
+import net.tracystacktrace.stackem.tools.JsonMapper;
 import net.tracystacktrace.stackem.tools.JsonReadHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -31,7 +32,7 @@ public final class StackemJsonReader {
                     final JsonElement elementId = category.get("id");
                     if (elementId.isJsonArray()) {
                         final JsonArray idArray = elementId.getAsJsonArray();
-                        final EnumCategory[] collected = JsonReadHelper.transformArraySafe(
+                        final EnumCategory[] collected = JsonMapper.mapJsonArraySafe(
                                 idArray, element -> EnumCategory.define(JsonReadHelper.readString(element)),
                                 EnumCategory[]::new
                         );
@@ -47,7 +48,7 @@ public final class StackemJsonReader {
 
                     if (elementCustom.isJsonArray()) {
                         final JsonArray arrayCustom = elementCustom.getAsJsonArray();
-                        final String[] collected = JsonReadHelper.transformArraySafe(
+                        final String[] collected = JsonMapper.mapJsonArraySafe(
                                 arrayCustom, element -> {
                                     final String collected1 = JsonReadHelper.readString(element);
                                     return (collected1 != null && collected1.isEmpty()) ? null : collected1;
