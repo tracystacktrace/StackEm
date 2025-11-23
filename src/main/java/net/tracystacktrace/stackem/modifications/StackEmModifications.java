@@ -16,12 +16,12 @@ import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
 import net.tracystacktrace.stackem.sagittarius.IconSwapReader;
 import net.tracystacktrace.stackem.sagittarius.ItemIconSwap;
 import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
-import net.tracystacktrace.stackem.tools.IOReadHelper;
-import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
+import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.json.ThrowingJson;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
@@ -77,11 +77,11 @@ public final class StackEmModifications {
         //moon and sun
         if (stacked.checkIfFileExists("/stackem.moon.json")) {
             try {
-                final String content = IOReadHelper.readTextFile("/stackem.moon.json", stacked::getResourceAsStream);
+                final String content = stacked.readTextFile("/stackem.moon.json");
                 final JsonObject object = ThrowingJson.stringToJsonObject(content, content); //TODO: replace 2nd content with name
                 final CelestialMeta compiled = MoonReader.fromJson(object, content);
                 stacked.getDeepMeta().setMoonData(compiled);
-            } catch (IOReadHelper.CustomIOException | JsonExtractionException e) {
+            } catch (IOException | JsonExtractionException e) {
                 StackEm.LOGGER.severe("Failed fetching and compiling contents of stackem.moon.json");
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
                 e.printStackTrace();
@@ -90,11 +90,11 @@ public final class StackEmModifications {
 
         if (stacked.checkIfFileExists("/stackem.sun.json")) {
             try {
-                final String content = IOReadHelper.readTextFile("/stackem.sun.json", stacked::getResourceAsStream);
+                final String content = stacked.readTextFile("/stackem.sun.json");
                 final JsonObject object = ThrowingJson.stringToJsonObject(content, content); //TODO: replace 2nd content with name
                 final CelestialMeta compiled = MoonReader.fromJson(object, content);
                 stacked.getDeepMeta().setSunData(compiled);
-            } catch (IOReadHelper.CustomIOException | JsonExtractionException e) {
+            } catch (IOException | JsonExtractionException e) {
                 StackEm.LOGGER.severe("Failed fetching and compiling contents of stackem.sun.json");
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchTextureModifications", e);
                 e.printStackTrace();

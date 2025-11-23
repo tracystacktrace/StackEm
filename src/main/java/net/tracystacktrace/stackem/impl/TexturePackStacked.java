@@ -5,15 +5,14 @@ import net.minecraft.client.renderer.block.TexturePackBase;
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -198,5 +197,29 @@ public class TexturePackStacked extends TexturePackBase {
 
     public boolean hasCustomSun() {
         return this.deepMeta.sunData != null;
+    }
+
+    public @NotNull String readTextFile(@NotNull String path) throws IOException {
+        final InputStream inputStream;
+
+        try {
+            inputStream = this.getResourceAsStream(path);
+        } catch (IOException e) {
+            throw new IOException(String.format("Error during accessing an InputStream instance of %s", path), e);
+        }
+
+        String collected;
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
+            collected = reader.lines().collect(Collectors.joining());
+        } catch (IOException e) {
+            throw new IOException(String.format("Error during reading the file of %s", path), e);
+        }
+
+        try {
+            inputStream.close();
+        } catch (IOException ignored) {
+        }
+
+        return collected;
     }
 }

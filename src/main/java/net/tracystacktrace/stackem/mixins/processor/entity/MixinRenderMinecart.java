@@ -19,6 +19,6 @@ public abstract class MixinRenderMinecart extends EntityRenderer<EntityMinecart>
             ordinal = 1
     ))
     private void stackem$entityVariation(EntityMinecart entity, double x, double y, double z, float yaw, float deltaTicks, CallbackInfo ci) {
-        this.loadTexture(((ITextureHolder)entity).stackem$getCachedTexture());
+        this.loadTexture(((ITextureHolder) entity).stackem$getCachedTexture());
     }
 }
