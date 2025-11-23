@@ -114,7 +114,7 @@ public final class GlueImages {
         for (int i = zipFiles.size() - 1; i >= 0; i--) {
             final ZipFile zipFile = zipFiles.get(i);
             final BufferedImage image = ImageHelper.readImage(zipFile, name.texture());
-            if (ImageHelper.isValidTexture(image)) {
+            if (ImageHelper.isValidSquareTexture(image)) {
                 images.add(image);
             } else {
                 if (image != null) {

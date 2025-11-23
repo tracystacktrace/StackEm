@@ -4,7 +4,6 @@ import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.RenderMinecart;
 import net.minecraft.common.entity.other.EntityMinecart;
 import net.tracystacktrace.stackem.hacks.ITextureHolder;
-import net.tracystacktrace.stackem.modifications.entityvariation.EntityVariation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;

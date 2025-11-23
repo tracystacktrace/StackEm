@@ -11,8 +11,11 @@ import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.modifications.category.StackemJsonReader;
-import net.tracystacktrace.stackem.tools.IOReadHelper;
 import net.tracystacktrace.stackem.tools.ZipFileHelper;
+import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
+import net.tracystacktrace.stackem.tools.json.ThrowingJson;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
 
 import java.awt.image.BufferedImage;
@@ -97,7 +100,7 @@ public class StackEm extends Mod {
         return collector;
     }
 
-    private static TagTexturePack fetchTexturepackFromZip(File file) {
+    private static @Nullable TagTexturePack fetchTexturepackFromZip(@NotNull File file) {
         //first line, second line, thumbnail image
         try (final ZipFile zipFile = new ZipFile(file)) {
             //pack.txt of two strings
@@ -133,9 +136,9 @@ public class StackEm extends Mod {
             final String stackemJsonContent = ZipFileHelper.readTextFile(zipFile, "stackem.json");
             if (stackemJsonContent != null) {
                 try {
-                    final JsonObject object_1 = IOReadHelper.processJson(stackemJsonContent);
+                    final JsonObject object_1 = ThrowingJson.stringToJsonObject(stackemJsonContent, tagTexturePack.name);
                     StackemJsonReader.pushJson(object_1, tagTexturePack);
-                } catch (IOReadHelper.CustomIOException e) {
+                } catch (JsonExtractionException e) {
                     StackEm.LOGGER.severe("Failed to process texturepack descriptor file (stackem.json)!");
                     StackEm.LOGGER.throwing("StackEm", "fetchTexturepackFromZip", e);
                     e.printStackTrace();
