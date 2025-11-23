@@ -59,7 +59,7 @@ public class SwapDescriptor {
             swapper.setArmorTexture(content);
         }
         if (object.has("armorEnableColor")) {
-            final Boolean content = ThrowingJson.cautiouslyGetBoolean(object, "armorEnableColor", sourceName);
+            final boolean content = ThrowingJson.cautiouslyGetBoolean(object, "armorEnableColor", sourceName);
             swapper.setArmorColor(content);
         }
     }

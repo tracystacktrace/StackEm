@@ -11,7 +11,7 @@ public class TextureByName extends SwapDescriptor {
     public static final byte EQUALS = 0;
     public static final byte EQUALS_IGNORE_CASE = 1;
     public static final byte CONTAINS = 2;
-    public static final byte REGEX = 3; //todo: add regex support
+    public static final byte REGEX = 3; //TODO: add regex support
     public static final byte STARTS_WITH = 4;
     public static final byte ENDS_WITH = 5;
 
@@ -30,9 +30,7 @@ public class TextureByName extends SwapDescriptor {
     }
 
     public boolean compareString(@Nullable String itemName) {
-        if (itemName == null || itemName.isEmpty()) {
-            return false;
-        }
+        if (itemName == null || itemName.isEmpty()) return false;
 
         switch (this.compareCode) {
             case EQUALS -> {

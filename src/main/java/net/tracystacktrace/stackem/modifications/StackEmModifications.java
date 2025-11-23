@@ -149,7 +149,7 @@ public final class StackEmModifications {
             if (entry == null) continue;
 
             try {
-                final ItemIconSwap[] possible = IconSwapReader.fromJson(
+                final ItemIconSwap[] possible = IconSwapReader.fromJsonFile(
                         file.getName() + "!/stackem.items.json",
                         ZipFileHelper.readTextFile(file, entry)
                 );
