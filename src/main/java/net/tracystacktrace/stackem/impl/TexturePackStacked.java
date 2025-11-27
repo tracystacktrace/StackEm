@@ -39,8 +39,8 @@ public class TexturePackStacked extends TexturePackBase {
 
     @Override
     protected void loadDescription() {
-        this.firstDescriptionLine = "Stack 'Em Internal";
-        this.secondDescriptionLine = "Do not use.";
+        this.firstDescriptionLine = "Stack 'Em Internal Object";
+        this.secondDescriptionLine = "Do not touch, use or look.";
     }
 
     public List<ZipFile> getZipFiles() {

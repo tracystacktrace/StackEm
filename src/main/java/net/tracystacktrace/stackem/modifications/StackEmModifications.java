@@ -4,12 +4,9 @@ import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.hacks.SmartHacks;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
 import net.tracystacktrace.stackem.modifications.entityvariation.EntityVariation;
-import net.tracystacktrace.stackem.modifications.imageglue.GlueImages;
-import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentedTexture;
-import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentsProvider;
+import net.tracystacktrace.stackem.modifications.imageglue.ImageGlueBridge;
 import net.tracystacktrace.stackem.modifications.moon.CelestialMeta;
 import net.tracystacktrace.stackem.modifications.moon.MoonReader;
 import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
@@ -20,7 +17,6 @@ import net.tracystacktrace.stackem.tools.ZipFileHelper;
 import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.json.ThrowingJson;
 
-import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.util.List;
 import java.util.zip.ZipEntry;
@@ -58,21 +54,7 @@ public final class StackEmModifications {
             return;
         }
 
-        //first step - segmented textures
-        for (SegmentedTexture value : SegmentsProvider.TEXTURES) {
-            //process texture layering, get a layered texture
-            BufferedImage image = GlueImages.processLayering(value);
-
-            if (SmartHacks.getTextureMap(renderEngine).containsKey(value.texture())) {
-                //hack solution - simply overwrite the texture with the in-built code
-                final int id = SmartHacks.getTextureMap(renderEngine).getInt(value.texture());
-                renderEngine.setupTexture(image, id);
-            } else {
-                //no id present - we will add it then
-                final int loc = renderEngine.allocateAndSetupTexture(image);
-                SmartHacks.getTextureMap(renderEngine).put(value.texture(), loc);
-            }
-        }
+        ImageGlueBridge.processTexturesSegments(renderEngine);
 
         //moon and sun
         if (stacked.checkIfFileExists("/stackem.moon.json")) {

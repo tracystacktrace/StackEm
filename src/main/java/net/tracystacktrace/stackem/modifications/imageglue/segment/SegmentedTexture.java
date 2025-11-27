@@ -6,7 +6,7 @@ public record SegmentedTexture(@NotNull String texture, int @NotNull [] @NotNull
     /**
      * Provides an empty array with the length equivalent to number of segments
      */
-    public boolean[] generateOverwrite() {
+    public boolean @NotNull [] genEmptyArray() {
         return new boolean[this.segments.length];
     }
 
@@ -18,7 +18,7 @@ public record SegmentedTexture(@NotNull String texture, int @NotNull [] @NotNull
      * @param scale  scale of the reference image, usually (1) for x1 scale
      * @return id of the segment, otherwise (-1) if not found
      */
-    public int isInWhatSegment(int pixelX, int pixelY, int scale) {
+    public int getSegmentIndex(int pixelX, int pixelY, int scale) {
         for (int i = 0; i < this.segments.length; i++) {
             final int[] segment = this.segments[i];
             if (pixelX > (segment[0] * scale) && pixelX < ((segment[0] + segment[2]) * scale) &&
