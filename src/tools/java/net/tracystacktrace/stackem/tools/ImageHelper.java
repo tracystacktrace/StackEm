@@ -1,6 +1,5 @@
 package net.tracystacktrace.stackem.tools;
 
-import net.minecraft.client.renderer.block.ITexturePack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -54,11 +53,11 @@ public final class ImageHelper {
     }
 
     public static @NotNull BufferedImage readImage(
-            @NotNull ITexturePack texturePack,
+            @NotNull FunctionWithException<String, InputStream, IOException> getResourceAsStream,
             @NotNull String name
     ) {
         try {
-            final InputStream inputStream = texturePack.getResourceAsStream(name);
+            final InputStream inputStream = getResourceAsStream.apply(name);
             final BufferedImage image = ImageIO.read(inputStream);
             inputStream.close();
             return image;

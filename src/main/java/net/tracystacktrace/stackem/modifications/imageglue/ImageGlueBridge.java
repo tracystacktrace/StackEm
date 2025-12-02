@@ -38,7 +38,7 @@ public final class ImageGlueBridge {
         final TexturePackDefault defaultPack = (TexturePackDefault) SmartHacks.getDefaultTexturePack();
         final TexturePackStacked stacked = StackEm.getContainerInstance();
 
-        final ImageGlueContainer original = new ImageGlueContainer(ImageHelper.readImage(defaultPack, name.texture()));
+        final ImageGlueContainer original = new ImageGlueContainer(ImageHelper.readImage(defaultPack::getResourceAsStream, name.texture()));
         final List<BufferedImage> images = new ArrayList<>();
 
         //fetching texturepacks that can into gluing
