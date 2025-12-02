@@ -11,20 +11,51 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class FetchMaster {
-    public static @Nullable PreviewTexturePack buildPreview(@NotNull File texturepackFile) {
-        // Check for basic existence of the file
-        if (!texturepackFile.exists() || !texturepackFile.isFile()) {
+    public static @Nullable List<@NotNull PreviewTexturePack> collectPreviews(@NotNull File texturepackFolder) {
+        if (!texturepackFolder.exists() || !texturepackFolder.isDirectory()) {
             return null;
         }
 
-        // Check for file being locked
-        if (SafetyTools.isFileLocked(texturepackFile)) {
+        final File[] candidatesArray = texturepackFolder.listFiles();
+
+        if (candidatesArray == null || candidatesArray.length == 0) {
             return null;
         }
+
+        final List<PreviewTexturePack> collector = new ArrayList<>();
+
+        for (File candidate : candidatesArray) {
+            if (candidate.isDirectory() || !candidate.getName().toLowerCase().endsWith(".zip")) {
+                continue;
+            }
+
+            final PreviewTexturePack pack = buildPreview(candidate);
+            if (pack != null) {
+                collector.add(pack);
+            }
+        }
+
+        return collector;
+    }
+
+    public static @Nullable PreviewTexturePack buildPreview(@NotNull File texturepackFile) {
+        // Check for basic existence of the file
+        if (!texturepackFile.exists() || !texturepackFile.isFile()) {
+            System.out.printf("[Stack 'Em] Not a file (ignoring): %s\n", texturepackFile.getName());
+            return null;
+        }
+
+//        // Check for file being locked
+//        if (SafetyTools.isFileLocked(texturepackFile)) {
+//            System.out.printf("[Stack 'Em] File is locked (ignoring): %s\n", texturepackFile.getName());
+//            return null;
+//        }
 
         // Calculate the SHA-256 of texturepack
         String sha256;
@@ -45,6 +76,7 @@ public class FetchMaster {
 
             // If pack.txt is empty - ignore
             if (packTxtContent == null) {
+                System.out.printf("[Stack 'Em] File does not contain pack.txt: %s\n", texturepackFile.getName());
                 return null;
             }
 
@@ -93,8 +125,11 @@ public class FetchMaster {
                 final String target_game = properties.getString("target_game");
                 final String website = properties.getString("website");
                 final String[] authors = properties.getStringArray("authors");
-                final String[] category = properties.getStringArray("category");
                 final String[] custom_category = properties.getStringArray("custom_category");
+                final String[] category = properties.getStringArray("category");
+
+                //put them here
+                pack.setStackemData(target_game, website, authors, custom_category, category);
 
             } catch (IOException e) {
                 System.out.printf("Failed to process [stackem.properties] of %s, reason: %s\n", pack.getName(), e.getMessage());

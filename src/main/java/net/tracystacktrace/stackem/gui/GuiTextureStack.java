@@ -8,8 +8,9 @@ import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hacks.SmartHacks;
 import net.tracystacktrace.stackem.hacks.SoundCleanupHelper;
-import net.tracystacktrace.stackem.impl.TagTexturePack;
 import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.neptune.container.PreviewTexturePack;
+import net.tracystacktrace.stackem.neptune.fetch.FetchMaster;
 import net.tracystacktrace.stackem.tools.QuickRNG;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
@@ -24,7 +25,7 @@ import java.util.List;
 
 public class GuiTextureStack extends GuiScreen {
 
-    public List<TagTexturePack> sequoiaCache;
+    public List<PreviewTexturePack> sequoiaCache;
 
     private final String hint1;
     private final String hint2;
@@ -164,7 +165,7 @@ public class GuiTextureStack extends GuiScreen {
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
-        this.sequoiaCache.forEach(p -> p.removeThumbnail(mc.renderEngine));
+        this.sequoiaCache.forEach(p -> p.removeTexture(mc.renderEngine::deleteTexture));
     }
 
     @Override
@@ -208,13 +209,13 @@ public class GuiTextureStack extends GuiScreen {
         }
 
         //info button process
-        final TagTexturePack pack = sequoiaCache.get(index);
+        final PreviewTexturePack pack = sequoiaCache.get(index);
         this.buttonWebsite.enabled = StackEm.isValidWebsite(pack.getWebsite());
 
-        if (pack.hasAuthor() && pack.hasWebsite()) {
-            this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.2", pack.getAuthor());
-        } else if (pack.hasAuthor()) {
-            this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.1", pack.getAuthor());
+        if (pack.hasAuthors() && pack.hasWebsite()) {
+            this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.2", String.join(",", pack.getAuthors()));
+        } else if (pack.hasAuthors()) {
+            this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKeyFormat("stackem.button.website.1", String.join(",", pack.getAuthors()));
         } else {
             this.buttonWebsite.displayInfo = StringTranslate.getInstance().translateKey("stackem.button.website.0");
         }
@@ -223,7 +224,9 @@ public class GuiTextureStack extends GuiScreen {
     /* code to obtain info from outside */
 
     private void fetchCacheFromOuterworld(String[] previousCached) {
-        List<TagTexturePack> candidates = StackEm.fetchTexturepackList();
+        final File texturepacksFolder = new File(Minecraft.getInstance().getMinecraftDir(), "texturepacks");
+        final List<PreviewTexturePack> candidates = FetchMaster.collectPreviews(texturepacksFolder);
+
         if (candidates == null) {
             this.sequoiaCache = new ArrayList<>();
             return;
@@ -231,15 +234,15 @@ public class GuiTextureStack extends GuiScreen {
 
         for (int i = 0; i < previousCached.length; i++) {
             String s = previousCached[i];
-            for (TagTexturePack q : candidates) {
-                if (q.name.equals(s)) {
+            for (PreviewTexturePack q : candidates) {
+                if (q.getName().equals(s)) {
                     q.order = i;
                 }
             }
         }
 
         this.sequoiaCache = candidates;
-        this.sequoiaCache.forEach(TagTexturePack::buildCategory);
+        this.sequoiaCache.forEach(PreviewTexturePack::bakeCategoryList);
         this.pushSequoiaCacheSort();
     }
 
@@ -254,7 +257,7 @@ public class GuiTextureStack extends GuiScreen {
             if (o1.isInStack() && o2.isInStack()) return Integer.compare(o1.order, o2.order);
             if (o1.isInStack()) return -1;
             if (o2.isInStack()) return 1;
-            return o1.name.compareTo(o2.name);
+            return o1.getName().compareTo(o2.getName());
         });
     }
 
@@ -270,7 +273,7 @@ public class GuiTextureStack extends GuiScreen {
         }
     }
 
-    public TagTexturePack getSequoiaCacheElement(int index) {
+    public PreviewTexturePack getSequoiaCacheElement(int index) {
         return sequoiaCache.get(index);
     }
 
@@ -279,7 +282,7 @@ public class GuiTextureStack extends GuiScreen {
     }
 
     public int countInStackElements() {
-        return (int) sequoiaCache.stream().filter(TagTexturePack::isInStack).count();
+        return (int) sequoiaCache.stream().filter(PreviewTexturePack::isInStack).count();
     }
 
     public void addElementToStack(int index) {
@@ -299,8 +302,8 @@ public class GuiTextureStack extends GuiScreen {
         List<String> stackemList = new ArrayList<>();
 
         for (int i = 0; i < this.countInStackElements(); i++) {
-            files.add(this.sequoiaCache.get(i).file);
-            stackemList.add(this.sequoiaCache.get(i).name);
+            files.add(this.sequoiaCache.get(i).getFile());
+            stackemList.add(this.sequoiaCache.get(i).getName());
         }
 
         StackEm.DEBUG_FORCE_FALLBACK = false;
@@ -337,11 +340,11 @@ public class GuiTextureStack extends GuiScreen {
         slotManager.elementClicked(index + 1, false);
     }
 
-    protected void renderCategoriesTooltip(float x, float y, TagTexturePack tag) {
+    protected void renderCategoriesTooltip(float x, float y, PreviewTexturePack tag) {
         GL11.glPushMatrix();
         GL11.glTranslated(0.0, 0.0, 90.0);
 
-        final String[] data = tag.getBakedCSS();
+        final String[] data = tag.getBakedCategories();
         final int sizeY = 12 * data.length;
         int sizeX = 0;
 

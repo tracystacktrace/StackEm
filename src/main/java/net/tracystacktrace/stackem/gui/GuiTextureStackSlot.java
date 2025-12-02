@@ -4,7 +4,7 @@ import com.indigo3d.util.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.world.Tessellator;
-import net.tracystacktrace.stackem.impl.TagTexturePack;
+import net.tracystacktrace.stackem.neptune.container.PreviewTexturePack;
 import net.tracystacktrace.stackem.tools.StringFeatures;
 
 public class GuiTextureStackSlot extends GuiSlot {
@@ -32,11 +32,11 @@ public class GuiTextureStackSlot extends GuiSlot {
 
     @Override
     protected void drawSlot(Minecraft minecraft, int index, float x, float y, int iconHeight, Tessellator tessellator) {
-        final TagTexturePack tag = parentScreen.getSequoiaCacheElement(index);
+        final PreviewTexturePack tag = parentScreen.getSequoiaCacheElement(index);
         final boolean isSelectedOne = this.selectedIndex == index;
 
-        if (tag.hasThumbnail()) {
-            tag.bindThumbnail(minecraft.renderEngine);
+        if (tag.hasIcon()) {
+            RenderSystem.bindTexture2D(tag.bindTexture(minecraft.renderEngine::allocateAndSetupTexture));
         } else {
             minecraft.renderEngine.bindTexture(minecraft.renderEngine.getTexture("/textures/gui/unknown_pack.png"));
         }
@@ -53,7 +53,7 @@ public class GuiTextureStackSlot extends GuiSlot {
         tessellator.addVertexWithUV((x + iconHeight), y, 0.0D, 1.0D, 0.0D);
         tessellator.addVertexWithUV(x, y, 0.0D, 0.0D, 0.0D);
         tessellator.draw();
-        String showName = tag.name;
+        String showName = tag.getName();
         if (tag.isInStack()) {
             showName = "[§e" + (tag.order + 1) + "§r] " + showName;
         }
@@ -64,8 +64,8 @@ public class GuiTextureStackSlot extends GuiSlot {
 
         parentScreen.drawString(minecraft.fontRenderer, showName, x + iconHeight + 2.0F, y + 1.0F, 16777215);
 
-        parentScreen.drawString(minecraft.fontRenderer, tag.firstLine, x + iconHeight + 2.0F, y + 12.0F, 8421504);
-        parentScreen.drawString(minecraft.fontRenderer, tag.secondLine, x + iconHeight + 2.0F, y + 12.0F + 11.0F, 8421504);
+        parentScreen.drawString(minecraft.fontRenderer, tag.getFirstLine(), x + iconHeight + 2.0F, y + 12.0F, 8421504);
+        parentScreen.drawString(minecraft.fontRenderer, tag.getSecondLine(), x + iconHeight + 2.0F, y + 12.0F + 11.0F, 8421504);
     }
 
     @Override
@@ -74,9 +74,9 @@ public class GuiTextureStackSlot extends GuiSlot {
         final float initialY = this.top + 4 - (int) this.amountScrolled + this.headerPadding;
 
         for (int i = 0; i < this.getSize(); i++) {
-            final TagTexturePack tag = parentScreen.getSequoiaCacheElement(i);
+            final PreviewTexturePack tag = parentScreen.getSequoiaCacheElement(i);
 
-            if (!tag.hasCategories()) continue;
+            if (!tag.hasBakedCategoriesList()) continue;
 
             if (this.isSlotHovered(mouseX, mouseY, startX, initialY + this.slotHeight * i)) {
                 parentScreen.renderCategoriesTooltip(mouseX, mouseY, tag);
