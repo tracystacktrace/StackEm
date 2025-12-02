@@ -14,21 +14,30 @@ group = 'net.tracystacktrace'
 version = '0.3.8'
 
 sourceSets {
-    tools {
+    main {
         java {
-            srcDirs = ['src/tools/java']
+            srcDirs = ['stackem-main/src']
         }
         resources {
-            srcDirs = ['src/tools/resources']
+            srcDirs = ['stackem-main/resources']
+        }
+    }
+
+    tools {
+        java {
+            srcDirs = ['stackem-main/src-tools']
+        }
+        resources {
+            srcDirs = ['stackem-main/resources-tools']
         }
     }
 
     neptune {
         java {
-            srcDirs = ['neptune/src']
+            srcDirs = ['stackem-neptune/src']
         }
         resources {
-            srcDirs = ['neptune/resources']
+            srcDirs = ['stackem-neptune/resources']
         }
         compileClasspath += sourceSets.tools.output
         runtimeClasspath += sourceSets.tools.output
@@ -36,10 +45,10 @@ sourceSets {
 
     sagittarius {
         java {
-            srcDirs = ['sagittarius/src']
+            srcDirs = ['stackem-sagittarius/src']
         }
         resources {
-            srcDirs = ['sagittarius/resources']
+            srcDirs = ['stackem-sagittarius/resources']
         }
         compileClasspath += sourceSets.tools.output
         runtimeClasspath += sourceSets.tools.output
