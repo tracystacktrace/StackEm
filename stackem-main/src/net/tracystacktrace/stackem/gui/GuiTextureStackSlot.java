@@ -3,6 +3,7 @@ package net.tracystacktrace.stackem.gui;
 import com.indigo3d.util.RenderSystem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
+import net.minecraft.client.renderer.world.RenderEngine;
 import net.minecraft.client.renderer.world.Tessellator;
 import net.tracystacktrace.stackem.neptune.container.PreviewTexturePack;
 import org.jetbrains.annotations.Nullable;
@@ -30,13 +31,20 @@ public class GuiTextureStackSlot extends GuiSlot {
         parentScreen.updateMoveButtonsState(index);
     }
 
+    private void bindTexturePackIcon(RenderEngine renderEngine, PreviewTexturePack pack) {
+        if(!pack.hasTextureIndex()) {
+            pack.setTextureIndex(renderEngine.allocateAndSetupTexture(pack.getIcon()));
+        }
+        RenderSystem.bindTexture2D(pack.getTextureIndex());
+    }
+
     @Override
     protected void drawSlot(Minecraft minecraft, int index, float x, float y, int iconHeight, Tessellator tessellator) {
         final PreviewTexturePack tag = parentScreen.getSequoiaCacheElement(index);
         final boolean isSelectedOne = this.selectedIndex == index;
 
         if (tag.hasIcon()) {
-            RenderSystem.bindTexture2D(tag.bindTexture(minecraft.renderEngine::allocateAndSetupTexture));
+            bindTexturePackIcon(minecraft.renderEngine, tag);
         } else {
             minecraft.renderEngine.bindTexture(minecraft.renderEngine.getTexture("/textures/gui/unknown_pack.png"));
         }
@@ -64,8 +72,8 @@ public class GuiTextureStackSlot extends GuiSlot {
 
         parentScreen.drawString(minecraft.fontRenderer, showName, x + iconHeight + 2.0F, y + 1.0F, 16777215);
 
-        parentScreen.drawString(minecraft.fontRenderer, tag.getFirstLine(), x + iconHeight + 2.0F, y + 12.0F, 8421504);
-        parentScreen.drawString(minecraft.fontRenderer, tag.getSecondLine(), x + iconHeight + 2.0F, y + 12.0F + 11.0F, 8421504);
+        parentScreen.drawString(minecraft.fontRenderer, tag.firstLine, x + iconHeight + 2.0F, y + 12.0F, 8421504);
+        parentScreen.drawString(minecraft.fontRenderer, tag.secondLine, x + iconHeight + 2.0F, y + 12.0F + 11.0F, 8421504);
     }
 
     @Override

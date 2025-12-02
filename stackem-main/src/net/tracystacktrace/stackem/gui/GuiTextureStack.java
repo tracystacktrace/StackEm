@@ -165,7 +165,7 @@ public class GuiTextureStack extends GuiScreen {
     @Override
     public void onGuiClosed() {
         super.onGuiClosed();
-        this.sequoiaCache.forEach(p -> p.removeTexture(mc.renderEngine::deleteTexture));
+        this.sequoiaCache.forEach(pack -> mc.renderEngine.deleteTexture(pack.popTextureIndex()));
     }
 
     @Override

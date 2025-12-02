@@ -9,12 +9,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
-import java.util.function.IntConsumer;
 
 public class PreviewTexturePack extends ContainerTexturePack {
-    protected final @NotNull String firstLine;
-    protected final @NotNull String secondLine;
-    protected final @NotNull String sha256;
+    public final @NotNull String firstLine;
+    public final @NotNull String secondLine;
+    public final @NotNull String sha256;
 
     protected @Nullable BufferedImage icon; //icon image
     protected int iconBindIdentifier = -1; //for OpenGL
@@ -66,14 +65,6 @@ public class PreviewTexturePack extends ContainerTexturePack {
         }
     }
 
-    public @NotNull String getFirstLine() {
-        return this.firstLine;
-    }
-
-    public @NotNull String getSecondLine() {
-        return this.secondLine;
-    }
-
     /* Category Building Tools */
 
     public boolean hasWebsite() {
@@ -116,18 +107,29 @@ public class PreviewTexturePack extends ContainerTexturePack {
         return this.icon != null;
     }
 
-    public int bindTexture(@NotNull Function<BufferedImage, Integer> bindProvider) {
-        if (this.icon != null && this.iconBindIdentifier == -1) {
-            this.iconBindIdentifier = bindProvider.apply(this.icon);
-        }
+    public @Nullable BufferedImage getIcon() {
+        return this.icon;
+    }
+
+    public boolean hasTextureIndex() {
+        return this.iconBindIdentifier != -1;
+    }
+
+    public int getTextureIndex() {
         return this.iconBindIdentifier;
     }
 
-    public void removeTexture(@NotNull IntConsumer bindRemover) {
+    public void setTextureIndex(int i) {
+        this.iconBindIdentifier = i;
+    }
+
+    public int popTextureIndex() {
         if (this.iconBindIdentifier != -1) {
-            bindRemover.accept(this.iconBindIdentifier);
+            int temp = this.iconBindIdentifier;
             this.iconBindIdentifier = -1;
             this.icon = null;
+            return temp;
         }
+        return this.iconBindIdentifier;
     }
 }
