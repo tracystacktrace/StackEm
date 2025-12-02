@@ -14,37 +14,61 @@ group = 'net.tracystacktrace'
 version = '0.3.8'
 
 sourceSets {
-    tools {
+    main {
         java {
-            srcDirs = ['src/tools/java']
+            srcDirs = ['stackem-main/src']
         }
         resources {
-            srcDirs = ['src/tools/resources']
+            srcDirs = ['stackem-main/resources']
         }
+    }
+
+    toolsJson {
+        java {
+            srcDirs = ['tools-jsonparser/src']
+        }
+        resources {
+            srcDirs = ['tools-jsonparser/resources']
+        }
+    }
+
+    neptune {
+        java {
+            srcDirs = ['stackem-neptune/src']
+        }
+        resources {
+            srcDirs = ['stackem-neptune/resources']
+        }
+        compileClasspath += sourceSets.toolsJson.output
+        runtimeClasspath += sourceSets.toolsJson.output
     }
 
     sagittarius {
         java {
-            srcDirs = ['src/sagittarius/java']
+            srcDirs = ['stackem-sagittarius/src']
         }
         resources {
-            srcDirs = ['src/sagittarius/resources']
+            srcDirs = ['stackem-sagittarius/resources']
         }
-        compileClasspath += sourceSets.tools.output
-        runtimeClasspath += sourceSets.tools.output
+        compileClasspath += sourceSets.toolsJson.output
+        runtimeClasspath += sourceSets.toolsJson.output
     }
 
     main {
-        compileClasspath += sourceSets.tools.output
-        runtimeClasspath += sourceSets.tools.output
+        compileClasspath += sourceSets.toolsJson.output
+        runtimeClasspath += sourceSets.toolsJson.output
+        compileClasspath += sourceSets.neptune.output
+        runtimeClasspath += sourceSets.neptune.output
         compileClasspath += sourceSets.sagittarius.output
         runtimeClasspath += sourceSets.sagittarius.output
     }
 }
 
 configurations {
-    toolsImplementation.extendsFrom implementation
-    toolsRuntimeOnly.extendsFrom runtimeOnly
+    toolsJsonImplementation.extendsFrom implementation
+    toolsJsonRuntimeOnly.extendsFrom runtimeOnly
+    neptuneImplementation.extendsFrom implementation
+    neptuneRuntimeOnly.extendsFrom runtimeOnly
     sagittariusImplementation.extendsFrom implementation
     sagittariusRuntimeOnly.extendsFrom runtimeOnly
 }
@@ -60,9 +84,12 @@ test {
 }
 
 jar {
-    from sourceSets.tools.output
+    from sourceSets.toolsJson.output
+    from sourceSets.neptune.output
     from sourceSets.sagittarius.output
-    from sourceSets.tools.resources
+
+    from sourceSets.toolsJson.resources
+    from sourceSets.neptune.resources
     from sourceSets.sagittarius.resources
 
     from "LICENSE"
@@ -82,9 +109,13 @@ foxloader {
     modDesc("\u00A76Sources: \u00A79https://github.com/tracystacktrace/StackEm")
 }
 
-tasks.withType(Javadoc) {
-    source += sourceSets.tools.allJava
-    classpath += sourceSets.tools.output + sourceSets.tools.compileClasspath
+tasks.withType(Javadoc).configureEach {
+    source += sourceSets.toolsJson.allJava
+    classpath += sourceSets.toolsJson.output + sourceSets.toolsJson.compileClasspath
+
+    source += sourceSets.neptune.allJava
+    classpath += sourceSets.neptune.output + sourceSets.neptune.compileClasspath
+
     source += sourceSets.sagittarius.allJava
     classpath += sourceSets.sagittarius.output + sourceSets.sagittarius.compileClasspath
 }
