@@ -14,16 +14,15 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public final class ZipFileHelper {
-    public static class ZipIOException extends Exception {
-        public ZipIOException(@NotNull String info, @NotNull IOException e) {
-            super(info, e);
-        }
+    @FunctionalInterface
+    public interface FunctionException<T, R, E extends Exception> {
+        R apply(T a) throws E;
     }
 
     public static <T> @Nullable T readTextFile(
             @NotNull ZipFile file,
             @NotNull String location,
-            @NotNull FunctionWithException<BufferedReader, T, IOException> generator
+            @NotNull ZipFileHelper.FunctionException<BufferedReader, T, IOException> generator
     ) {
         if (location.startsWith("/")) {
             location = location.substring(1);

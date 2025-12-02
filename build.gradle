@@ -23,12 +23,12 @@ sourceSets {
         }
     }
 
-    tools {
+    toolsJson {
         java {
-            srcDirs = ['stackem-main/src-tools']
+            srcDirs = ['tools-jsonparser/src']
         }
         resources {
-            srcDirs = ['stackem-main/resources-tools']
+            srcDirs = ['tools-jsonparser/resources']
         }
     }
 
@@ -39,8 +39,8 @@ sourceSets {
         resources {
             srcDirs = ['stackem-neptune/resources']
         }
-        compileClasspath += sourceSets.tools.output
-        runtimeClasspath += sourceSets.tools.output
+        compileClasspath += sourceSets.toolsJson.output
+        runtimeClasspath += sourceSets.toolsJson.output
     }
 
     sagittarius {
@@ -50,13 +50,13 @@ sourceSets {
         resources {
             srcDirs = ['stackem-sagittarius/resources']
         }
-        compileClasspath += sourceSets.tools.output
-        runtimeClasspath += sourceSets.tools.output
+        compileClasspath += sourceSets.toolsJson.output
+        runtimeClasspath += sourceSets.toolsJson.output
     }
 
     main {
-        compileClasspath += sourceSets.tools.output
-        runtimeClasspath += sourceSets.tools.output
+        compileClasspath += sourceSets.toolsJson.output
+        runtimeClasspath += sourceSets.toolsJson.output
         compileClasspath += sourceSets.neptune.output
         runtimeClasspath += sourceSets.neptune.output
         compileClasspath += sourceSets.sagittarius.output
@@ -65,8 +65,8 @@ sourceSets {
 }
 
 configurations {
-    toolsImplementation.extendsFrom implementation
-    toolsRuntimeOnly.extendsFrom runtimeOnly
+    toolsJsonImplementation.extendsFrom implementation
+    toolsJsonRuntimeOnly.extendsFrom runtimeOnly
     neptuneImplementation.extendsFrom implementation
     neptuneRuntimeOnly.extendsFrom runtimeOnly
     sagittariusImplementation.extendsFrom implementation
@@ -84,11 +84,11 @@ test {
 }
 
 jar {
-    from sourceSets.tools.output
+    from sourceSets.toolsJson.output
     from sourceSets.neptune.output
     from sourceSets.sagittarius.output
 
-    from sourceSets.tools.resources
+    from sourceSets.toolsJson.resources
     from sourceSets.neptune.resources
     from sourceSets.sagittarius.resources
 
@@ -110,8 +110,8 @@ foxloader {
 }
 
 tasks.withType(Javadoc).configureEach {
-    source += sourceSets.tools.allJava
-    classpath += sourceSets.tools.output + sourceSets.tools.compileClasspath
+    source += sourceSets.toolsJson.allJava
+    classpath += sourceSets.toolsJson.output + sourceSets.toolsJson.compileClasspath
 
     source += sourceSets.neptune.allJava
     classpath += sourceSets.neptune.output + sourceSets.neptune.compileClasspath

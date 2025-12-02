@@ -1,6 +1,6 @@
 package net.tracystacktrace.stackem.neptune.container;
 
-import net.tracystacktrace.stackem.tools.ZipFileHelper;
+import net.tracystacktrace.stackem.tools.IntermediateIOException;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -81,12 +81,12 @@ public class ZipDrivenTexturePack extends ContainerTexturePack {
         }
     }
 
-    public @NotNull String readTextFile(@NotNull String path) throws ZipFileHelper.ZipIOException {
+    public @NotNull String readTextFile(@NotNull String path) throws IntermediateIOException {
         try (InputStream inputStream = this.getInputStreamOf(path);
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
             return reader.lines().collect(Collectors.joining());
         } catch (IOException e) {
-            throw new ZipFileHelper.ZipIOException("Couldn't read file: " + path, e);
+            throw new IntermediateIOException("Couldn't read file: " + path, e);
         }
     }
 }

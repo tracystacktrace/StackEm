@@ -5,7 +5,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiSlot;
 import net.minecraft.client.renderer.world.Tessellator;
 import net.tracystacktrace.stackem.neptune.container.PreviewTexturePack;
-import net.tracystacktrace.stackem.tools.StringFeatures;
+import org.jetbrains.annotations.Nullable;
 
 public class GuiTextureStackSlot extends GuiSlot {
 
@@ -59,7 +59,7 @@ public class GuiTextureStackSlot extends GuiSlot {
         }
 
         if (!isSelectedOne) {
-            showName = StringFeatures.limitString(showName, 44, true);
+            showName = limitString(showName, 44, true);
         }
 
         parentScreen.drawString(minecraft.fontRenderer, showName, x + iconHeight + 2.0F, y + 1.0F, 16777215);
@@ -111,5 +111,23 @@ public class GuiTextureStackSlot extends GuiSlot {
     @Override
     protected int getContentHeight() {
         return getSize() * 36;
+    }
+
+    public static @Nullable String limitString(@Nullable String line, final int length, final boolean endDots) {
+        if (line == null || line.length() < length) {
+            return line;
+        }
+
+        int maxLength = length;
+        int colorCodeCount = (int) line.chars().limit(maxLength - 1).filter(c -> c == '§').count();
+
+        maxLength += colorCodeCount * 2;
+
+        String result = line.length() > maxLength ? line.substring(0, maxLength) : line;
+        if (endDots) {
+            result += "...";
+        }
+
+        return result;
     }
 }

@@ -14,7 +14,7 @@ import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
 import net.tracystacktrace.stackem.sagittarius.IconSwapReader;
 import net.tracystacktrace.stackem.sagittarius.ItemIconSwap;
 import net.tracystacktrace.stackem.sagittarius.SagittariusBridge;
-import net.tracystacktrace.stackem.tools.ZipFileHelper;
+import net.tracystacktrace.stackem.tools.IntermediateIOException;
 import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.json.ThrowingJson;
 
@@ -97,7 +97,7 @@ public final class StackEmModifications {
                     StackEm.getContainerInstance().getDeepMeta().addEntityVariation(item);
                 }
 
-            } catch (ZipFileHelper.ZipIOException e) {
+            } catch (IntermediateIOException e) {
                 StackEm.LOGGER.severe(String.format("Failed to read file: %s", file.getName() + "!/stackem.items.json"));
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
             } catch (JsonExtractionException e) {
@@ -136,7 +136,7 @@ public final class StackEmModifications {
                     SagittariusBridge.addIconSwapper(item);
                 }
 
-            } catch (ZipFileHelper.ZipIOException e) {
+            } catch (IntermediateIOException e) {
                 StackEm.LOGGER.severe(String.format("Failed to read file: %s", file.getName() + "!/stackem.items.json"));
                 StackEm.LOGGER.throwing("StackEmModifications", "fetchIconModifications", e);
             } catch (IconProcessorException | JsonExtractionException e) {
