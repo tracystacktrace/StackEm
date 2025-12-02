@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
-import java.util.stream.Collectors;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
@@ -18,32 +17,6 @@ public final class ZipFileHelper {
     public static class ZipIOException extends Exception {
         public ZipIOException(@NotNull String info, @NotNull IOException e) {
             super(info, e);
-        }
-    }
-
-    public static @Nullable ZipEntry getEntryFor(
-            @NotNull ZipFile file,
-            @Nullable String string
-    ) {
-        if (string == null || string.isEmpty()) {
-            return null;
-        }
-        if (string.startsWith("/")) {
-            string = string.substring(1);
-        }
-
-        return file.getEntry(string);
-    }
-
-    public static @NotNull String readTextFile(
-            @NotNull ZipFile file,
-            @NotNull ZipEntry entry
-    ) throws ZipIOException {
-        try (InputStream inputStream = file.getInputStream(entry);
-             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8))) {
-            return reader.lines().collect(Collectors.joining());
-        } catch (IOException e) {
-            throw new ZipIOException("Couldn't read file: " + entry.getName(), e);
         }
     }
 

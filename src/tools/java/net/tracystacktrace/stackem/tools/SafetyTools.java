@@ -2,7 +2,10 @@ package net.tracystacktrace.stackem.tools;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
+import java.io.BufferedInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
@@ -30,14 +33,6 @@ public final class SafetyTools {
             return hexString.toString();
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    public static boolean isFileLocked(@NotNull File file) {
-        try (final RandomAccessFile ignored = new RandomAccessFile(file, "rw")) {
-            return true;
-        } catch (IOException e) {
-            return false;
         }
     }
 }

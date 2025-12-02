@@ -3,11 +3,7 @@ package net.tracystacktrace.stackem.tools;
 import org.jetbrains.annotations.Nullable;
 
 public final class StringFeatures {
-    public static @Nullable String limitString(
-            @Nullable String line,
-            final int length,
-            final boolean endDots
-    ) {
+    public static @Nullable String limitString(@Nullable String line, final int length, final boolean endDots) {
         if (line == null || line.length() < length) {
             return line;
         }

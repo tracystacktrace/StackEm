@@ -20,13 +20,17 @@ public class ModernStackedImpl extends TexturePackBase {
     private final DeepMeta deepMeta = new DeepMeta();
 
     public ModernStackedImpl(
-            String id,
-            ITexturePack defaultTexturePack,
-            List<File> texturepackArchives
+            @NotNull String id,
+            @NotNull ITexturePack defaultTexturePack,
+            @NotNull List<@NotNull File> texturepackArchives
     ) {
         super(id, null, "stackem.tpstapcked", defaultTexturePack);
         this.defaultTexturePack = defaultTexturePack;
         this.driverEngine = new StackedIO(texturepackArchives);
+    }
+
+    public @NotNull ZipDrivenTexturePack @NotNull [] getArchives() {
+        return this.driverEngine.getArchives();
     }
 
     @Override
@@ -87,7 +91,7 @@ public class ModernStackedImpl extends TexturePackBase {
         return this.driverEngine.isEmpty();
     }
 
-    public DeepMeta getDeepMeta() {
+    public @NotNull DeepMeta getDeepMeta() {
         return this.deepMeta;
     }
 
@@ -121,9 +125,5 @@ public class ModernStackedImpl extends TexturePackBase {
         }
 
         return collected;
-    }
-
-    public ZipDrivenTexturePack[] getArchives() {
-        return this.driverEngine.getArchives();
     }
 }

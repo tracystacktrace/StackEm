@@ -8,7 +8,7 @@ import java.util.Properties;
 import java.util.regex.Pattern;
 
 public class NeptuneProperties {
-    private static final Pattern PATTERN_SINGLE_WORD = Pattern.compile("^\\w+$");
+    protected static final Pattern PATTERN_SINGLE_WORD = Pattern.compile("^\\w+$");
     protected final Properties properties = new Properties();
 
     public NeptuneProperties() {
