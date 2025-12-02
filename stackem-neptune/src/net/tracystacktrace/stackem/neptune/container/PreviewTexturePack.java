@@ -16,7 +16,7 @@ public class PreviewTexturePack extends ContainerTexturePack {
     public final @NotNull String sha256;
 
     protected @Nullable BufferedImage icon; //icon image
-    protected int iconBindIdentifier = -1; //for OpenGL
+    protected int iconTextureID = -1; //for OpenGL
 
     protected String target_version;
     protected String website;
@@ -112,24 +112,24 @@ public class PreviewTexturePack extends ContainerTexturePack {
     }
 
     public boolean hasTextureIndex() {
-        return this.iconBindIdentifier != -1;
+        return this.iconTextureID != -1;
     }
 
     public int getTextureIndex() {
-        return this.iconBindIdentifier;
+        return this.iconTextureID;
     }
 
     public void setTextureIndex(int i) {
-        this.iconBindIdentifier = i;
+        this.iconTextureID = i;
     }
 
     public int popTextureIndex() {
-        if (this.iconBindIdentifier != -1) {
-            int temp = this.iconBindIdentifier;
-            this.iconBindIdentifier = -1;
+        if (this.iconTextureID != -1) {
+            int returnInt = this.iconTextureID;
+            this.iconTextureID = -1;
             this.icon = null;
-            return temp;
+            return returnInt;
         }
-        return this.iconBindIdentifier;
+        return this.iconTextureID;
     }
 }

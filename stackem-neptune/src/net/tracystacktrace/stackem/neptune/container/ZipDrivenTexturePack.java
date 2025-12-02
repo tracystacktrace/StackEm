@@ -70,6 +70,7 @@ public class ZipDrivenTexturePack extends ContainerTexturePack {
 
     public @Nullable BufferedImage readImage(@NotNull String location) {
         final ZipEntry entry = this.getEntry(location);
+
         if (entry == null) {
             return null;
         }

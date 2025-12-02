@@ -5,7 +5,6 @@ import org.jetbrains.annotations.NotNull;
 import java.io.File;
 
 public class ContainerTexturePack {
-    //pack.txt/pack.png public attributes
     protected final File file;
     protected final String name;
 

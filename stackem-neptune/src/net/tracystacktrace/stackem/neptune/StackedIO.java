@@ -24,6 +24,7 @@ public class StackedIO {
         for (int i = 0; i < this.archives.length; i++) {
             final File candidate = texturepackArchives.get(i);
             this.archives[i] = new ZipDrivenTexturePack(candidate, candidate.getName());
+            this.archives[i].order = i;
         }
     }
 
