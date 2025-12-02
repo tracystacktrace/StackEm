@@ -4,9 +4,10 @@ import net.minecraft.client.renderer.block.TexturePackDefault;
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hacks.SmartHacks;
-import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.impl.ModernStackedImpl;
 import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentedTexture;
 import net.tracystacktrace.stackem.modifications.imageglue.segment.SegmentsProvider;
+import net.tracystacktrace.stackem.neptune.container.ZipDrivenTexturePack;
 import net.tracystacktrace.stackem.tools.ImageHelper;
 import org.jetbrains.annotations.NotNull;
 
@@ -36,22 +37,19 @@ public final class ImageGlueBridge {
 
     private static @NotNull BufferedImage processLayering(@NotNull SegmentedTexture name) {
         final TexturePackDefault defaultPack = (TexturePackDefault) SmartHacks.getDefaultTexturePack();
-        final TexturePackStacked stacked = StackEm.getContainerInstance();
+        final ModernStackedImpl stacked = StackEm.getContainerInstance();
 
         final ImageGlueContainer original = new ImageGlueContainer(ImageHelper.readImage(defaultPack::getResourceAsStream, name.texture()));
         final List<BufferedImage> images = new ArrayList<>();
 
         //fetching texturepacks that can into gluing
-        List<ZipFile> zipFiles = stacked.getZipFiles();
-        for (int i = zipFiles.size() - 1; i >= 0; i--) {
-            final ZipFile zipFile = zipFiles.get(i);
-            final BufferedImage image = ImageHelper.readImage(zipFile, name.texture());
+        ZipDrivenTexturePack[] archives = stacked.getArchives();
+        for (int i = archives.length - 1; i >= 0; i--) {
+            final BufferedImage image = archives[i].readImage(name.texture());
             if (ImageHelper.isValidSquareTexture(image)) {
                 images.add(image);
-            } else {
-                if (image != null) {
-                    image.flush();
-                }
+            } else if (image != null) {
+                image.flush();
             }
         }
 

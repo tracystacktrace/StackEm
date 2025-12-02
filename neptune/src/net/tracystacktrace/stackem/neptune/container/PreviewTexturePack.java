@@ -1,6 +1,5 @@
 package net.tracystacktrace.stackem.neptune.container;
 
-import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.neptune.category.EnumCategory;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -101,12 +100,9 @@ public class PreviewTexturePack extends ContainerTexturePack {
         return this.bakedCategoriesList;
     }
 
-    public void bakeCategoryList() {
+    public void bakeCategoryList(@NotNull Function<@NotNull String, @NotNull String> translateFunction) {
         if (this.categories != null || this.custom_categories != null) {
-            this.bakedCategoriesList = EnumCategory.collect(
-                    s -> StringTranslate.getInstance().translateKey(s),
-                    this.categories, this.custom_categories
-            );
+            this.bakedCategoriesList = EnumCategory.collect(translateFunction, this.categories, this.custom_categories);
         }
     }
 

@@ -47,25 +47,6 @@ public final class ZipFileHelper {
         }
     }
 
-    public static @Nullable String readTextFile(
-            @NotNull ZipFile file,
-            @NotNull String location
-    ) {
-        if (location.startsWith("/")) {
-            location = location.substring(1);
-        }
-
-        final ZipEntry entry = file.getEntry(location);
-        if (entry == null) {
-            return null;
-        }
-        try {
-            return readTextFile(file, entry);
-        } catch (ZipIOException e) {
-            return null;
-        }
-    }
-
     public static <T> @Nullable T readTextFile(
             @NotNull ZipFile file,
             @NotNull String location,

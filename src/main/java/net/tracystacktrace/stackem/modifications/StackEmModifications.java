@@ -4,11 +4,12 @@ import com.google.gson.JsonObject;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.world.RenderEngine;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.impl.ModernStackedImpl;
 import net.tracystacktrace.stackem.modifications.entityvariation.EntityVariation;
 import net.tracystacktrace.stackem.modifications.imageglue.ImageGlueBridge;
 import net.tracystacktrace.stackem.modifications.moon.CelestialMeta;
 import net.tracystacktrace.stackem.modifications.moon.MoonReader;
+import net.tracystacktrace.stackem.neptune.container.ZipDrivenTexturePack;
 import net.tracystacktrace.stackem.sagittarius.IconProcessorException;
 import net.tracystacktrace.stackem.sagittarius.IconSwapReader;
 import net.tracystacktrace.stackem.sagittarius.ItemIconSwap;
@@ -18,9 +19,6 @@ import net.tracystacktrace.stackem.tools.json.JsonExtractionException;
 import net.tracystacktrace.stackem.tools.json.ThrowingJson;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipFile;
 
 /**
  * A main entrypoint for most texture/sound modifications handled by this mod
@@ -47,7 +45,7 @@ public final class StackEmModifications {
             return;
         }
 
-        final TexturePackStacked stacked = StackEm.getContainerInstance();
+        final ModernStackedImpl stacked = StackEm.getContainerInstance();
 
         //no textures - no changes
         if (stacked.isEmpty()) {
@@ -84,15 +82,14 @@ public final class StackEmModifications {
         }
 
         //parse entity textures
-        final List<ZipFile> zipFiles = stacked.getZipFiles();
-        for (int i = zipFiles.size() - 1; i >= 0; i--) {
-            final ZipFile file = zipFiles.get(i);
-            final ZipEntry entry = ZipFileHelper.getEntryFor(file, "stackem.entity.json");
-            if (entry == null) continue;
+        ZipDrivenTexturePack[] zipFiles = stacked.getArchives();
+        for (int i = zipFiles.length - 1; i >= 0; i--) {
+            final ZipDrivenTexturePack file = zipFiles[i];
+            if (!file.hasEntry("stackem.entity.json")) continue;
 
             try {
                 final EntityVariation.Description[] possible = EntityVariation.fromJson(
-                        ZipFileHelper.readTextFile(file, entry),
+                        file.readTextFile("stackem.entity.json"),
                         file.getName() + "!/stackem.entity.json"
                 );
 
@@ -119,21 +116,20 @@ public final class StackEmModifications {
             return;
         }
 
-        final TexturePackStacked stacked = StackEm.getContainerInstance();
+        final ModernStackedImpl stacked = StackEm.getContainerInstance();
 
         //no textures - no changes
         if (stacked.isEmpty()) {
             return;
         }
 
-        for (final ZipFile file : stacked.getZipFiles()) {
-            final ZipEntry entry = ZipFileHelper.getEntryFor(file, "stackem.items.json");
-            if (entry == null) continue;
+        for (final ZipDrivenTexturePack file : stacked.getArchives()) {
+            if (!file.hasEntry("stackem.items.json")) continue;
 
             try {
                 final ItemIconSwap[] possible = IconSwapReader.fromJsonFile(
                         file.getName() + "!/stackem.items.json",
-                        ZipFileHelper.readTextFile(file, entry)
+                        file.readTextFile("stackem.items.json")
                 );
 
                 for (ItemIconSwap item : possible) {

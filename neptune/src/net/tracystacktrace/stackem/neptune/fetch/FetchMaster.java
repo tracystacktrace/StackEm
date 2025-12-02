@@ -114,7 +114,7 @@ public class FetchMaster {
     }
 
     private static void setPossibleProperties(@NotNull ZipFile zipFile, @NotNull PreviewTexturePack pack) {
-        final ZipEntry stackemCfgZipEntry = zipFile.getEntry("stackem.json");
+        final ZipEntry stackemCfgZipEntry = zipFile.getEntry("stackem.properties");
         if (stackemCfgZipEntry != null) {
             try {
                 final InputStream stackemCfgInputStream = zipFile.getInputStream(stackemCfgZipEntry);

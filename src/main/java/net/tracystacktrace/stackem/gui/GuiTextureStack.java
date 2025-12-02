@@ -8,7 +8,7 @@ import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.hacks.SmartHacks;
 import net.tracystacktrace.stackem.hacks.SoundCleanupHelper;
-import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.impl.ModernStackedImpl;
 import net.tracystacktrace.stackem.neptune.container.PreviewTexturePack;
 import net.tracystacktrace.stackem.neptune.fetch.FetchMaster;
 import net.tracystacktrace.stackem.tools.QuickRNG;
@@ -242,7 +242,7 @@ public class GuiTextureStack extends GuiScreen {
         }
 
         this.sequoiaCache = candidates;
-        this.sequoiaCache.forEach(PreviewTexturePack::bakeCategoryList);
+        this.sequoiaCache.forEach(pack -> pack.bakeCategoryList(StringTranslate.getInstance()::translateKey));
         this.pushSequoiaCacheSort();
     }
 
@@ -309,7 +309,7 @@ public class GuiTextureStack extends GuiScreen {
         StackEm.DEBUG_FORCE_FALLBACK = false;
         StackEm.getContainerInstance().deleteTexturePack(mc.renderEngine);
 
-        final TexturePackStacked stacked = new TexturePackStacked(QuickRNG.getRandomIdentifier(), SmartHacks.getDefaultTexturePack(), files);
+        final ModernStackedImpl stacked = new ModernStackedImpl(QuickRNG.getRandomIdentifier(), SmartHacks.getDefaultTexturePack(), files);
 
         this.mc.texturePackList.setTexturePack(stacked);
         this.mc.gameSettings.texturePack = StackEm.packSaveString(stackemList.toArray(new String[0]));

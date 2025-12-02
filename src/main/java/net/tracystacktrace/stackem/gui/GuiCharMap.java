@@ -4,7 +4,7 @@ import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.common.util.i18n.StringTranslate;
 import net.tracystacktrace.stackem.StackEm;
-import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.impl.ModernStackedImpl;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -142,7 +142,7 @@ public class GuiCharMap extends GuiScreen {
 
 
     private void fetchFontTxtFile() {
-        TexturePackStacked stacked = StackEm.getContainerInstance();
+        ModernStackedImpl stacked = StackEm.getContainerInstance();
         try (InputStream inputStream = stacked.getResourceAsStream("/font.txt");
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
 

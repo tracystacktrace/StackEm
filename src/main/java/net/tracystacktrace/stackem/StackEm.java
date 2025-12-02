@@ -7,7 +7,7 @@ import com.fox2code.foxloader.loader.Mod;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.util.KeyBinding;
 import net.minecraft.common.util.i18n.StringTranslate;
-import net.tracystacktrace.stackem.impl.TexturePackStacked;
+import net.tracystacktrace.stackem.impl.ModernStackedImpl;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
@@ -20,8 +20,8 @@ public class StackEm extends Mod {
     public static final KeyBinding DEBUG_KEYBIND_FALLBACK = new KeyBinding("stackem.keybind.fallback", Keyboard.KEY_F10);
     public static boolean DEBUG_FORCE_FALLBACK = false;
 
-    public static TexturePackStacked getContainerInstance() {
-        return (TexturePackStacked) Minecraft.getInstance().texturePackList.getSelectedTexturePack();
+    public static ModernStackedImpl getContainerInstance() {
+        return (ModernStackedImpl) Minecraft.getInstance().texturePackList.getSelectedTexturePack();
     }
 
     public static void toggleDefaultTextures() {
