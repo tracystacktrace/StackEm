@@ -59,6 +59,10 @@ public class StackEm extends Mod {
         return website != null && (website.startsWith("https://") || website.startsWith("http://"));
     }
 
+    public static @NotNull String getInternalRndIdentifier() {
+        return String.format("stackem%06X", (int) (System.currentTimeMillis() & 0xFFFFFF));
+    }
+
     @Override
     public void onPreInit() {
         this.setConfigObject(CONFIG);

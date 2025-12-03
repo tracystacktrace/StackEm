@@ -11,7 +11,6 @@ import net.tracystacktrace.stackem.hacks.SoundCleanupHelper;
 import net.tracystacktrace.stackem.impl.ModernStackedImpl;
 import net.tracystacktrace.stackem.neptune.container.PreviewTexturePack;
 import net.tracystacktrace.stackem.neptune.fetch.FetchMaster;
-import net.tracystacktrace.stackem.tools.QuickRNG;
 import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
@@ -309,7 +308,7 @@ public class GuiTextureStack extends GuiScreen {
         StackEm.DEBUG_FORCE_FALLBACK = false;
         StackEm.getContainerInstance().deleteTexturePack(mc.renderEngine);
 
-        final ModernStackedImpl stacked = new ModernStackedImpl(QuickRNG.getRandomIdentifier(), SmartHacks.getDefaultTexturePack(), files);
+        final ModernStackedImpl stacked = new ModernStackedImpl(StackEm.getInternalRndIdentifier(), SmartHacks.getDefaultTexturePack(), files);
 
         this.mc.texturePackList.setTexturePack(stacked);
         this.mc.gameSettings.texturePack = StackEm.packSaveString(stackemList.toArray(new String[0]));

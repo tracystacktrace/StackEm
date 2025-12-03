@@ -5,7 +5,6 @@ import net.minecraft.client.renderer.block.ITexturePack;
 import net.minecraft.client.renderer.block.TexturePackList;
 import net.tracystacktrace.stackem.StackEm;
 import net.tracystacktrace.stackem.impl.ModernStackedImpl;
-import net.tracystacktrace.stackem.tools.QuickRNG;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -60,7 +59,7 @@ public abstract class MixinTexturePackList {
             finished[i] = collector.get(i).getName();
         }
 
-        this.selectedTexturePack = new ModernStackedImpl(QuickRNG.getRandomIdentifier(), defaultTexturePack, collector);
+        this.selectedTexturePack = new ModernStackedImpl(StackEm.getInternalRndIdentifier(), defaultTexturePack, collector);
 
         this.mc.gameSettings.texturePack = StackEm.packSaveString(finished);
         this.mc.gameSettings.saveOptions();
