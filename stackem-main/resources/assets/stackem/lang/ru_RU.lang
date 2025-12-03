@@ -1,9 +1,9 @@
 # general/gui
 stackem.gui.done=§c§lСОХРАНИТЬ§r и выйти
 stackem.gui.folder=Открыть папку текстур паков
-stackem.gui.charmap=Открыть CharMap
+stackem.gui.charmap=Открыть карту символов
 
-stackem.gui.hint1=Нажмите два раза на элемент, чтобы включить/исключить
+stackem.gui.hint1=Двойной клик на слот — включить/исключить
 stackem.gui.hint2=§eПоддерживаются§r только текстурпаки формата "§e.zip§r"!
 stackem.gui.actions=Действия:
 

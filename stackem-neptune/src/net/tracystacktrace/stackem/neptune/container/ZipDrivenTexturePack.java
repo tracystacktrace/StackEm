@@ -41,7 +41,7 @@ public class ZipDrivenTexturePack extends ContainerTexturePack {
 
     public @Nullable ZipEntry getEntry(@NotNull String path) {
         if (this.archive == null) {
-            throw new IllegalStateException("Cannot access getEntry when the archive is not opened!");
+            return null;
         }
         if (path.startsWith("/")) {
             path = path.substring(1);

@@ -11,7 +11,7 @@ buildscript {
 apply plugin: 'foxloader.dev'
 
 group = 'net.tracystacktrace'
-version = '0.3.8'
+version = '0.4.0'
 
 sourceSets {
     main {

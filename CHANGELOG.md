@@ -1,8 +1,10 @@
 
-## [0.3.9] - 2025-11-22
+## [0.4.0] - 2025-12-TBA
 
 **[View changes between 0.3.7 with 0.3.8](https://github.com/tracystacktrace/StackEm/compare/0.3.8...0.3.9)**
 
+- Reimplemented the core of the mod with abstraction of it - now it can be adapted to many MC mods and versions.
+- Faster random ID generator for internal use.
 - Category list of a texturepack is now rendered as a hovered tooltip.
 - Refactored the whole JSON parsing code to be unitary and strict for input data.
 - Fixed a bug where stackem.sun.json is applied to the Moon but not the Sun.
