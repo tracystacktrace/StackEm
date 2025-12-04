@@ -1,6 +1,6 @@
 # StackEm (Stack 'Em)
 
-![Mod Logo](https://github.com/tracystacktrace/StackEm/raw/main/src/main/resources/assets/stackem/icon.png)
+![Mod Logo](https://github.com/tracystacktrace/StackEm/raw/main/stackem-main/resources/assets/stackem/icon.png)
 
 [![Available on - Modrinth](https://img.shields.io/badge/Available_on-Modrinth-4bab62?logo=modrinth&logoColor=white)](https://modrinth.com/mod/stack-em) [![GitHub release](https://img.shields.io/github/release/tracystacktrace/StackEm?include_prereleases=&sort=semver&color=success)](https://github.com/tracystacktrace/StackEm/releases/)
 
